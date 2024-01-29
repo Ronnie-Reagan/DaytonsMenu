@@ -1,0 +1,13 @@
+{
+    "Lua.diagnostics.globals": [
+        "localplayer",
+        "stats",
+        "sleep",
+        "globals",
+        "require_game_build",
+        "menu",
+        "json",
+        "replayinterface",
+        "vector3"
+    ]
+}

@@ -12,12 +12,17 @@ local Config = {
     Safety = 20
 }
 
+local vehicleName = nil
+
+local InfiniteScrollLoop = false
 local plateLength = 8
 local sixtyFeet = 18.288
 local reactionTime = nil
 local reactionRecorded = false
 local sixtyFootTime = nil
 local sixtyFootSpeed = nil
+local finalSpeed = nil
+local preventSpeedo = false
 
 local tuningMode = {
     fastDriftMode = false,
@@ -143,6 +148,7 @@ loadUserSettings()
 print("Loading of User Settings Complete")
 
 if userSettings.selectedSpeedMode then
+    print("user setting found: " .. userSettings.selectedSpeedMode)
     if userSettings.selectedSpeedMode == "MPH" then
         speedmode.current = speedmode.mph
     else
@@ -533,7 +539,9 @@ end
 local cumulativeCount = 0
 local vehiclesMoved = 0
 
-co1 = coroutine.create(function(radius)
+local co1
+-- coroutine is not running well (it stops before hitting 20 vehicles moved)
+local function carRemovalCoroutine()
     local playerPos = localplayer:get_position()
     local playerVehicle = localplayer:get_current_vehicle()
 
@@ -569,117 +577,133 @@ co1 = coroutine.create(function(radius)
             coroutine.yield()
         end
     end
-end)
+end
 
+function printRaceDetails()                                     -- Print The Race Details then restore to empty table for a new race.
+    print(" ")
+    print("Race Data Saved for " .. raceData.vehicleName)
+    print("Race Distance: " .. raceData.distance)
+    print("Reaction Time: " .. raceData.reactionTime)
+    print("60 Foot Time: " .. raceData.sixtyFootTime)
+    print("Race finished! Time: " .. raceData.time)
+    print("60 Foot SpeedTrap: " .. raceData.sixtyFootSpeed)
+    print("Final Speed: " .. raceData.speed)
+
+    -- Clear raceData for the next race
+    raceData = {}
+end
 
 function DoDragRace()
     if scriptFree then
-    if localplayer and localplayer:is_in_vehicle() then
-        checkPlate()
-        --menu.emit_event("raceBeginning")
-        local player = localplayer
-        local vehicle = player:get_current_vehicle()
-        raceRunning = true
-        raceFinished = false
-        startPosition = getCurrentPosition()
-        reactionTime = 0
-        sixtyFootTime = 0
-        sixtyFootSpeed = 0
-        setPlate("ENJOY ")
-        sleep(0.75)
-        setPlate(" YOUR ")
-        sleep(0.75)
-        setPlate("  Race")
-        sleep(1.0)
-        setPlate("0------0")
-        sleep(0.5)
-        setPlate("00----00")
-        sleep(0.5)
-        setPlate("000--000")
-        sleep(0.49)
-        if startPosition ~= getCurrentPosition() then
-            setPlate("JUMPED!")
-            raceFinished = true
-            raceRunning = false
-            print("Race Aborted: Jumped The Start")
-            sleep(5)
-            checkPlate()
-        else
-            setPlate("---GO---")
-            Timer.start() -- Start the custom timer
-            while not raceFinished do
-                coroutine.resume(co1)
-                if reactionTime == 0 and getCurrentPosition() ~= startPosition then
-                    reactionTime = formatTime(Timer.elapsedTime())
-                end
-                if sixtyFootTime == 0 and calculateDistance(startPosition, getCurrentPosition()) >= sixtyFeet then
-                    sixtyFootTime = formatTime(Timer.elapsedTime()) -- save the 60 foot time
-                    sixtyFootSpeed = getCurrentSpeed(vehicle)
-                end
-                if hasReachedFinishLine() then
-                    --menu.emit_event("raceEnded")
-                    raceRunning = false
-                    raceFinished = true
-                    local finalTime = Timer.elapsedTime()
-                    local finalSpeed = getCurrentSpeed(vehicle)
-
-                    -- Get the selected speed mode from the user settings
-                    if speedmode.current == speedmode.kph then
-                        selectedMode = "KPH"
-                    else
-                        selectedMode = "MPH"
+        if localplayer and localplayer:is_in_vehicle() then
+            scriptFree = false
+            preventSpeedo = true
+            checkPlate()                                                                                                -- Check plate before start to ensure the correct plate is saved on startup
+            --menu.emit_event("raceBeginning")                                                                          -- For multi-thread scripting
+            local player = localplayer                                                                                  -- Shorten localplayer to player
+            local vehicle = player:get_current_vehicle()                                                                -- Set vehicle to the local player's current vehicle
+            raceRunning = true                                                                                          -- Set the race to running
+            raceFinished = false                                                                                        -- Set the race to unfinished
+            startPosition = getCurrentPosition()                                                                        -- Set the start position
+            reactionTime = 0                                                                                            -- Reset the reaction time
+            sixtyFootTime = 0                                                                                           -- Reset the sixty foot time
+            sixtyFootSpeed = 0                                                                                          -- Reset the sixty foot speed
+            vehicleName = nil                                                                                           -- Reset the saved Vehicle Name (for the current race's post race details)
+            setPlate(" ENJOY  ")                                                                                        -- Begin Start up and Countdown
+            sleep(0.75)
+            setPlate("  YOUR  ")
+            sleep(0.75)
+            setPlate("   Race ")
+            sleep(1.0)
+            setPlate("0------0")
+            sleep(0.5)
+            setPlate("00----00")
+            sleep(0.5)
+            setPlate("000--000")
+            sleep(0.49)                                                                                                 -- Countdown Concludes
+            if startPosition ~= getCurrentPosition() then                                                               -- Check for jumpstart
+                setPlate("JUMPED!")
+                raceFinished = true                                                                                     -- Set the race to finished
+                raceRunning = false                                                                                     -- Set race to not running
+                print("Race Aborted: Jumped The Start")
+                sleep(5)                                                                                                -- Sleep to wait for before returning the plate to normal
+                checkPlate()                                                                                            -- Check the plate against the savedplatetext variable
+                scriptFree =true
+            else
+                setPlate("---GO---")                                                                                    -- Start of the race
+                Timer.start()                                                                                           -- Start the custom timer
+                co1 = coroutine.create(carRemovalCoroutine)
+                while not raceFinished do                                                                               -- Constantly check for race completion
+                    coroutine.resume(co1)                                                                               -- Run Car Removal
+                    if reactionTime == 0 and getCurrentPosition() ~= startPosition then                                 -- Check if Reaction Time has been set and if the car has moved since "GO"
+                        reactionTime = formatTime(Timer.elapsedTime())                                                  -- Save the current time reading as the Reaction Time
                     end
+                    if sixtyFootTime == 0 and calculateDistance(startPosition, getCurrentPosition()) >= sixtyFeet then  -- Check if Sixty Foot Time is set and if veh has reached 60 feet
+                        sixtyFootTime = formatTime(Timer.elapsedTime())                                                 -- Save the Currnet timer reading as the Sixty Foot Time
+                        sixtyFootSpeed = getCurrentSpeed(vehicle)                                                       -- Save the current speed as the Sixty Foot Speed
+                    end
+                    if hasReachedFinishLine() then                                                                      -- Check to see if the current vehicle has reached the finish line
+                        --menu.emit_event("raceEnded")                                                                  -- Menu Event for Multi Thread Processing (Race Ended)
+                        raceRunning = false                                                                             -- Set the race to not running
+                        raceFinished = true                                                                             -- Set the race to finished
+                        finalTime = Timer.elapsedTime()                                                                 -- Set the current timer reading to the Final Time
+                        finalSpeed = getCurrentSpeed(vehicle)                                                           -- Set the current speed to the Final Speed
 
-                    local raceDetails = {
-                        distance = selectedDistance,
-                        reactionTime = reactionTime,
-                        sixtyFootTime = sixtyFootTime,
-                        time = formatTime(finalTime),
-                        sixtyFootSpeed = sixtyFootSpeed .. " " .. selectedMode,
-                        speed = (finalSpeed * speedmode.current) .. " " .. selectedMode
-                    }
+                        -- Get the selected speed mode from the user settings
+                        if speedmode.current == speedmode.kph then                                                      -- Checks the selected speedmode
+                            selectedMode =
+                            "KPH"                                                                                       -- Defines the speedmode as a plain string
+                        else
+                            selectedMode =
+                            "MPH" -- Defines the speedmode as a plain string
+                        end
 
-                    -- Update raceData table
-                    local vehicleHash = vehicle:get_model_hash()
-                    local vehicleName = getVehicleNameFromHash(vehicleHash)
-                    raceData[vehicleName] = raceData[vehicleName] or {}
-                    table.insert(raceData[vehicleName], raceDetails)
+                        local raceDetails = {                                                                           -- Table to store the Post Race Details
+                            distance = selectedDistance,                                                                -- Race Distance
+                            reactionTime = reactionTime,                                                                -- Reaction Time
+                            sixtyFootTime = sixtyFootTime,                                                              -- Time to reach 60 feet
+                            time = formatTime(finalTime),                                                               -- Time to race completion
+                            sixtyFootSpeed = sixtyFootSpeed .. " " .. selectedMode,                                     -- Sixty Foot Speed
+                            speed = (finalSpeed * speedmode.current).." "..selectedMode                                 -- Final Speed
+                        }
 
-                    -- Save the updated race data
-                    saveRaceData()
+                        -- Update raceData table
+                        local vehicleHash = vehicle:get_model_hash()
+                        vehicleName = getVehicleNameFromHash(vehicleHash)
+                        raceData[vehicleName] = raceData[vehicleName] or {}
+                        table.insert(raceData[vehicleName], raceDetails)
 
-                    -- Clear raceData for the next race
-                    raceData = {}
+                        -- Save the updated race data
+                        saveRaceData()
 
-                    -- Print the data
-                    print("Race Data Saved for " .. vehicleName)
-                    print("Race Distance: " .. selectedDistance)
-                    print("Reaction Time: " .. reactionTime)
-                    print("60 Foot Time: " .. sixtyFootTime)
-                    print("Race finished! Time: " .. formatTime(finalTime))
-                    print("60 Foot SpeedTrap: " .. sixtyFootSpeed .. " " .. selectedMode)
-                    print("Final Speed: " .. finalSpeed .. " " .. selectedMode)
+                        -- Print the data
+                        printRaceDetails()
 
-                    setPlate(formatTime(finalTime)) -- Display race time on the plate
-                    sleep(5)
-                    checkPlate()
-                    break
-                else
-                    if formatTime(Timer.elapsedTime()) >= "1" then
-                        displaySpeed()
+                        setPlate(formatTime(finalTime)) -- Display race time on the plate
+                        sleep(5)
+                        checkPlate()
+                        scriptFree = true
+                        break
+                    else
+                        if preventSpeedo then
+                            if formatTime(Timer.elapsedTime()) >= "1" then
+                                displaySpeed()
+                                preventSpeedo = false
+                            end
+                        else
+                            displaySpeed()
+                        end
                     end
                 end
             end
+        else
+            print("Not in a vehicle! You cant race barefoot!!")
+            error("Not in a vehicle! You can't race barefoot!!", 2)
         end
     else
-        print("Not in a vehicle! You cant race barefoot!!")
-        error("Not in a vehicle! You can't race barefoot!!", 2)
+        sleep(5)
+        DoDragRace()
     end
-else
-    sleep(5)
-    DoDragRace()
-end
-
 end
 
 local function abortrace()
@@ -814,7 +838,7 @@ function ScrollText(message, speed)
 
     local calculatedSpeed = speed * 0.25 -- Change the speed to a delay
     -- Ensure localplayer and setPlate functions are defined
-    if localplayer:is_in_vehicle() == false then
+    if not localplayer:is_in_vehicle() then
         print("Error: No vehicle detected")
         return
     else
@@ -826,9 +850,8 @@ function ScrollText(message, speed)
         shouldScroll = true
         while shouldScroll do
             for i = 1, plateLength do
-                if not shouldScroll then
-                    break
-                end
+                if not shouldScroll then break end
+                if not InfiniteScrollLoop then break end
 
                 local displayText = plateText:sub(i, i + plateLength - 1)
                 setPlate(displayText)
@@ -838,7 +861,7 @@ function ScrollText(message, speed)
 
         -- Restore the original plate text after scrolling
         if savedPlateText then
-            setPlate(savedPlateText)     -- Set it to the original message
+            setPlate(savedPlateText) -- Set it to the original message
         else
             print("No saved Plate Data, Setting plate to the default")
             setPlate(defaultPlate)
@@ -854,12 +877,6 @@ function ChangeInfinitescrollbool()
     else
         InfiniteScrollLoop = true
     end
-end
-
--- Infinite Scroll Getter
-
-function GetInfinitescrollbool()
-    return InfiniteScrollLoop
 end
 
 -- Example usage
@@ -1010,7 +1027,7 @@ local xmasDynamicPlateMenu = DynamicPlateMenu:add_submenu("Christmas Loop")
 local DaytonsScrollMenu = DynamicPlateMenu:add_submenu("Dayton's Dynamic Plates")
 DaytonsScrollMenu:add_action("Stop Scrolling!!", function() stopEverything() end)
 local scrollingtextmenu = DynamicPlateMenu:add_submenu("Scrolling Message Plates")
-scrollingtextmenu:add_toggle("Infinite Loop", function() GetInfinitescrollbool() end,
+scrollingtextmenu:add_toggle("Infinite Loop", function() return InfiniteScrollLoop end,
     function() ChangeInfinitescrollbool() end)
 
 -- MERRY CHRISTMAS SCROLL
@@ -1022,7 +1039,7 @@ MerryChristmasScrollMenu:add_action("EAT SHIT AND DIE SLOW", function() ScrollTe
 MerryChristmasScrollMenu:add_action("EAT SHIT AND DIE TOO SLOW", function() ScrollText("EAT SHIT AND DIE", 4) end)
 
 --Dayton's Dynamic Plates
-DaytonsScrollMenu:add_action("WHAT IS THIS? TOO SLOW",
+DaytonsScrollMenu:add_action("Daytons A DickHead",
     function() ScrollText("Daytons a dick head and if you are reading this you probably are too bitch ass", 1) end)
 DaytonsScrollMenu:add_action("Swearing", function() ScrollText("Fuck DICK SHIT BITCH CUNT PUSSY", 1) end)
 DaytonsScrollMenu:add_action("FUCK YOU", function() ScrollText("DAYTON IS A QUEEF EATER", 1) end)
