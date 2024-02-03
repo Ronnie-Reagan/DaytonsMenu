@@ -1,28 +1,68 @@
 --This is a test scrip to show dayton how to code.
+
+function printFlag()
+    print(" ")
+    print(" ")
+    print(" ")
+    print("--DACANADACANADACANADACANADACANADACANADACANADACANADACANADACANADACANAD")
+    print("--ACANADACANADACAN                                   NADACANADACANADA")
+    print("--CANADACANADACANA                 A                 ADACANADACANADAC")
+    print("--ANADACANADACANAD                ADA                DACANADACANADACA")
+    print("--NADACANADACANADA           AC  ADACA  DA           ACANADACANADACAN")
+    print("--ADACANADACANADAC            ANADACANADA            CANADACANADACANA")
+    print("--DACANADACANADACA        DA   ADACANADA   AD        ANADACANADACANAD")
+    print("--ACANADACANADACAN    ANADACAN  ACANADA  NADACANA    NADACANADACANADA")
+    print("--CANADACANADACANA     ADACANADACANADACANADACANA     ADACANADACANADAC")
+    print("--ANADACANADACANAD   NADACANADACANADACANADACANADAC   DACANADACANADACA")
+    print("--NADACANADACANADA      CANADACANADACANADACANAD      ACANADACANADACAN")
+    print("--ADACANADACANADAC         DACANADACANADACAN         CANADACANADACANA")
+    print("--DACANADACANADACA           ANADACANADACA           ANADACANADACANAD")
+    print("--ACANADACANADACAN         CANADACANADACANAD         NADACANADACANADA")
+    print("--CANADACANADACANA                 A                 ADACANADACANADAC")
+    print("--ANADACANADACANAD                 D                 DACANADACANADACA")
+    print("--NADACANADACANADA                 A                 ACANADACANADACAN")
+    print("--ADACANADACANADAC                                   CANADACANADACANA")
+    print("--DACANADACANADACANADACANADACANADACANADACANADACANADACANADACANADACANAD")
+    print(" ")
+    print("Love From Canada.")
+    print(" ")
+    print(" ")
+end
+
 local scriptFree = false
 local customPlates = json.loadfile("Custom_Plates.json")
 local Timer = require("scripts/ReaganTimer")
 
+-- Global variable to control infinite scrolling
+local scrollTextSavedMessage = nil
+local scrollTextSavedSpeed = nil
+local infiniteScroll = false
 local shouldScroll = false
+local XMASPLATE = false
 
 local defaultPlate = "ROCKSTAR"
 
-local Config = {
+local debugMode = true            -- true for initial startup (reset to false after full script is loaded)
+
+local recordingKeystrokes = false -- keystroke recording for typing in custom plates
+local recordedKeys = {}
+
+local newPlateText = nil
+local savedPlateVehicle = nil -- plate to match the vehicle it was from, else revert to default (to be fully implemented)
+local savedPlateText = nil
+
+local Config = { -- vehicle deleter (for drag racing)
     OuterRadius = 150,
     Safety = 20
 }
 
-local vehicleName = nil
 
-local InfiniteScrollLoop = false
-local plateLength = 8
-local sixtyFeet = 18.288
+
+local plateLength = 8    -- maximum allowable characters on a license plate
+local sixtyFeet = 18.288 -- 60 feet in meters
 local reactionTime = nil
-local reactionRecorded = false
 local sixtyFootTime = nil
 local sixtyFootSpeed = nil
-local finalSpeed = nil
-local preventSpeedo = false
 
 local tuningMode = {
     fastDriftMode = false,
@@ -33,7 +73,8 @@ local tuningMode = {
 local bennysMode = false
 local f1Mode = false
 local savedHash = 0
-local savedPlateText = nil
+
+local driftPlate = false
 
 local rollTuneSettings = { -- EXPERIMENTAL!!
     front = nil,           -- Front roll
@@ -42,8 +83,14 @@ local rollTuneSettings = { -- EXPERIMENTAL!!
     newRear = nil
 }
 
+local function debugPrint(text)
+    if debugMode then
+        print(text)
+    end
+end
+
 local function rip()
-    print("i am dumb")
+    debugPrint("i am dumb")
 end
 
 local raceDistanceOptions = {}
@@ -90,9 +137,9 @@ function loadRaceData()
 
     if result and loadedData then
         raceData = loadedData
-        print("Race data loaded.")
+        debugPrint("Race data loaded.")
     else
-        print("Race data file not found or unreadable. Creating a new one.")
+        debugPrint("Race data file not found or unreadable. Creating a new one.")
         json.savefile(raceDataFilename, raceData)
     end
 end
@@ -112,51 +159,76 @@ function saveRaceData()
 
     -- Save the updated data
     json.savefile(raceDataFilename, existingData)
-    print("Race data saved.")
+    debugPrint("Race data Saved.")
 end
-
--- Save back to ensure file creation or update
-json.savefile(raceDataFilename, raceData)
 
 -- User Settings Management
 local userSettingsFilename = "user_settings.json"
-local userSettings = {}
+local userSettings = {
+    selectedSpeedMode = "kph", -- Defaults for if the file isnt present
+    DebugMode = true
+}
+
 
 function loadUserSettings()
     local result, loadedSettings = pcall(function() return json.loadfile(userSettingsFilename) end)
 
     if result and loadedSettings then
-        userSettings = loadedSettings
-        print("User settings loaded.")
+        if loadedSettings.DebugMode ~= nil then
+            userSettings = loadedSettings
+            debugMode = userSettings.DebugMode              -- Set to the setting stored in the file.
+            if userSettings.selectedSpeedMode == "kph" then -- convert from one mode to another (with/without values)
+                speedmode.current = speedmode.kph
+            else
+                speedmode.current = speedmode.mph
+            end
+            debugPrint("User settings loaded.")
+        else
+            debugPrint("DebugMode not found in loaded settings. Using default settings.")
+        end
     else
-        print("User settings file not found or unreadable. Creating a new one.")
+        debugPrint("User settings file not found or unreadable. Creating a new one with default options.")
         json.savefile(userSettingsFilename, userSettings)
     end
 end
 
 function saveUserSettings()
     json.savefile(userSettingsFilename, userSettings)
-    print("User settings saved.")
+    debugPrint("User settings Saved.")
 end
 
--- Load Data
-print("Attempting to load Race Data")
-loadRaceData()
-print("Loading of Race Data Complete")
-print("Attempting to load User Settings")
-loadUserSettings()
-print("Loading of User Settings Complete")
-
-if userSettings.selectedSpeedMode then
-    print("user setting found: " .. userSettings.selectedSpeedMode)
-    if userSettings.selectedSpeedMode == "MPH" then
-        speedmode.current = speedmode.mph
+local function toggleDebugMode()
+    if debugMode == true then
+        debugMode = false
     else
-        speedmode.current = speedmode.kph
+        debugMode = true
     end
-else
-    userSettings.selectedSpeedMode = "KPH"
+    userSettings.DebugMode = debugMode
+    json.savefile(userSettingsFilename, userSettings)
+    debugPrint("User Setting: Debug Mode saved to " .. tostring(debugMode))
 end
+
+menu.register_callback("OnScriptsLoaded", function()
+    -- Load Data
+    scriptFree = true
+    debugPrint("Attempting to load User Settings")
+    loadUserSettings()
+    debugPrint("Loading of User Settings Complete")
+    debugPrint(" ")
+    debugPrint("Attempting to load Race Data")
+    loadRaceData()
+    debugPrint("Loading of Race Data Complete")
+    debugPrint(" ")
+    printFlag()
+    debugPrint("You can turn off debug mode (the print outs)")
+    debugPrint("by going to the settings submenu and toggling off")
+    debugPrint("Debug Mode and confirming it was saved by checking")
+    debugPrint("User Settings JSON in your Modest Menu folder.")
+    debugPrint(" ")
+    print("Thank you for trying my latest creation. Please Enjoy.")
+    print("                    - Don Reagan")
+end
+)
 
 slowDriftStats = { -- Drift tune (Low Speed)
     acceleration = 1.80,
@@ -179,19 +251,19 @@ fastDriftStats = { -- Drift tune (High Speed)
     upShift = 9000,
     downShift = 9000,
     driveBiasFront = 0,
-    turningRadius = 45,
+    turningRadius = 418
 }
 
 spoodBeastStats = { -- Speed Boost
     acceleration = 6.9,
-    tractionMax = 8,
-    tractionMin = 7,
+    tractionMax = 6,
+    tractionMin = 5,
     tractionLateral = 16,
     tractionLoss = 0.5,
     upShift = 10000,
     downShift = 10000,
-    driveBiasFront = 50,
-    turningRadius = 20,
+    driveBiasFront = 48.9,
+    turningRadius = 22.5, -- quarter of a right angle (for smoother turning at high speeds)
 }
 
 oldStats = { -- Old stats for reversal
@@ -333,47 +405,84 @@ function fastDrift()
     end
 end
 
+menu.register_callback("OnVehicleChanged", function()
+    if localplayer and localplayer:is_in_vehicle() then
+        local currentveh = localplayer:get_current_vehicle()
+        if currentveh ~= savedPlateVehicle then
+            if savedPlateText ~= nil then
+                savedPlateText = localplayer:get_current_vehicle():get_number_plate_text()
+            end
+        end
+        if tuningMode.fastDriftMode then
+            tuningMode.fastDriftMode = false
+            fastDrift()
+        end
+        if tuningMode.slowDriftMode then
+            tuningMode.slowDriftMode = false
+            slowDrift()
+        end
+        if tuningMode.spoodBeastMode then
+            tuningMode.spoodBeastMode = false
+            spoodBeast()
+        end
+        if infiniteScroll then
+            infiniteScroll = false
+            ScrollText(scrollTextSavedMessage, scrollTextSavedSpeed)
+        end
+    end
+end)
+
 -- Speedometer Functions
+
+function toggleSpeedmode()
+    if speedmode.current == speedmode.kph then
+        speedmode.current = speedmode.mph
+        userSettings.selectedSpeedMode = "mph"
+        debugPrint("User Settings Saved with MPH being selected")
+    else
+        speedmode.current = speedmode.kph
+        userSettings.selectedSpeedMode = "kph"
+        debugPrint("User Settings Saved with KPH being selected")
+    end
+    json.savefile(userSettingsFilename, userSettings)
+end
 
 function speedoToggle()
     if speedoRunning then
-        print("Speedo Stopping!")
+        debugPrint("Speedo Stopping!")
         speedoRunning = false
         checkPlate()
     else
-        print("Speedo Starting!")
+        debugPrint("Speedo Starting!")
         runSpeedometer()
     end
 end
 
 function runSpeedometer() -- speedo loop
-    local player = localplayer
-    local vehicle = player:get_current_vehicle()
-    if savedPlateText == nil then
-        savedPlateText = vehicle:get_number_plate_text()
-    end
-    speedoRunning = true
-    print("speedo starting 2")
-    while speedoRunning == true do
-        local p = localplayer
-        local veh = p:get_current_vehicle()
-        if speedoRunning == false then
-            setPlate(savedPlateText)
-            break
+    if localplayer and localplayer:is_in_vehicle() then
+        local player = localplayer
+        local vehicle = player:get_current_vehicle()
+        if savedPlateText == nil then
+            savedPlateText = vehicle:get_number_plate_text()
+            savedPlateVehicle = vehicle
         end
-        sleep(0.0167) -- arbitrary number for 60 fps (test)
-        local velocity = veh:get_velocity()
-        local sped = math.sqrt(velocity.x ^ 2 + velocity.y ^ 2 + velocity.z ^ 2)
-        local speed = math.floor(sped * speedmode.current)
-        if speedoRunning == false then
-            setPlate(savedPlateText)
-            break
-        end
-        if speed == 0 then
-            setPlate("CHILLING")
-        elseif speed < 20 and speed > 0.9 then
-            setPlate("CRUISING")
-        else
+        speedoRunning = true
+        debugPrint("speedo starting 2")
+        while speedoRunning == true do
+            local p = localplayer
+            local veh = p:get_current_vehicle()
+            if speedoRunning == false then
+                setPlate(savedPlateText)
+                break
+            end
+            sleep(0.0167) -- arbitrary number for 60 fps (test)
+            local velocity = veh:get_velocity()
+            local sped = math.sqrt(velocity.x ^ 2 + velocity.y ^ 2 + velocity.z ^ 2)
+            local speed = math.floor(sped * speedmode.current)
+            if speedoRunning == false then
+                setPlate(savedPlateText)
+                break
+            end
             if speedmode.current == speedmode.mph then
                 setPlate(speed .. " MPH")
             else
@@ -522,8 +631,8 @@ function printHash()
         local p = localplayer
         local v = p:get_current_vehicle()
         local hash = v:get_model_hash()
-        print("Vehicle hash is: " .. tostring(hash))
-        print("Please add it if its missing from the json.")
+        debugPrint("Vehicle hash is: " .. tostring(hash))
+        debugPrint("Please add it if its missing from the json.")
     end
 end
 
@@ -539,9 +648,7 @@ end
 local cumulativeCount = 0
 local vehiclesMoved = 0
 
-local co1
--- coroutine is not running well (it stops before hitting 20 vehicles moved)
-local function carRemovalCoroutine()
+co1 = coroutine.create(function(radius)
     local playerPos = localplayer:get_position()
     local playerVehicle = localplayer:get_current_vehicle()
 
@@ -565,139 +672,127 @@ local function carRemovalCoroutine()
 
             if cumulativeCount >= 1000 then
                 collectgarbage("collect")
-                print("garbage collected")
+                debugPrint("garbage collected")
                 cumulativeCount = 0
             end
 
             if distanceToMainPlayer <= Config.OuterRadius and distanceToMainPlayer > Config.Safety and not closeToAnyPlayer then
                 veh:set_position(vector3(0, 0, Config.OuterRadius) + vehiclePosition)
                 vehiclesMoved = vehiclesMoved + 1
-                print("vehicles moved so far: " .. vehiclesMoved)
+                debugPrint("vehicles moved so far: " .. vehiclesMoved)
             end
             coroutine.yield()
         end
     end
-end
+end)
 
-function printRaceDetails()                                     -- Print The Race Details then restore to empty table for a new race.
-    print(" ")
-    print("Race Data Saved for " .. raceData.vehicleName)
-    print("Race Distance: " .. raceData.distance)
-    print("Reaction Time: " .. raceData.reactionTime)
-    print("60 Foot Time: " .. raceData.sixtyFootTime)
-    print("Race finished! Time: " .. raceData.time)
-    print("60 Foot SpeedTrap: " .. raceData.sixtyFootSpeed)
-    print("Final Speed: " .. raceData.speed)
 
-    -- Clear raceData for the next race
-    raceData = {}
-end
-
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------- Main Race Function --------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------------------------
 function DoDragRace()
     if scriptFree then
         if localplayer and localplayer:is_in_vehicle() then
-            scriptFree = false
-            preventSpeedo = true
-            checkPlate()                                                                                                -- Check plate before start to ensure the correct plate is saved on startup
-            --menu.emit_event("raceBeginning")                                                                          -- For multi-thread scripting
-            local player = localplayer                                                                                  -- Shorten localplayer to player
-            local vehicle = player:get_current_vehicle()                                                                -- Set vehicle to the local player's current vehicle
-            raceRunning = true                                                                                          -- Set the race to running
-            raceFinished = false                                                                                        -- Set the race to unfinished
-            startPosition = getCurrentPosition()                                                                        -- Set the start position
-            reactionTime = 0                                                                                            -- Reset the reaction time
-            sixtyFootTime = 0                                                                                           -- Reset the sixty foot time
-            sixtyFootSpeed = 0                                                                                          -- Reset the sixty foot speed
-            vehicleName = nil                                                                                           -- Reset the saved Vehicle Name (for the current race's post race details)
-            setPlate(" ENJOY  ")                                                                                        -- Begin Start up and Countdown
+            checkPlate()
+            --menu.emit_event("raceBeginning")
+            local player = localplayer
+            local vehicle = player:get_current_vehicle()
+            raceRunning = true
+            raceFinished = false
+            startPosition = getCurrentPosition()
+            reactionTime = 0
+            sixtyFootTime = 0
+            sixtyFootSpeed = 0
+            setPlate("ENJOY ")
             sleep(0.75)
-            setPlate("  YOUR  ")
+            setPlate(" YOUR ")
             sleep(0.75)
-            setPlate("   Race ")
+            setPlate("  Race")
             sleep(1.0)
             setPlate("0------0")
             sleep(0.5)
             setPlate("00----00")
             sleep(0.5)
             setPlate("000--000")
-            sleep(0.49)                                                                                                 -- Countdown Concludes
-            if startPosition ~= getCurrentPosition() then                                                               -- Check for jumpstart
+            sleep(0.49)
+            if startPosition ~= getCurrentPosition() then
                 setPlate("JUMPED!")
-                raceFinished = true                                                                                     -- Set the race to finished
-                raceRunning = false                                                                                     -- Set race to not running
-                print("Race Aborted: Jumped The Start")
-                sleep(5)                                                                                                -- Sleep to wait for before returning the plate to normal
-                checkPlate()                                                                                            -- Check the plate against the savedplatetext variable
-                scriptFree =true
+                raceFinished = true
+                raceRunning = false
+                debugPrint("Race Aborted: Jumped The Start")
+                sleep(1.25)
+                checkPlate()
             else
-                setPlate("---GO---")                                                                                    -- Start of the race
-                Timer.start()                                                                                           -- Start the custom timer
-                co1 = coroutine.create(carRemovalCoroutine)
-                while not raceFinished do                                                                               -- Constantly check for race completion
-                    coroutine.resume(co1)                                                                               -- Run Car Removal
-                    if reactionTime == 0 and getCurrentPosition() ~= startPosition then                                 -- Check if Reaction Time has been set and if the car has moved since "GO"
-                        reactionTime = formatTime(Timer.elapsedTime())                                                  -- Save the current time reading as the Reaction Time
+                setPlate("---GO---")
+                Timer.start() -- Start the custom timer
+                while not raceFinished do
+                    coroutine.resume(co1)
+                    if reactionTime == 0 and getCurrentPosition() ~= startPosition then
+                        reactionTime = formatTime(Timer.elapsedTime())
                     end
-                    if sixtyFootTime == 0 and calculateDistance(startPosition, getCurrentPosition()) >= sixtyFeet then  -- Check if Sixty Foot Time is set and if veh has reached 60 feet
-                        sixtyFootTime = formatTime(Timer.elapsedTime())                                                 -- Save the Currnet timer reading as the Sixty Foot Time
-                        sixtyFootSpeed = getCurrentSpeed(vehicle)                                                       -- Save the current speed as the Sixty Foot Speed
+                    if sixtyFootTime == 0 and calculateDistance(startPosition, getCurrentPosition()) >= sixtyFeet then
+                        sixtyFootTime = formatTime(Timer.elapsedTime()) -- save the 60 foot time
+                        sixtyFootSpeed = getCurrentSpeed(vehicle)
                     end
-                    if hasReachedFinishLine() then                                                                      -- Check to see if the current vehicle has reached the finish line
-                        --menu.emit_event("raceEnded")                                                                  -- Menu Event for Multi Thread Processing (Race Ended)
-                        raceRunning = false                                                                             -- Set the race to not running
-                        raceFinished = true                                                                             -- Set the race to finished
-                        finalTime = Timer.elapsedTime()                                                                 -- Set the current timer reading to the Final Time
-                        finalSpeed = getCurrentSpeed(vehicle)                                                           -- Set the current speed to the Final Speed
+                    if hasReachedFinishLine() then
+                        --menu.emit_event("raceEnded")
+                        raceRunning = false
+                        raceFinished = true
+                        local finalTime = Timer.elapsedTime()
+                        local finalSpeed = getCurrentSpeed(vehicle)
 
                         -- Get the selected speed mode from the user settings
-                        if speedmode.current == speedmode.kph then                                                      -- Checks the selected speedmode
-                            selectedMode =
-                            "KPH"                                                                                       -- Defines the speedmode as a plain string
+                        if speedmode.current == speedmode.kph then
+                            selectedMode = "KPH"
                         else
-                            selectedMode =
-                            "MPH" -- Defines the speedmode as a plain string
+                            selectedMode = "MPH"
                         end
 
-                        local raceDetails = {                                                                           -- Table to store the Post Race Details
-                            distance = selectedDistance,                                                                -- Race Distance
-                            reactionTime = reactionTime,                                                                -- Reaction Time
-                            sixtyFootTime = sixtyFootTime,                                                              -- Time to reach 60 feet
-                            time = formatTime(finalTime),                                                               -- Time to race completion
-                            sixtyFootSpeed = sixtyFootSpeed .. " " .. selectedMode,                                     -- Sixty Foot Speed
-                            speed = (finalSpeed * speedmode.current).." "..selectedMode                                 -- Final Speed
+                        local raceDetails = {
+                            distance = selectedDistance,
+                            reactionTime = reactionTime,
+                            sixtyFootTime = sixtyFootTime,
+                            time = formatTime(finalTime),
+                            sixtyFootSpeed = sixtyFootSpeed .. " " .. selectedMode,
+                            speed = (finalSpeed * speedmode.current) .. " " .. selectedMode
                         }
 
                         -- Update raceData table
                         local vehicleHash = vehicle:get_model_hash()
-                        vehicleName = getVehicleNameFromHash(vehicleHash)
+                        local vehicleName = getVehicleNameFromHash(vehicleHash)
                         raceData[vehicleName] = raceData[vehicleName] or {}
                         table.insert(raceData[vehicleName], raceDetails)
 
                         -- Save the updated race data
                         saveRaceData()
 
+                        -- Clear raceData for the next race
+                        raceData = {}
+
                         -- Print the data
-                        printRaceDetails()
+                        debugPrint("Race Data Saved for " .. vehicleName)
+                        debugPrint("Race Distance: " .. selectedDistance)
+                        debugPrint("Reaction Time: " .. reactionTime)
+                        debugPrint("60 Foot Time: " .. sixtyFootTime)
+                        debugPrint("Race finished! Time: " .. formatTime(finalTime))
+                        debugPrint("60 Foot SpeedTrap: " .. sixtyFootSpeed .. " " .. selectedMode)
+                        debugPrint("Final Speed: " .. finalSpeed .. " " .. selectedMode)
 
                         setPlate(formatTime(finalTime)) -- Display race time on the plate
                         sleep(5)
                         checkPlate()
-                        scriptFree = true
                         break
                     else
-                        if preventSpeedo then
-                            if formatTime(Timer.elapsedTime()) >= "1" then
-                                displaySpeed()
-                                preventSpeedo = false
-                            end
-                        else
+                        if formatTime(Timer.elapsedTime()) >= "1" then
                             displaySpeed()
                         end
                     end
                 end
             end
         else
-            print("Not in a vehicle! You cant race barefoot!!")
+            debugPrint("Not in a vehicle! You cant race barefoot!!")
             error("Not in a vehicle! You can't race barefoot!!", 2)
         end
     else
@@ -710,7 +805,7 @@ local function abortrace()
     raceFinished = true
     raceRunning = false
     setPlate("ABORTED!")
-    print("Race Aborted")
+    debugPrint("Race Aborted")
     sleep(5)
     checkPlate()
 end
@@ -718,26 +813,34 @@ end
 -- Plate Changing Functions
 function checkPlate() -- Check for ensured reversal
     scriptFree = false
+    debugPrint("checking plate now. please wait.")
     stopEverything()
     if localplayer and localplayer:is_in_vehicle() then
-        print("Checking plate for need of reversion")
+        debugPrint("checking plate now. please wait..")
+        debugPrint("checking plate now. please wait...")
+        debugPrint(" ")
+        debugPrint("Checking plate for need of reversion")
         if savedPlateText == nil then
-            print("saved plate text is currently nil (start of plate check)")
+            debugPrint(" ")
+            debugPrint("Saved plate text is currently nil (start of plate check)")
             setPlate(defaultPlate)
         else
             local player = localplayer
             local veh = player:get_current_vehicle()
             local currentPlate = veh:get_number_plate_text()
             if savedPlateText ~= currentPlate then
-                print("the plate is showing up as: " ..
+                debugPrint(" ")
+                debugPrint("the plate is showing up as: " ..
                     tostring(currentPlate) .. " and the saved plate is showing up as: " .. tostring(savedPlateText))
-                if savedPlateText == "cruising" or savedPlateText == "chilling" or savedPlateText == " MPH" or savedPlateText == " KPH" then
+                if savedPlateText == "cruising" or savedPlateText == "chilling" or savedPlateText == " MPH" or savedPlateText == " KPH" or savedPlateText == "0" then
                     setPlate(defaultPlate)
                 else
                     setPlate(savedPlateText)
                 end
             else
-                print("Plate confirmed to match saved plate text.")
+                debugPrint(" ")
+                debugPrint("Plate confirmed to match saved plate text.")
+                debugPrint(" ")
             end
         end
     end
@@ -766,18 +869,6 @@ end
 ------------------------------
 --Custom Plate Changer
 
-function stopEverything()
-    print("Attempting To Stop Everything Now")
-    speedoRunning = false
-    raceFinished = true
-    raceRunning = false
-    dynamicplate = false
-    everything = false
-    textscrolling = false
-    XMASPLATE = false
-    print("Everything Has Been Stopped")
-end
-
 -- Christmas loop
 
 function Christmasplate(XMASSPEED)
@@ -789,6 +880,7 @@ function Christmasplate(XMASSPEED)
         baseSleep = 0.25 * XMASSPEED -- Adjust the base sleep time based on the speed
         sleep(0.25)
         savedPlateText = veh:get_number_plate_text()
+        savedPlateVehicle = veh
         XMASPLATE = true
         while XMASPLATE == true do
             setPlate("HO      ")
@@ -822,73 +914,242 @@ function Christmasplate(XMASSPEED)
 end
 
 ---------------------------------- Scrolling Text -- Section ----------------------------------
--- Global variable to control infinite scrolling
-local InfiniteScroll = true
 
 -- Function to scroll text on the number plate
 function ScrollText(message, speed)
-    checkPlate()
-    if not message or type(message) ~= 'string' then
-        print("Invalid message")
-        return
-    elseif not speed or type(speed) ~= 'number' or speed < 0 then
-        print("Invalid or negative speed")
-        speed = 1
-    end
+    if localplayer and localplayer:is_in_vehicle() then
+        debugPrint("scroll text function called, checking plate before continuation")
+        checkPlate()
+        if not message or type(message) ~= 'string' then
+            debugPrint("Invalid message")
+            return
+        elseif not speed or type(speed) ~= 'number' or speed < 0 then
+            debugPrint("Invalid or negative speed")
+            speed = 1
+        end
+        scrollTextSavedMessage = message
+        scrollTextSavedSpeed = speed
 
-    local calculatedSpeed = speed * 0.25 -- Change the speed to a delay
-    -- Ensure localplayer and setPlate functions are defined
-    if not localplayer:is_in_vehicle() then
-        print("Error: No vehicle detected")
-        return
-    else
-        local p = localplayer
-        local v = p:get_current_vehicle()
-        savedPlateText = v:get_number_plate_text()
-        local plateText = message .. "      " -- Add spaces for a gap before repeating
-        local plateLength = #plateText
-        shouldScroll = true
-        while shouldScroll do
-            for i = 1, plateLength do
-                if not shouldScroll then break end
-                if not InfiniteScrollLoop then break end
+        local calculatedSpeed = speed * 0.25 -- Change the speed to a delay
+        -- Ensure localplayer and setPlate functions are defined
+        if localplayer:is_in_vehicle() == false then
+            debugPrint("Error: No vehicle detected")
+            return
+        else
+            local p = localplayer
+            local v = p:get_current_vehicle()
+            savedPlateText = v:get_number_plate_text()
+            savedPlateVehicle = v
+            local plateText = message .. "  " .. message .. "  " .. message .. "  " -- Add spaces for a gap
+            local plateLength = #plateText
+            infiniteScroll = true
+            while infiniteScroll do
+                for i = 1, plateLength do
+                    if not infiniteScroll then
+                        break
+                    end
 
-                local displayText = plateText:sub(i, i + plateLength - 1)
-                setPlate(displayText)
-                sleep(calculatedSpeed)
+                    local displayText = plateText:sub(i, i + plateLength - 1)
+                    setPlate(displayText)
+                    sleep(calculatedSpeed)
+                end
+            end
+
+            -- Restore the original plate text after scrolling
+            if savedPlateText then
+                setPlate(savedPlateText) -- Set it to the original message
+            else
+                debugPrint("No saved Plate Data, Setting plate to the default")
+                setPlate(defaultPlate)
             end
         end
-
-        -- Restore the original plate text after scrolling
-        if savedPlateText then
-            setPlate(savedPlateText) -- Set it to the original message
-        else
-            print("No saved Plate Data, Setting plate to the default")
-            setPlate(defaultPlate)
-        end
+    else
+        error("You cant put a plate on your ass! Get in a car!", 2)
     end
 end
 
 -- Function to toggle infinite scrolling
-function ChangeInfinitescrollbool()
-    if InfiniteScrollLoop then
-        InfiniteScrollLoop = false
-        checkPlate()
-    else
-        InfiniteScrollLoop = true
-    end
+function ToggleInfiniteScroll()
+    infiniteScroll = not infiniteScroll
 end
 
 -- Example usage
 -- ScrollText("HELLO WORLD", 0.5) -- FUNCTION("MESSAGE", TIME)
 
+function stopEverything()
+    speedoRunning = false
+    raceFinished = true
+    raceRunning = false
+    infiniteScroll = false
+    XMASPLATE = false
+    driftPlate = false
+end
 
--- Menu Building
+-- Drifting Plate Functions
+
+local driftAngles = {}
+local maxDriftAngleHistory = 5 -- The number of angles to keep in history for averaging
+local updateDelay = 0.25       -- delay between refresh
+local driftPoints = 0
+local comboStreak = 0
+local angleMultiplier = 2            -- Adjust as needed
+local speedBonusThreshold = 30 * 3.5 -- Adjust as needed
+local transitionAngleThreshold = 45  -- Adjust as needed, in degrees
+local transitionPoints = 50          -- Adjust as needed
+
+function setUpdateDelay(value)
+    updateDelay = value / 1000 -- Convert milliseconds to seconds
+end
+
+-- Vector operations
+local function vectorDot(v1, v2)
+    return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z
+end
+
+local function vectorMagnitude(v)
+    return math.sqrt(v.x ^ 2 + v.y ^ 2 + v.z ^ 2)
+end
+
+local function vectorSubtract(v1, v2)
+    return { x = v1.x - v2.x, y = v1.y - v2.y, z = v1.z - v2.z }
+end
+
+-- Function to calculate the weighted moving average
+local function calculateWeightedMovingAverage(values)
+    local total = 0
+    local weightSum = 0
+    for i, value in ipairs(values) do
+        local weight = (maxDriftAngleHistory - i + 1) -- Weight decreases for older values
+        total = total + value * weight
+        weightSum = weightSum + weight
+    end
+    return total / weightSum
+end
+
+-- Updated function to calculate the drift angle with smoothing
+local function calculateDriftAngle(veh)
+    local headingVector = veh:get_heading()
+    local position1 = veh:get_position()
+    sleep(updateDelay) -- Sleep to allow for movement
+    local position2 = veh:get_position()
+    local velocityVector = vectorSubtract(position2, position1)
+    local dot = vectorDot(headingVector, velocityVector)
+    local magHeading = vectorMagnitude(headingVector)
+    local magVelocity = vectorMagnitude(velocityVector)
+    local cosAngle = dot / (magHeading * magVelocity)
+    cosAngle = math.max(-1, math.min(1, cosAngle))
+    local angleRad = math.acos(cosAngle)
+    local angleDeg = math.deg(angleRad)
+
+    -- Add the current drift angle to the history, removing the oldest if necessary
+    table.insert(driftAngles, angleDeg)
+    if #driftAngles > maxDriftAngleHistory then
+        table.remove(driftAngles, 1)
+    end
+
+    -- Calculate the weighted moving average for the drift angle
+    return calculateWeightedMovingAverage(driftAngles)
+end
+
+function toggleDriftPlate()
+    if raceRunning then
+        raceRunning = false
+        raceFinished = true
+    end
+    if speedoRunning then
+        speedoToggle()
+    end
+    if infiniteScroll then
+        ToggleInfiniteScroll()
+    end
+    if XMASPLATE then
+        XMASPLATE = false
+        checkPlate()
+    end
+    if driftPlate then
+        debugPrint("drift plate active, de-activating it now...")
+        driftPlate = false
+        checkPlate()
+    else
+        debugPrint("drift plate is in-active, activating now...")
+        driftPlate = true
+        startDriftPlate()
+    end
+end
+
+function startDriftPlate()
+    debugPrint("saving current plate for reversal")
+    local v = localplayer:get_current_vehicle()
+    savedPlateText = v:get_number_plate_text()
+    savedPlateVehicle = v
+    debugPrint("drift plate starting...")
+
+    local prevDriftAngle = 0 -- To track the previous drift angle for transition detection
+
+    while driftPlate do
+        if localplayer and localplayer:is_in_vehicle() then
+            local veh = localplayer:get_current_vehicle()
+            local driftAngle = calculateDriftAngle(veh)
+            local speed = vectorMagnitude(veh:get_velocity())
+
+            -- Calculate points based on angle and speed
+            local anglePoints = math.floor(math.abs(driftAngle) * angleMultiplier)
+            local speedPoints = (speed > speedBonusThreshold) and math.floor(speed - speedBonusThreshold) or 0
+
+            -- Update combo streak and detect transition
+            local isTransition = math.abs(driftAngle - prevDriftAngle) > transitionAngleThreshold
+            comboStreak = isTransition and 1 or comboStreak + 1
+
+            -- Calculate points for transition
+            local transitionBonus = isTransition and transitionPoints or 0
+
+            -- Apply combo multiplier
+            local comboMultiplier = 1 +
+                math.floor(comboStreak / 3) -- Increase multiplier every 3 consecutive successful drifts
+
+            -- Calculate total points
+            local totalPoints = (anglePoints + speedPoints + transitionBonus) * comboMultiplier
+
+            -- Update drift points
+            driftPoints = driftPoints + totalPoints
+
+            -- Print the current drift points and stats
+            debugPrint("Move and resize the window so you dont see this text (controller player only)")
+            debugPrint(" ") -- simulate a constantly changing display
+            debugPrint(" ")
+            debugPrint(" ")
+            debugPrint("Current Drift Points: " .. driftPoints)
+            debugPrint("Angle Points: " .. anglePoints)
+            debugPrint("Speed Points: " .. speedPoints)
+            debugPrint("Transition Bonus: " .. transitionBonus)
+            debugPrint("Combo Streak: " .. comboStreak)
+            debugPrint("Transition: " .. (isTransition and "Yes" or "No"))
+            debugPrint("Total Points: " .. totalPoints)
+
+            -- Print the angle to the plate
+            local angleStr = string.format("%3.0f°", driftAngle)
+            setPlate(angleStr)
+
+            -- Update previous drift angle for the next iteration
+            prevDriftAngle = driftAngle
+        else
+            sleep(0.99)
+        end
+        sleep(0.01)
+    end
+end
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------- Menu Building -------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 -- Main Menu Layout (order)
 daytonsMenu = menu.add_submenu("Dayton's Menu")
 
+daytonsDriftPlate = daytonsMenu:add_submenu("Drift Plate")
 daytonsSpeedoMenu = daytonsMenu:add_submenu("Speedometer")
 daytonsDragMenu = daytonsMenu:add_submenu("Drag Section")
 daytonsTuning = daytonsMenu:add_submenu("1 click Tuning")
@@ -897,6 +1158,20 @@ daytonsRims = daytonsMenu:add_submenu("Tire Mods (Use in CEO Office)")
 
 
 -- SubMenus
+
+daytonsDriftPlate:add_int_range("Update Delay (ms)", 20, 20, 1000, function()
+    return updateDelay * 1000 -- Convert seconds back to milliseconds for display
+end, function(value)
+    setUpdateDelay(value)
+    debugPrint("update set to " .. value)
+end)
+
+daytonsDriftPlate:add_toggle("Drift Plate Toggle", function() return driftPlate end,
+    function()
+        debugPrint("drift plate pressed")
+        toggleDriftPlate()
+    end)
+
 daytonsSpeedoMenu:add_toggle("Speedo ON/OFF", function() return speedoRunning end,
     function()
         if speedoRunning then
@@ -908,20 +1183,9 @@ daytonsSpeedoMenu:add_toggle("Speedo ON/OFF", function() return speedoRunning en
     end)
 
 
-daytonsSpeedoMenu:add_action("KPH / MPH",
-    function()
-        if speedmode.current == speedmode.kph then
-            speedmode.current = speedmode.mph
-        else
-            speedmode.current = speedmode.kph
-        end
-
-        -- Update the selected speed mode in user settings
-        userSettings.selectedSpeedMode = (speedmode.current == speedmode.kph) and "kph" or "mph"
-
-        -- Save the updated user settings
-        saveUserSettings()
-    end
+daytonsSpeedoMenu:add_action("KPH / MPH", function()
+    toggleSpeedmode()
+end
 )
 
 
@@ -937,15 +1201,16 @@ daytonsDragMenu:add_array_item("Distance", raceDistanceOptions,
         selectedDistance = raceDistanceOptions[index]
         raceDistance = raceDistances[selectedDistance]
         if savedPlateText == nil then
-            print("saving the plate")
+            debugPrint("saving the plate")
             local p = localplayer
-            v = p:get_current_vehicle()
+            local v = p:get_current_vehicle()
             savedPlateText = v:get_number_plate_text()
+            savedPlateVehicle = v
         end
         checkPlate()
         sleep(0.5)
         setPlate(selectedDistance)
-        print("selected distance: " .. selectedDistance)
+        debugPrint("selected distance: " .. selectedDistance)
         sleep(5)
         setPlate(savedPlateText)
     end)
@@ -957,7 +1222,7 @@ daytonsDragMenu:add_action("Start Drag Race", function()
     if vehicle then
         raceDistance = distance
         checkPlate()
-        print("starting the DoDragRace function now")
+        debugPrint("starting the DoDragRace function now")
         DoDragRace()
     else
         rip()
@@ -1011,7 +1276,8 @@ daytonsRims:add_toggle("Benny's Wheels", function() return bennysMode end,
 
 -- Static Plate SubMenus
 local PermanentPlateChangeMenu = daytonsCustomPlates:add_submenu("Permanent/Static Plates")
-local USERPLATEMENU = PermanentPlateChangeMenu:add_submenu("User Plates")
+local KeefsPlateInputMenu = daytonsCustomPlates:add_submenu("User Input Plate Changer(user typed)")
+local userPlateMenu = PermanentPlateChangeMenu:add_submenu("User Plates(pre-made)")
 local starWarsMenu = PermanentPlateChangeMenu:add_submenu("Star Wars Plates")
 local gtaMenu = PermanentPlateChangeMenu:add_submenu("GTA Plates")
 local racersGearheadsMenu = PermanentPlateChangeMenu:add_submenu("Racers & Gearheads Plates")
@@ -1027,8 +1293,8 @@ local xmasDynamicPlateMenu = DynamicPlateMenu:add_submenu("Christmas Loop")
 local DaytonsScrollMenu = DynamicPlateMenu:add_submenu("Dayton's Dynamic Plates")
 DaytonsScrollMenu:add_action("Stop Scrolling!!", function() stopEverything() end)
 local scrollingtextmenu = DynamicPlateMenu:add_submenu("Scrolling Message Plates")
-scrollingtextmenu:add_toggle("Infinite Loop", function() return InfiniteScrollLoop end,
-    function() ChangeInfinitescrollbool() end)
+scrollingtextmenu:add_toggle("Infinite Loop", function() return infiniteScroll end,
+    function() ToggleInfiniteScroll() end)
 
 -- MERRY CHRISTMAS SCROLL
 local MerryChristmasScrollMenu = scrollingtextmenu:add_submenu("EAT SHIT AND DIE Loop")
@@ -1039,12 +1305,12 @@ MerryChristmasScrollMenu:add_action("EAT SHIT AND DIE SLOW", function() ScrollTe
 MerryChristmasScrollMenu:add_action("EAT SHIT AND DIE TOO SLOW", function() ScrollText("EAT SHIT AND DIE", 4) end)
 
 --Dayton's Dynamic Plates
-DaytonsScrollMenu:add_action("Daytons A DickHead",
-    function() ScrollText("Daytons a dick head and if you are reading this you probably are too bitch ass", 1) end)
-DaytonsScrollMenu:add_action("Swearing", function() ScrollText("Fuck DICK SHIT BITCH CUNT PUSSY", 1) end)
-DaytonsScrollMenu:add_action("FUCK YOU", function() ScrollText("DAYTON IS A QUEEF EATER", 1) end)
+DaytonsScrollMenu:add_action("Move bitch, get out the way hoe",
+    function() ScrollText("move bitch  get out the way hoe", 1) end)
+DaytonsScrollMenu:add_action("Swearing", function() ScrollText("Fuck DICK SHIT BITCH CUNT PUSSY ass COCKSUCKER ", 1) end)
+DaytonsScrollMenu:add_action("FASTER THAN YOU", function() ScrollText("IM FASTER THAN YOU", 1) end)
 DaytonsScrollMenu:add_action("BOATS N HOES", function() ScrollText("BOATS N HOES", 2) end)
-DaytonsScrollMenu:add_action("BOATS N HOES", function() ScrollText("", 2) end)
+DaytonsScrollMenu:add_action("SKRT", function() ScrollText("SKKRRRRRRRRRT", 2) end)
 
 -- HO HO HO PLATES
 xmasDynamicPlateMenu:add_action("Very Fast", function() Christmasplate(0.5) end)
@@ -1052,7 +1318,7 @@ xmasDynamicPlateMenu:add_action("Fast", function() Christmasplate(0.75) end)
 xmasDynamicPlateMenu:add_action("Normal", function() Christmasplate(1) end)
 xmasDynamicPlateMenu:add_action("Slower", function() Christmasplate(2) end)
 xmasDynamicPlateMenu:add_action("Slowest", function() Christmasplate(4) end)
-xmasDynamicPlateMenu:add_action("STOP EVERYTHING (HOLD)", function() checkPlate() end)
+xmasDynamicPlateMenu:add_action("STOP EVERYTHING (HOLD)", function() stopEverything() end)
 
 
 -- Plate Designs (Colours)
@@ -1094,137 +1360,503 @@ textcolormenu:add_action("Dull Yellow",
     end)
 
 -- User Plate Category
-USERPLATEMENU:add_action("Write your own plates by opening this", rip)
-USERPLATEMENU:add_action("Lua file in a text editing app and", rip)
-USERPLATEMENU:add_action("writing what you want in the area at the", rip)
-USERPLATEMENU:add_action("top of the script. Dont worry though,", rip)
-USERPLATEMENU:add_action("Further instructions will be there.", rip)
-USERPLATEMENU:add_action("", rip)
+KeefsPlateInputMenu:add_action("Write your own plates by opening", rip)
+KeefsPlateInputMenu:add_action("the debug log", rip)
+KeefsPlateInputMenu:add_action("while the debug log is open,", rip)
+KeefsPlateInputMenu:add_action("select the option", rip)
+KeefsPlateInputMenu:add_action("to allow more than 8 characters if you want to", rip)
+KeefsPlateInputMenu:add_action("if you want to use scrolling text", rip)
+KeefsPlateInputMenu:add_action("on your license plate", rip)
+KeefsPlateInputMenu:add_action("", rip)
+KeefsPlateInputMenu:add_action("More instructions will be in the", rip)
+KeefsPlateInputMenu:add_action("debug log when you open the submenu", rip)
 
-USERPLATEMENU:add_action("", rip)
-USERPLATEMENU:add_array_item("USER PLATES", customPlates["USERPLATES"], function() end,
-    function(value)
-        stopEverything()
-        setPlate(customPlates["USERPLATES"][value])
-        savedPlateText = customPlates["USERPLATES"][value]
+
+-- Mapping table for Java keycodes to alphanumeric characters
+local javaKeycodeMapping = {
+    [65] = 'A',
+    [66] = 'B',
+    [67] = 'C',
+    [68] = 'D',
+    [69] = 'E',
+    [70] = 'F',
+    [71] = 'G',
+    [72] = 'H',
+    [73] = 'I',
+    [74] = 'J',
+    [75] = 'K',
+    [76] = 'L',
+    [77] = 'M',
+    [78] = 'N',
+    [79] = 'O',
+    [80] = 'P',
+    [81] = 'Q',
+    [82] = 'R',
+    [83] = 'S',
+    [84] = 'T',
+    [85] = 'U',
+    [86] = 'V',
+    [87] = 'W',
+    [88] = 'X',
+    [89] = 'Y',
+    [90] = 'Z',
+    [48] = '0',
+    [49] = '1',
+    [50] = '2',
+    [51] = '3',
+    [52] = '4',
+    [53] = '5',
+    [54] = '6',
+    [55] = '7',
+    [56] = '8',
+    [57] = '9'
+}
+
+function registerHotkeys()
+    -- Register hotkeys for alphanumeric keys (A-Z and 0-9)
+    for keycode = 65, 90 do
+        menu.register_hotkey(keycode, function() onKeyPress(keycode) end)
+    end
+
+    for keycode = 48, 57 do
+        menu.register_hotkey(keycode, function() onKeyPress(keycode) end)
+    end
+
+    -- Register hotkeys for special keys
+    menu.register_hotkey(8, function() onBackspace() end)     -- Backspace
+    menu.register_hotkey(32, function() onSpace() end)        -- Space
+    menu.register_hotkey(13, function() onFinishTyping() end) -- Enter/Return
+end
+
+KeefsPlateInputMenu:add_action("STOP SCROLLING TEXT", function()
+    sleep(0.001)
+    infiniteScroll = false
+    sleep(0.001)
+    checkPlate()
+end)
+
+local userInputMenu = KeefsPlateInputMenu:add_submenu("Keyboard Input (experimental)", function()
+    debugMode = true
+    debugPrint("Stopping Everything Before Recording Keystrokes")
+    stopEverything()
+    debugPrint(" ")
+    debugPrint("Welcome to Don Reagan's Experimental User Input Method")
+    debugPrint("Please give an honest review and report any bugs you find.")
+    debugPrint(" ")
+    startRecording()
+end)
+
+-- Add toggle for allowing more than 8 characters
+local allowMoreThan8Characters = false
+
+userInputMenu:add_toggle("Toggle Keystroke Recording", function() return recordingKeystrokes end,
+    function()
+        if recordingKeystrokes then
+            recordingKeystrokes = false
+            stopRecording()
+            debugPrint("Keystroke Recording Concluded")
+        else
+            recordingKeystrokes = true
+            debugPrint("Keystroke Recording Started")
+        end
+    end)
+
+-- Add toggle for allowing more than 8 characters
+userInputMenu:add_toggle("Allow More Than 8 Characters", function() return allowMoreThan8Characters end,
+    function()
+        allowMoreThan8Characters = not allowMoreThan8Characters
+        debugPrint("Allowing more than 8 characters: " .. tostring(allowMoreThan8Characters))
+    end)
+
+userInputMenu:add_action("Stop Scrolling Text",
+    function()
+        sleep(0.001)
+        infiniteScroll = false
+        sleep(0.001)
         checkPlate()
+    end)
+
+-- Function to start recording
+function startRecording()
+    debugMode = true
+    registerHotkeys()
+    recordingKeystrokes = true
+    recordedKeys = {}
+    debugPrint(" ")
+    debugPrint("Recording started...")
+    debugPrint("Current input: " .. table.concat(recordedKeys, ""))
+end
+
+-- Function to stop recording
+function stopRecording()
+    recordingKeystrokes = false
+    debugPrint(" ")
+    debugPrint("Recording stopped.")
+    debugPrint("Recorded input: " .. table.concat(recordedKeys, ""))
+    promptForConfirmation()
+end
+
+-- Function to handle key press
+function onKeyPress(keycode)
+    if recordingKeystrokes then
+        if #recordedKeys < 8 or allowMoreThan8Characters then
+            table.insert(recordedKeys, javaKeycodeMapping[keycode] or tostring(keycode))
+            newPlateText = table.concat(recordedKeys, "")
+            debugPrint(" ")
+            debugPrint("Key pressed: " .. (javaKeycodeMapping[keycode] or tostring(keycode)))
+            debugPrint("Current input: " .. table.concat(recordedKeys, ""))
+            if not allowMoreThan8Characters and #recordedKeys == 8 then
+                debugPrint("Plate length reached")
+                debugPrint(" ")
+                debugPrint("Turn on the option for scrolling text")
+                debugPrint("if you want to use text over 8 characters")
+                debugPrint("(buggy and semi permanent(make sure to turn off the infinite loop when done))")
+                stopRecording()
+            end
+        end
+    end
+end
+
+-- Function to handle backspace key
+function onBackspace()
+    if recordingKeystrokes then
+        table.remove(recordedKeys)
+        newPlateText = table.concat(recordedKeys, "")
+        debugPrint(" ")
+        debugPrint("Key pressed: Backspace")
+        debugPrint("Current input: " .. table.concat(recordedKeys, ""))
+    end
+end
+
+-- Function to handle space key
+function onSpace()
+    if recordingKeystrokes then
+        if #recordedKeys < 8 or allowMoreThan8Characters then
+            table.insert(recordedKeys, ' ')
+            newPlateText = table.concat(recordedKeys, "")
+            debugPrint(" ")
+            debugPrint("Key pressed: Spacebar")
+            debugPrint("Current input: " .. table.concat(recordedKeys, ""))
+            if not allowMoreThan8Characters and #recordedKeys == 8 then
+                stopRecording()
+            end
+        end
+    end
+end
+
+-- Function to handle ESC/Escape key
+function onESC()
+    if recordingKeystrokes then
+        debugPrint("Key Pressed: Escape")
+        recordingKeystrokes = false
+        debugPrint("Keystroke Recording Stopped.")
+        debugPrint(" ")
+    end
+end
+
+-- Function to handle Enter/Return key
+function onFinishTyping()
+    if recordingKeystrokes then
+        debugPrint(" ")
+        debugPrint("Key pressed: Enter")
+        debugPrint("Prompting Confirmation next...")
+        stopRecording()
+    end
+end
+
+function promptForConfirmation()
+    debugPrint(" ")
+    debugPrint("Are you sure you want to set your plate to: ")
+    print(newPlateText)
+    debugPrint(" ")
+    debugPrint("Please confirm: Y = Yes, N = No")
+
+    local keypressY = false
+    local keypressN = false
+    local keypressY2 = false
+    local keypressN2 = false
+    -- Register hotkeys for 'Y', 'Y2', 'N' and 'N2'
+    menu.register_hotkey(89, function() keypressY = true end) -- 'Y'
+    menu.register_hotkey(78, function() keypressN = true end) -- 'N'
+    local confirmingText = true
+    repeat
+        if keypressY then
+            debugPrint(" ")
+            debugPrint("Key pressed: Y")
+            debugPrint(" ")
+            debugPrint("Confirming number of characters is 8 or less.")
+            debugPrint(" ")
+            debugPrint("New plate showing up as: " .. newPlateText)
+            if #recordedKeys <= 8 then
+                debugPrint("New plate confirmed to be 8 characters or less.")
+                savedPlateText = newPlateText
+                savedPlateVehicle = localplayer:get_current_vehicle()
+                confirmingText = false
+                debugPrint("Setting Plate to: " .. savedPlateText)
+                setPlate(savedPlateText)
+
+                if userSettings.DebugMode == false then
+                    debugMode = false
+                end
+            else
+                confirmingText = false
+                confirmScrollText()
+                break
+            end
+        elseif keypressN then
+            debugPrint(" ")
+            debugPrint("Key pressed: N")
+            debugPrint("Text Confirmation FAILED..")
+            newPlateText = nil
+            debugPrint("Resetting Process now.")
+            debugPrint("Resetting Process now..")
+            debugPrint("Resetting Process now...")
+            recordedKeys = {}
+            debugPrint("Resetting Process now.")
+            debugPrint("Resetting Process now..")
+            debugPrint("Resetting Process now...")
+            confirmingText = false
+            debugPrint("Resetting Process now.")
+            debugPrint("Resetting Process now..")
+            debugPrint("Resetting Process now...")
+            debugPrint(" ")
+            startRecording()
+            break
+        else
+            sleep(.25)
+        end
+    until confirmingText == false
+end
+
+function confirmScrollText()
+    menu.register_hotkey(89, function() keypressY2 = true end) -- 'Y2'
+    menu.register_hotkey(78, function() keypressN2 = true end) -- 'N2'
+    debugPrint(" ")
+    debugPrint("Plate length exceeded! Are you sure you want to scroll text?")
+    debugPrint("you will need to make sure to disable scrolling before exiting the vehicle")
+    debugPrint("to revert the plate to the last valid plate recorded by the script(8 characters or less)")
+    debugPrint(" ")
+    debugPrint("Please confirm: Y = Yes, N = No")
+    confirmingScrollText = true
+    repeat
+        if keypressY2 then
+            if savedPlateText == nil then
+                savedPlateText = localplayer:get_current_vehicle():get_number_plate_text()
+                savedPlateVehicle = localplayer:get_current_vehicle()
+            end
+            confirmingScrollText = false
+            debugPrint("New plate text is confirmed to be over 8 characters")
+            debugPrint("scrolling the text accross the plate instead")
+            debugPrint(" ")
+            if userSettings.DebugMode == false then
+                debugMode = false
+            end
+            ScrollText(newPlateText, 1)
+            break
+        elseif keypressN2 then
+            debugPrint(" ")
+            debugPrint("Key pressed: N")
+            debugPrint("Text Confirmation FAILED..")
+            newPlateText = nil
+            debugPrint("Resetting Process now.")
+            debugPrint("Resetting Process now..")
+            debugPrint("Resetting Process now...")
+            recordedKeys = {}
+            debugPrint("Resetting Process now.")
+            debugPrint("Resetting Process now..")
+            debugPrint("Resetting Process now...")
+            confirmingScrollText = false
+            debugPrint("Resetting Process now.")
+            debugPrint("Resetting Process now..")
+            debugPrint("Resetting Process now...")
+            menu.remove_hotkey(89)
+            menu.remove_hotkey(78)
+            debugPrint(" ")
+            startRecording()
+            break
+        else
+            sleep("0.25")
+        end
+    until confirmingScrollText == false
+end
+
+userPlateMenu:add_array_item("Custom Plates", customPlates["USERPLATES"], function() end,
+    function(value)
+        if localplayer and localplayer:is_in_vehicle() then
+            stopEverything()
+            setPlate(customPlates["USERPLATES"][value])
+            savedPlateText = customPlates["USERPLATES"][value]
+            savedPlateVehicle = localplayer:get_current_vehicle()
+            checkPlate()
+        end
     end)
 
 -- STAR WARS Categories
 starWarsMenu:add_array_item("Characters", customPlates["starWarsCharacterPlates"], function() end,
     function(value)
-        stopEverything()
-        setPlate(customPlates["starWarsCharacterPlates"][value])
-        savedPlateText = customPlates["starWarsCharacterPlates"][value]
-        checkPlate()
+        if localplayer and localplayer:is_in_vehicle() then
+            stopEverything()
+            setPlate(customPlates["starWarsCharacterPlates"][value])
+            savedPlateText = customPlates["starWarsCharacterPlates"][value]
+            savedPlateVehicle = localplayer:get_current_vehicle()
+            checkPlate()
+        end
     end)
 starWarsMenu:add_array_item("Ships", customPlates["starWarsShipPlates"], function() end,
     function(value)
-        stopEverything()
-        setPlate(customPlates["starWarsShipPlates"][value])
-        savedPlateText = customPlates["starWarsShipPlates"][value]
-        checkPlate()
+        if localplayer and localplayer:is_in_vehicle() then
+            stopEverything()
+            setPlate(customPlates["starWarsShipPlates"][value])
+            savedPlateText = customPlates["starWarsShipPlates"][value]
+            savedPlateVehicle = localplayer:get_current_vehicle()
+            checkPlate()
+        end
     end)
 
 -- GTA Categories
 gtaMenu:add_array_item("Vice City", customPlates["gtaViceCityPlates"], function() end,
     function(value)
-        stopEverything()
-        setPlate(customPlates["gtaViceCityPlates"][value])
-        savedPlateText = customPlates["gtaViceCityPlates"][value]
-        checkPlate()
+        if localplayer and localplayer:is_in_vehicle() then
+            stopEverything()
+            setPlate(customPlates["gtaViceCityPlates"][value])
+            savedPlateText = customPlates["gtaViceCityPlates"][value]
+            savedPlateVehicle = localplayer:get_current_vehicle()
+            checkPlate()
+        end
     end)
 
 gtaMenu:add_array_item("San Andreas", customPlates["gtaSanAndreasPlates"], function() end,
     function(value)
-        stopEverything()
-        setPlate(customPlates["gtaSanAndreasPlates"][value])
-        savedPlateText = customPlates["gtaSanAndreasPlates"][value]
-        checkPlate()
+        if localplayer and localplayer:is_in_vehicle() then
+            stopEverything()
+            setPlate(customPlates["gtaSanAndreasPlates"][value])
+            savedPlateText = customPlates["gtaSanAndreasPlates"][value]
+            savedPlateVehicle = localplayer:get_current_vehicle()
+            checkPlate()
+        end
     end)
 
 gtaMenu:add_array_item("IV", customPlates["gtaIVPlates"], function() end,
     function(value)
-        stopEverything()
-        setPlate(customPlates["gtaIVPlates"][value])
-        savedPlateText = customPlates["gtaIVPlates"][value]
-        checkPlate()
+        if localplayer and localplayer:is_in_vehicle() then
+            stopEverything()
+            setPlate(customPlates["gtaIVPlates"][value])
+            savedPlateText = customPlates["gtaIVPlates"][value]
+            savedPlateVehicle = localplayer:get_current_vehicle()
+            checkPlate()
+        end
     end)
 
 gtaMenu:add_array_item("V", customPlates["gtaVPlates"], function() end,
     function(value)
-        stopEverything()
-        setPlate(customPlates["gtaVPlates"][value])
-        savedPlateText = customPlates["gtaVPlates"][value]
-        checkPlate()
+        if localplayer and localplayer:is_in_vehicle() then
+            stopEverything()
+            setPlate(customPlates["gtaVPlates"][value])
+            savedPlateText = customPlates["gtaVPlates"][value]
+            savedPlateVehicle = localplayer:get_current_vehicle()
+            checkPlate()
+        end
     end)
 
 gtaMenu:add_array_item("VI", customPlates["gta6CharactersLocationsPlates"], function() end,
     function(value)
-        stopEverything()
-        setPlate(customPlates["gta6CharactersLocationsPlates"][value])
-        savedPlateText = customPlates["gta6CharactersLocationsPlates"][value]
-        checkPlate()
+        if localplayer and localplayer:is_in_vehicle() then
+            stopEverything()
+            setPlate(customPlates["gta6CharactersLocationsPlates"][value])
+            savedPlateText = customPlates["gta6CharactersLocationsPlates"][value]
+            savedPlateVehicle = localplayer:get_current_vehicle()
+            checkPlate()
+        end
     end)
 
 -- Racers & Gearheads Categories
 racersGearheadsMenu:add_array_item("Off-Roaders", customPlates["offRoadPlates"], function() end,
     function(value)
-        stopEverything()
-        setPlate(customPlates["offRoadPlates"][value])
-        savedPlateText = customPlates["offRoadPlates"][value]
-        checkPlate()
+        if localplayer and localplayer:is_in_vehicle() then
+            stopEverything()
+            setPlate(customPlates["offRoadPlates"][value])
+            savedPlateText = customPlates["offRoadPlates"][value]
+            savedPlateVehicle = localplayer:get_current_vehicle()
+            checkPlate()
+        end
     end)
 
 racersGearheadsMenu:add_array_item("Supercars", customPlates["supercarPlates"], function() end,
     function(value)
-        stopEverything()
-        setPlate(customPlates["supercarPlates"][value])
-        savedPlateText = customPlates["supercarPlates"][value]
-        checkPlate()
+        if localplayer and localplayer:is_in_vehicle() then
+            stopEverything()
+            setPlate(customPlates["supercarPlates"][value])
+            savedPlateText = customPlates["supercarPlates"][value]
+            savedPlateVehicle = localplayer:get_current_vehicle()
+            checkPlate()
+        end
     end)
 
 racersGearheadsMenu:add_array_item("Street Tuners", customPlates["streetTunerPlates"], function() end,
     function(value)
-        stopEverything()
-        setPlate(customPlates["streetTunerPlates"][value])
-        savedPlateText = customPlates["streetTunerPlates"][value]
-        checkPlate()
+        if localplayer and localplayer:is_in_vehicle() then
+            stopEverything()
+            setPlate(customPlates["streetTunerPlates"][value])
+            savedPlateText = customPlates["streetTunerPlates"][value]
+            savedPlateVehicle = localplayer:get_current_vehicle()
+            checkPlate()
+        end
     end)
 
 racersGearheadsMenu:add_array_item("Muscle Cars", customPlates["muscleCarPlates"], function() end,
     function(value)
-        stopEverything()
-        setPlate(customPlates["muscleCarPlates"][value])
-        savedPlateText = customPlates["muscleCarPlates"][value]
-        checkPlate()
+        if localplayer and localplayer:is_in_vehicle() then
+            stopEverything()
+            setPlate(customPlates["muscleCarPlates"][value])
+            savedPlateText = customPlates["muscleCarPlates"][value]
+            savedPlateVehicle = localplayer:get_current_vehicle()
+            checkPlate()
+        end
     end)
 
 racersGearheadsMenu:add_array_item("Vintage Classics", customPlates["vintageClassicPlates"], function() end,
     function(value)
-        stopEverything()
-        setPlate(customPlates["vintageClassicPlates"][value])
-        savedPlateText = customPlates["vintageClassicPlates"][value]
-        checkPlate()
+        if localplayer and localplayer:is_in_vehicle() then
+            stopEverything()
+            setPlate(customPlates["vintageClassicPlates"][value])
+            savedPlateText = customPlates["vintageClassicPlates"][value]
+            savedPlateVehicle = localplayer:get_current_vehicle()
+            checkPlate()
+        end
     end)
 
 -- Pop Culture Categories
 popCultureMenu:add_array_item("Game Characters", customPlates["gameCharacterPlates"], function() end,
     function(value)
-        stopEverything()
-        setPlate(customPlates["gameCharacterPlates"][value])
-        savedPlateText = customPlates["gameCharacterPlates"][value]
-        checkPlate()
-    end)
+        if localplayer and localplayer:is_in_vehicle() then
+            stopEverything()
+            setPlate(customPlates["gameCharacterPlates"][value])
+            savedPlateText = customPlates["gameCharacterPlates"][value]
+            savedPlateVehicle = localplayer:get_current_vehicle()
+            checkPlate()
+        end
+    end
+)
 
 popCultureMenu:add_array_item("Game Vehicles", customPlates["gameVehiclePlates"], function() end,
     function(value)
-        stopEverything()
-        setPlate(customPlates["gameVehiclePlates"][value])
-        savedPlateText = customPlates["gameVehiclePlates"][value]
-        checkPlate()
-    end)
+        if localplayer and localplayer:is_in_vehicle() then
+            stopEverything()
+            setPlate(customPlates["gameVehiclePlates"][value])
+            savedPlateText = customPlates["gameVehiclePlates"][value]
+            savedPlateVehicle = localplayer:get_current_vehicle()
+            checkPlate()
+        end
+    end
+)
 
-scriptFree = true
 
 daytonsCustomPlates:add_action("Stop Scrolling!!", function() stopEverything() end)
+
+
+userSettingsMenu = daytonsMenu:add_submenu("Settings")
+userSettingsMenu:add_toggle("Debug Mode", function() return debugMode end, function() toggleDebugMode() end)
+userSettingsMenu:add_toggle("MPH Speedometer",
+    function() if speedmode.current == speedmode.kph then return false else return true end end,
+    function() toggleSpeedmode() end
+)
