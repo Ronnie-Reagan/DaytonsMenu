@@ -29,6 +29,64 @@ function printFlag()
     print(" ")
 end
 
+
+--[[ To be implemented
+local positiveMessages = {}
+local LINEMESSAGES = {}
+local rickMortyMessages = {}
+local ganjaMessages = {}
+function loadCustomScrollingTextStrings()
+    positiveMessages = {
+        "Life's too short to be anything but happy.",
+        "Keep moving forward, one step at a time.",
+        "Embrace the journey, not just the destination.",
+        "Believe in yourself and all that you are.",
+        "Every moment is a fresh beginning.",
+        "Dream big and dare to fail.",
+        "Happiness is a choice, not a result.",
+        "You are capable of amazing things.",
+        "Chase your dreams, but always know the road that'll lead you home again.",
+        "Success is not final, failure is not fatal: It is the courage to continue that counts.",
+        "Be creative  live a fun life  and dont be an asshole"
+    }
+
+    LINEMESSAGES = {
+        "III11i1ii11ii11i1i1i1ii111ii11i1i1i1ii111ii11ii11ii1i11ii1111ii11ii11i1i1i1",
+        "iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii"
+    }
+
+    rickMortyMessages = {
+        "DONT BE A DICK MORTY",
+        "WUBBA LUBBA DUB DUB",
+        ""
+    }
+
+    ganjaMessages = {
+        "puff puff pass",
+        "roll one for the skipper",
+        "roll roll roll your joints",
+        "SMOK ONE",
+        "OG KUSH",
+        "FOUR 20",
+        "420",
+        "THC",
+        "CALI BUD",
+        "BC BUD",
+        "BONGMEUP",
+        "BONG ME UP",
+        "BONG RIP",
+        "CHILLOUT",
+        "SPARK ME UP SCOTTY",
+        "GANJA",
+        "GAS WEED",
+        "WEED DEDLIVERY",
+        "GRASSMAN",
+        "KEEF IT UP",
+        "GRN CRAK",
+        "GREEN CRACK,"
+    }
+end
+]]
 local scriptFree = false
 local customPlates = {}
 
@@ -169,7 +227,7 @@ local startTimeInCar = stats.get_int("MP" .. stats.get_int("MPPLY_LAST_MP_CHAR")
 
 -- start the timer
 function Timer.start()
-    startTimeInCar = getTimeInCar()     -- Reset the timer with the current time in the car
+    startTimeInCar = getTimeInCar() -- Reset the timer with the current time in the car
 end
 
 -- Get the elapsed time in milliseconds since the timer started
@@ -190,508 +248,534 @@ local vehicleHashes = {}
 function loadVehicleHashes()
     -- Vehicle Hash File Import
     vehicleHashes = {
-        [-1132721664] = "imorgon",
-        [1456336509] = "vstr",
-        [1284356689] = "zhaba",
-        [740289177] = "vargant",
-        [872704284] = "sultan2",
-        [987469656] = "sugoi",
-        [301304410] = "stryder",
-        [2031587082] = "retinue2",
-        [408825843] = "outlaw",
-        [394110044] = "jb7002",
-        [960812448] = "furia",
-        [-1960756985] = "formula2",
-        [340154634] = "formula",
-        [-1756021720] = "everon",
-        [-2098954619] = "club",
-        [-1728685474] = "coquette4",
-        [2134119907] = "dukes3",
-        [-2122646867] = "gauntlet5",
-        [-913589546] = "glendale2",
-        [-838099166] = "landstalker2",
-        [1717532765] = "manana2",
-        [1492612435] = "openwheel1",
-        [1181339704] = "openwheel2",
-        [-631322662] = "penumbra2",
-        [1107404867] = "peyote3",
-        [-1810806490] = "seminole2",
-        [-1358197432] = "tigon",
-        [1802742206] = "youga3",
-        [-777275802] = "freighttrailer",
-        [-1744505657] = "impaler4",
-        [600450546] = "hustler",
-        [628003514] = "issi4",
-        [-1293924613] = "dominator6",
-        [1239571361] = "issi6",
-        [679453769] = "cerberus2",
-        [1279262537] = "deviant",
-        [-579747861] = "scarab3",
-        [1502869817] = "trailerlarge",
-        [-1259134696] = "flashgt",
-        [-1374500452] = "deathbike3",
-        [1938952078] = "firetruk",
-        [1721676810] = "monster3",
-        [-1146969353] = "scarab",
-        [-42959138] = "hunter",
-        [1637620610] = "imperator2",
-        [840387324] = "monster4",
-        [-376434238] = "tyrant",
-        [1254014755] = "caracara",
-        [-1134706562] = "taipan",
-        [788045382] = "sanchez",
-        [-214906006] = "jester3",
-        [1542143200] = "scarab2",
-        [931280609] = "issi3",
-        [1046206681] = "michelli",
-        [-1694081890] = "bruiser2",
-        [1537277726] = "issi5",
-        [-1924800695] = "impaler3",
-        [1742022738] = "slamvan6",
-        [1617472902] = "fagaloa",
-        [-1100548694] = "trailers4",
-        [-2042350822] = "bruiser3",
-        [-1566607184] = "clique",
-        [1118611807] = "asbo",
-        [409049982] = "kanjo",
-        [-1254331310] = "minitank",
-        [1693751655] = "yosemite2",
-        [83136452] = "rebla",
-        [-834353991] = "komoda",
-        [159274291] = "ardent",
-        [1011753235] = "coquette2",
-        [1051415893] = "jb700",
-        [418536135] = "infernus",
-        [-1558399629] = "tornado6",
-        [-1566741232] = "feltzer3",
-        [-982130927] = "turismo2",
-        [1762279763] = "tornado3",
-        [1504306544] = "torero",
-        [500482303] = "swinger",
-        [1483171323] = "deluxo",
-        [1841130506] = "retinue",
-        [886810209] = "stromberg",
-        [-882629065] = "nebula",
-        [668439077] = "bruiser",
-        [2139203625] = "brutus",
-        [444994115] = "imperator",
-        [2038858402] = "brutus3",
-        [1009171724] = "impaler2",
-        [868868440] = "metrotrain",
-        [-1476447243] = "armytrailer",
-        [-2061049099] = "slamvan4",
-        [219613597] = "speedo4",
-        [-1812949672] = "deathbike2",
-        [1126868326] = "bfinjection",
-        [-801550069] = "cerberus",
-        [373261600] = "slamvan5",
-        [1909189272] = "gb200",
-        [-1267543371] = "ellie",
-        [838982985] = "z190",
-        [661493923] = "comet5",
-        [-755532233] = "imperator3",
-        [-1375060657] = "dominator5",
-        [-688189648] = "dominator4",
-        [-27326686] = "deathbike",
-        [408970549] = "avenger2",
-        [-1890996696] = "brutus2",
-        [-2120700196] = "entity2",
-        [-715746948] = "monster5",
-        [-121446169] = "kamacho",
-        [1909700336] = "cerberus3",
-        [-1842748181] = "faggio",
-        [2069146067] = "oppressor2",
-        [-891462355] = "bati2",
-        [-757735410] = "fcr2",
-        [-609625092] = "vortex",
-        [-1352468814] = "trflat",
-        [1019737494] = "graintrailer",
-        [-1770643266] = "tvtrailer",
-        [1854776567] = "issi7",
-        [1922255844] = "schafter6",
-        [-1372848492] = "kuruma",
-        [-1106353882] = "jester2",
-        [736902334] = "buffalo2",
-        [353883353] = "polmav",
-        [-1973172295] = "police4",
-        [-1779120616] = "policeold2",
-        [-2007026063] = "pbus",
-        [2046537925] = "police",
-        [-1536924937] = "policeold1",
-        [1912215274] = "police3",
-        [1127131465] = "fbi",
-        [-1205689942] = "riot",
-        [-1627000575] = "police2",
-        [469291905] = "lguard",
-        [719660200] = "ruston",
-        [108773431] = "coquette",
-        [-1106120762] = "zr3802",
-        [1104234922] = "sentinel3",
-        [-1089039904] = "furoregt",
-        [-1757836725] = "seven70",
-        [310284501] = "dynasty",
-        [-777172681] = "omnis",
-        [-566387422] = "elegy2",
-        [-1041692462] = "banshee",
-        [237764926] = "buffalo3",
-        [-2022483795] = "comet3",
-        [-1848994066] = "neon",
-        [410882957] = "kuruma2",
-        [-208911803] = "jugular",
-        [-331467772] = "italigto",
-        [767087018] = "alpha",
-        [499169875] = "fusilade",
-        [1102544804] = "verlierer2",
-        [-1620126302] = "neo",
-        [867799010] = "pariah",
-        [-1529242755] = "raiden",
-        [1074745671] = "specter2",
-        [1489967196] = "schafter4",
-        [-1485523546] = "schafter3",
-        [196747873] = "elegy",
-        [686471183] = "drafter",
-        [-591651781] = "blista3",
-        [-377465520] = "penumbra",
-        [-447711397] = "paragon",
-        [1886268224] = "specter",
-        [-941272559] = "locust",
-        [1039032026] = "blista2",
-        [540101442] = "zr380",
-        [-304802106] = "buffalo",
-        [-1045541610] = "comet2",
-        [-1995326987] = "feltzer2",
-        [544021352] = "khamelion",
-        [-888242983] = "schafter5",
+        [-1132721664] = "Imorgon",
+        [1456336509] = "Vstr",
+        [1284356689] = "Zhaba",
+        [740289177] = "Vargant",
+        [872704284] = "Sultan Classic",
+        [987469656] = "Sugoi",
+        [301304410] = "Stryder",
+        [2031587082] = "Retinue2",
+        [408825843] = "Outlaw",
+        [394110044] = "Jb7002",
+        [960812448] = "Furia",
+        [-1960756985] = "Formula2",
+        [340154634] = "Formula",
+        [-1756021720] = "Everon",
+        [-2098954619] = "Club",
+        [-1728685474] = "Coquette4",
+        [2134119907] = "Beater Dukes",
+        [-2122646867] = "Gauntlet5",
+        [-913589546] = "Glendale Custom",
+        [-838099166] = "Landstalker2",
+        [1717532765] = "Manana2",
+        [1492612435] = "Openwheel1",
+        [1181339704] = "Openwheel2",
+        [-631322662] = "Penumbra2",
+        [1107404867] = "Peyote Custom",
+        [-1810806490] = "Seminole Frontier",
+        [-1358197432] = "Tigon",
+        [1802742206] = "Youga3",
+        [-777275802] = "Freighttrailer",
+        [-1744505657] = "Impaler4",
+        [600450546] = "Hustler",
+        [628003514] = "Issi4",
+        [-1293924613] = "Dominator6",
+        [1239571361] = "Issi6",
+        [679453769] = "Cerberus2",
+        [1279262537] = "Deviant",
+        [-579747861] = "Scarab3",
+        [1502869817] = "Trailerlarge",
+        [-1259134696] = "Flashgt",
+        [-1374500452] = "Deathbike3",
+        [1938952078] = "Firetruk",
+        [1721676810] = "Monster3",
+        [-1146969353] = "Scarab",
+        [-42959138] = "Hunter",
+        [1637620610] = "Imperator2",
+        [840387324] = "Monster4",
+        [-376434238] = "Tyrant",
+        [1254014755] = "Caracara",
+        [-1134706562] = "Taipan",
+        [788045382] = "Sanchez",
+        [-214906006] = "Jester Classic",
+        [1542143200] = "Scarab2",
+        [931280609] = "Issi3",
+        [1046206681] = "Michelli",
+        [-1694081890] = "Bruiser2",
+        [1537277726] = "Issi5",
+        [-1924800695] = "Impaler3",
+        [1742022738] = "Slamvan6",
+        [1617472902] = "Fagaloa",
+        [-1100548694] = "Trailers4",
+        [-2042350822] = "Bruiser3",
+        [-1566607184] = "Clique",
+        [1118611807] = "Asbo",
+        [409049982] = "Kanjo",
+        [-1254331310] = "Minitank",
+        [1693751655] = "Yosemite2",
+        [83136452] = "Rebla",
+        [-834353991] = "Komoda",
+        [159274291] = "Ardent",
+        [1011753235] = "Coquette2",
+        [1051415893] = "Jb700",
+        [418536135] = "Infernus",
+        [-1558399629] = "Tornado6",
+        [-1566741232] = "Feltzer3",
+        [-982130927] = "Turismo2",
+        [1762279763] = "Tornado3",
+        [1504306544] = "Torero",
+        [500482303] = "Swinger",
+        [1483171323] = "Deluxo",
+        [1841130506] = "Retinue",
+        [886810209] = "Stromberg",
+        [-882629065] = "Nebula",
+        [668439077] = "Bruiser",
+        [2139203625] = "Brutus",
+        [444994115] = "Imperator",
+        [2038858402] = "Brutus3",
+        [1009171724] = "Impaler2",
+        [868868440] = "Metrotrain",
+        [-1476447243] = "Armytrailer",
+        [-2061049099] = "Slamvan4",
+        [219613597] = "Speedo4",
+        [-1812949672] = "Deathbike2",
+        [1126868326] = "Bfinjection",
+        [-801550069] = "Cerberus",
+        [373261600] = "Slamvan5",
+        [1909189272] = "Gb200",
+        [-1267543371] = "Ellie",
+        [838982985] = "Z190",
+        [661493923] = "Comet5",
+        [-755532233] = "Imperator3",
+        [-1375060657] = "Future Shock Dominator",
+        [-688189648] = "Apocalypse Dominator",
+        [-27326686] = "Deathbike",
+        [408970549] = "Avenger2",
+        [-1890996696] = "Brutus2",
+        [-2120700196] = "Entity2",
+        [-715746948] = "Monster5",
+        [-121446169] = "Kamacho",
+        [1909700336] = "Cerberus3",
+        [-1842748181] = "Faggio",
+        [2069146067] = "Oppressor2",
+        [-891462355] = "Bati2",
+        [-757735410] = "Fcr2",
+        [-609625092] = "Vortex",
+        [-1352468814] = "Trflat",
+        [1019737494] = "Graintrailer",
+        [-1770643266] = "Tvtrailer",
+        [1854776567] = "Issi7",
+        [1922255844] = "Schafter6",
+        [-1372848492] = "Kuruma",
+        [-1106353882] = "Jester2",
+        [736902334] = "Buffalo2",
+        [353883353] = "Polmav",
+        [-1973172295] = "Unmarked Cruiser",
+        [-1779120616] = "Police RoadCruiser",
+        [-2007026063] = "Prison Bus",
+        [2046537925] = "Police Cruiser ()",
+        [-1536924937] = "Police Rancher",
+        [1912215274] = "Police Cruiser ()",
+        [1127131465] = "Fbi",
+        [-1205689942] = "Riot",
+        [-1627000575] = "Police Cruiser ()",
+        [469291905] = "Lguard",
+        [719660200] = "Ruston",
+        [108773431] = "Coquette",
+        [-1106120762] = "Zr3802",
+        [1104234922] = "Sentinel3",
+        [-1089039904] = "Furore GT",
+        [-1757836725] = "Seven70",
+        [310284501] = "Dynasty",
+        [-777172681] = "Omnis",
+        [-566387422] = "Elegy2",
+        [-1041692462] = "Banshee",
+        [237764926] = "Buffalo3",
+        [-2022483795] = "Comet3",
+        [-1848994066] = "Neon",
+        [410882957] = "Kuruma2",
+        [-208911803] = "Jugular",
+        [-331467772] = "Italigto",
+        [767087018] = "Alpha",
+        [499169875] = "Fusilade",
+        [1102544804] = "Verlierer2",
+        [-1620126302] = "Neo",
+        [867799010] = "Pariah",
+        [-1529242755] = "Raiden",
+        [1074745671] = "Specter2",
+        [1489967196] = "Schafter4",
+        [-1485523546] = "Schafter3",
+        [196747873] = "Elegy",
+        [686471183] = "Drafter",
+        [-591651781] = "Blista3",
+        [-377465520] = "Penumbra",
+        [-447711397] = "Paragon",
+        [1886268224] = "Specter",
+        [-941272559] = "Locust",
+        [1039032026] = "Blista2",
+        [540101442] = "Zr380",
+        [-304802106] = "Buffalo",
+        [-1045541610] = "Comet2",
+        [-1995326987] = "Feltzer2",
+        [544021352] = "Khamelion",
+        [-888242983] = "Schafter5",
         [1032823388] = "Obey 9F",
-        [-1461482751] = "ninef2",
-        [-362150785] = "hellion",
-        [-286046740] = "rcbandito",
-        [-54332285] = "freecrawler",
-        [101905590] = "trophytruck",
-        [1233534620] = "marshall",
-        [-1435919434] = "bodhi2",
-        [-1590337689] = "blazer5",
-        [-1237253773] = "dubsta3",
-        [-1479664699] = "brawler",
-        [1645267888] = "rancherxl",
-        [-2045594037] = "rebel2",
-        [-845961253] = "monster",
-        [-663299102] = "trophytruck2",
-        [92612664] = "kalahari",
-        [-312295511] = "dune5",
-        [-827162039] = "dune4",
-        [-2103821244] = "rallytruck",
-        [-1912017790] = "wastelander",
-        [1917016601] = "trash",
-        [-305727417] = "brickade",
-        [1283517198] = "airbus",
-        [1941029835] = "tourbus",
-        [-2072933068] = "coach",
-        [-713569950] = "bus",
-        [-956048545] = "taxi",
-        [345756458] = "pbus2",
-        [-1098802077] = "rentalbus",
-        [-1255698084] = "trash2",
-        [-311022263] = "seashark3",
-        [1448677353] = "tropic2",
-        [1033245328] = "dinghy",
-        [-1066334226] = "submersible2",
-        [861409633] = "jetmax",
-        [1070967343] = "toro",
-        [-616331036] = "seashark2",
-        [290013743] = "tropic",
-        [-2100640717] = "tug",
-        [400514754] = "squalo",
-        [771711535] = "submersible",
-        [1739845664] = "bison3",
-        [-1743316013] = "burrito3",
-        [-1126264336] = "minivan2",
-        [-16948145] = "bison",
-        [728614474] = "speedo2",
-        [1026149675] = "youga2",
-        [-810318068] = "speedo",
-        [-1987130134] = "boxville",
-        [943752001] = "pony2",
-        [-310465116] = "minivan",
-        [1132262048] = "burrito5",
-        [296357396] = "gburrito2",
-        [1951180813] = "taco",
-        [-1311240698] = "surfer2",
-        [-907477130] = "burrito2",
-        [534258863] = "dune2",
-        [-1269889662] = "blazer3",
-        [-1207771834] = "rebel",
-        [1770332643] = "dloader",
-        [2071877360] = "insurgent2",
-        [-1532697517] = "riata",
-        [1180875963] = "technical2",
-        [1897744184] = "dune3",
-        [989381445] = "sandking2",
-        [1356124575] = "technical3",
-        [433954513] = "nightshark",
-        [-1924433270] = "insurgent3",
-        [-1349095620] = "caracara2",
-        [-1860900134] = "insurgent",
-        [-2096818938] = "technical",
-        [-2064372143] = "mesa3",
-        [2044532910] = "menacer",
-        [1933662059] = "rancherxl2",
-        [-48031959] = "blazer2",
-        [-440768424] = "blazer4",
-        [-349601129] = "bifta",
-        [-2128233223] = "blazer",
-        [-1189015600] = "sandking",
-        [-1661854193] = "dune",
-        [1824333165] = "besra",
-        [1058115860] = "jet",
-        [621481054] = "luxor",
-        [-1214293858] = "luxor2",
-        [1341619767] = "vestra",
-        [-975345305] = "rogue",
-        [-2122757008] = "stunt",
-        [-1746576111] = "mammatus",
-        [1349725314] = "sentinel",
-        [330661258] = "cogcabrio",
-        [-1193103848] = "zion2",
-        [1581459400] = "windsor",
-        [-89291282] = "felon2",
-        [-624529134] = "jackal",
-        [-511601230] = "oracle2",
-        [-1930048799] = "windsor2",
-        [-5153954] = "exemplar",
-        [-391594584] = "felon",
-        [-1122289213] = "zion",
-        [-591610296] = "f620",
-        [873639469] = "sentinel2",
-        [1348744438] = "oracle",
-        [-1776615689] = "rumpo2",
-        [893081117] = "burrito4",
-        [1069929536] = "bobcatxl",
-        [-119658072] = "pony",
-        [121658888] = "boxville3",
-        [1488164764] = "paradise",
-        [1876516712] = "camper",
-        [-1346687836] = "burrito",
-        [-1745203402] = "gburrito",
-        [699456151] = "surfer",
-        [1475773103] = "rumpo3 or boxville3",
-        [1162065741] = "rumpo",
-        [-233098306] = "boxville2",
-        [444171386] = "boxville4",
-        [-120287622] = "journey",
-        [65402552] = "youga",
-        [2072156101] = "bison2",
-        [782665360] = "rhino",
-        [-1435527158] = "khanjali",
-        [-212993243] = "barrage",
-        [1074326203] = "barracks2",
-        [630371791] = "barracks3",
-        [-1881846085] = "trailersmall2",
-        [-692292317] = "chernobog",
-        [562680400] = "apc",
-        [321739290] = "crusader",
-        [-823509173] = "barracks",
-        [-32236122] = "halftrack",
-        [-1214505995] = "shamal",
-        [-1295027632] = "nimbus",
-        [-1006919392] = "cutter",
-        [444583674] = "handler",
-        [1886712733] = "bulldozer",
-        [-2130482718] = "dump",
-        [-1705304628] = "rubble",
-        [-784816453] = "mixer",
-        [475220373] = "mixer2",
-        [-2107990196] = "guardian",
-        [1353720154] = "flatbed",
-        [1269098716] = "landstalker",
-        [-808457413] = "patriot",
-        [1337041428] = "serrano",
-        [1221512915] = "seminole",
-        [-1543762099] = "gresley",
-        [142944341] = "baller2",
-        [1203490606] = "xls",
-        [-1829436850] = "novak",
-        [914654722] = "mesa",
-        [-808831384] = "baller",
-        [-789894171] = "cavalcade2",
-        [-394074634] = "dubsta2",
-        [666166960] = "baller6",
-        [-420911112] = "patriot2",
-        [850565707] = "bjxl",
-        [3862958888] = "xls2",
-        [634118882] = "baller4",
-        [1878062887] = "baller3",
-        [486987393] = "huntley",
-        [-1137532101] = "fq2",
-        [470404958] = "baller5",
-        [-1775728740] = "granger",
-        [683047626] = "contender",
-        [-748008636] = "mesa2",
-        [2006918058] = "cavalcade",
-        [884422927] = "habanero",
-        [-1168952148] = "toros",
-        [1177543287] = "dubsta",
-        [2136773105] = "rocoto",
-        [-1651067813] = "radi",
-        [1489874736] = "thruster",
-        [-295689028] = "sultanrs",
-        [-1403128555] = "zentorno",
-        [2123327359] = "prototipo",
-        [-1242608589] = "vigilante",
-        [1031562256] = "tezeract",
-        [819197656] = "sheava",
-        [989294410] = "voltic2",
-        [-682108547] = "zorrusso",
-        [917809321] = "xa21",
-        [338562499] = "vacca",
-        [1392481335] = "cyclone",
-        [-324618589] = "s80",
-        [1093792632] = "nero2",
-        [-638562243] = "scramjet",
-        [1352136073] = "sc1",
-        [1987142870] = "osiris",
-        [-1696146015] = "bullet",
-        [-313185164] = "autarch",
-        [-998177792] = "visione",
-        [1034187331] = "nero",
-        [-1622444098] = "voltic",
-        [1426219628] = "fmj",
-        [1663218586] = "t20",
-        [1234311532] = "gp1",
-        [-664141241] = "krieger",
-        [1323778901] = "emerus",
-        [633712403] = "banshee2",
-        [1939284556] = "vagner",
-        [-1291952903] = "entityxf",
-        [2067820283] = "tyrus",
-        [272929391] = "tempesta",
-        [234062309] = "reaper",
-        [-482719877] = "italigtb2",
-        [-1216765807] = "adder",
-        [-1232836011] = "le7b",
-        [408192225] = "turismor",
-        [1044193113] = "thrax",
-        [-947761570] = "tiptruck2",
-        [48339065] = "tiptruck",
-        [841808271] = "rhapsody",
-        [-1177863319] = "issi2",
-        [1682114128] = "dilettante2",
-        [-1130810103] = "dilettante",
-        [1723137093] = "stratum",
-        [906642318] = "cog55",
-        [-14495224] = "regina",
-        [-1008861746] = "tailgater",
-        [886934177] = "intruder",
-        [-2040426790] = "primo2",
-        [-1883869285] = "premier",
-        [-1807623979] = "asea2",
-        [1777363799] = "washington",
-        [-1477580979] = "stanier",
-        [321186144] = "stafford",
-        [-1894894188] = "surge",
-        [-1903012613] = "asterope",
-        [1909141499] = "fugitive",
-        [-1883002148] = "emperor2",
-        [-1809822327] = "asea",
-        [1123216662] = "superd",
-        [-114627507] = "limo2",
-        [704435172] = "cog552",
-        [-685276541] = "emperor",
-        [-1255452397] = "schafter2",
-        [-604842630] = "cognoscenti2",
-        [-1289722222] = "ingot",
-        [-2030171296] = "cognoscenti",
-        [1373123368] = "warrener",
-        [-1150599089] = "primo",
-        [75131841] = "glendale",
-        [-1961627517] = "stretch",
-        [627094268] = "romero",
-        [-1241712818] = "emperor3",
-        [-1829802492] = "pfister811",
-        [-2048333973] = "italigtb",
-        [-1758137366] = "penetrator",
-        [-1311154784] = "cheetah",
-        [-1361687965] = "chino2",
-        [1896491931] = "moonbeam2",
-        [-1790546981] = "faction2",
-        [972671128] = "tampa",
-        [2006667053] = "voodoo",
-        [784565758] = "coquette3",
-        [-589178377] = "ratloader2",
-        [723973206] = "dukes",
-        [-682211828] = "buccaneer",
-        [349605904] = "chino",
-        [525509695] = "moonbeam",
-        [-1943285540] = "nightshade",
-        [729783779] = "slamvan",
-        [-1210451983] = "tampa3",
-        [16646064] = "virgo3",
-        [833469436] = "slamvan2",
-        [-227741703] = "ruiner",
-        [523724515] = "voodoo2",
-        [-1800170043] = "gauntlet",
-        [80636076] = "dominator",
-        [1934384720] = "gauntlet4",
-        [-1013450936] = "buccaneer2",
-        [-667151410] = "ratloader",
-        [37348240] = "hotknife",
-        [15219735] = "hermes",
-        [1119641113] = "slamvan3",
-        [722226637] = "gauntlet3",
-        [941494461] = "ruiner2",
-        [-498054846] = "virgo",
-        [-2039755226] = "faction3",
-        [642617954] = "freightgrain",
-        [1030400667] = "freight",
-        [184361638] = "freightcar",
-        [920453016] = "freightcont1",
-        [240201337] = "freightcont2",
-        [586013744] = "tankercar",
-        [1549126457] = "brioso",
-        [-431692672] = "panto",
-        [-344943009] = "blista",
-        [-1450650718] = "prairie",
-        [1491375716] = "forklift",
-        [-442313018] = "towtruck2",
-        [2132890591] = "utillitruck3",
-        [734217681] = "sadler2",
-        [1560980623] = "airtug",
-        [1641462412] = "tractor",
-        [-884690486] = "docktug",
-        [-537896628] = "caddy2",
-        [1147287684] = "caddy",
-        [516990260] = "utillitruck",
-        [-2076478498] = "tractor2",
-        [887537515] = "utillitruck2",
-        [3525819835] = "caddy3",
-        [-845979911] = "ripley",
-        [-599568815] = "sadler",
-        [-1323100960] = "towtruck",
-        [1783355638] = "mower",
-        [1445631933] = "tractor3",
-        [-1700801569] = "scrap",
-        [1871995513] = "yosemite",
-        [-326143852] = "dukes2",
-        [-49115651] = "vamos",
-        [-915704871] = "dominator2",
-        [-1804415708] = "peyote2",
-        [-825837129] = "vigero",
-        [223258115] = "sabregt2",
-        [777714999] = "ruiner3",
-        [-899509638] = "virgo2",
-        [1456744817] = "tulip",
-        [-2119578145] = "faction",
-        [-2096690334] = "impaler",
-        [-986944621] = "dominator3",
-        [-1685021548] = "sabregt",
-        [349315417] = "gauntlet2",
-        [-401643538] = "stalion2",
-        [-2095439403] = "phoenix",
-        [1923400478] = "stalion",
-        [-1205801634] = "blade",
-        [2068293287] = "lurcher",
-        [1507916787] = "picador",
-        [-893984159] = "Obey 10F"
+        [-1461482751] = "Ninef2",
+        [-362150785] = "Hellion",
+        [-286046740] = "Rcbandito",
+        [-54332285] = "Freecrawler",
+        [101905590] = "Trophytruck",
+        [1233534620] = "Marshall",
+        [-1435919434] = "Bodhi2",
+        [-1590337689] = "Blazer5",
+        [-1237253773] = "Dubsta3",
+        [-1479664699] = "Brawler",
+        [1645267888] = "Rancherxl",
+        [-2045594037] = "Rebel2",
+        [-845961253] = "Monster",
+        [-663299102] = "Trophytruck2",
+        [92612664] = "Kalahari",
+        [-312295511] = "Ramp Buggy 2",
+        [-827162039] = "Ramp Buggy",
+        [-2103821244] = "Rallytruck",
+        [-1912017790] = "Wastelander",
+        [1917016601] = "Trash",
+        [-305727417] = "Brickade",
+        [1283517198] = "Airbus",
+        [1941029835] = "Tourbus",
+        [-2072933068] = "Coach",
+        [-713569950] = "Bus",
+        [-956048545] = "Taxi",
+        [345756458] = "Pbus2",
+        [-1098802077] = "Rentalbus",
+        [-1255698084] = "Trash2",
+        [-311022263] = "Seashark3",
+        [1448677353] = "Tropic2",
+        [1033245328] = "Dinghy",
+        [-1066334226] = "Submersible2",
+        [861409633] = "Jetmax",
+        [1070967343] = "Toro",
+        [-616331036] = "Seashark2",
+        [290013743] = "Tropic",
+        [-2100640717] = "Tug",
+        [400514754] = "Squalo",
+        [771711535] = "Submersible",
+        [1739845664] = "Bison3",
+        [-1743316013] = "Burrito3",
+        [-1126264336] = "Minivan2",
+        [-16948145] = "Bison",
+        [728614474] = "Speedo2",
+        [1026149675] = "Youga2",
+        [-810318068] = "Speedo",
+        [-1987130134] = "Boxville",
+        [943752001] = "Pony2",
+        [-310465116] = "Minivan",
+        [1132262048] = "Burrito5",
+        [296357396] = "Gburrito2",
+        [1951180813] = "Taco",
+        [-1311240698] = "Surfer2",
+        [-907477130] = "Burrito2",
+        [534258863] = "sPACE dOCKER",
+        [-1269889662] = "Blazer3",
+        [-1207771834] = "Rebel",
+        [1770332643] = "Dloader",
+        [2071877360] = "Insurgent2",
+        [-1532697517] = "Riata",
+        [1180875963] = "Technical2",
+        [1897744184] = "Dune FAV",
+        [989381445] = "Sandking2",
+        [1356124575] = "Technical3",
+        [433954513] = "Nightshark",
+        [-1924433270] = "Insurgent3",
+        [-1349095620] = "Caracara2",
+        [-1860900134] = "Insurgent",
+        [-2096818938] = "Technical",
+        [-2064372143] = "Mesa3",
+        [2044532910] = "Menacer",
+        [1933662059] = "Rancherxl2",
+        [-48031959] = "Blazer2",
+        [-440768424] = "Blazer4",
+        [-349601129] = "Bifta",
+        [-2128233223] = "Blazer",
+        [-1189015600] = "Sandking",
+        [-1661854193] = "Dune",
+        [1824333165] = "Besra",
+        [1058115860] = "Jet",
+        [621481054] = "Luxor",
+        [-1214293858] = "Luxor2",
+        [1341619767] = "Vestra",
+        [-975345305] = "Rogue",
+        [-2122757008] = "Stunt",
+        [-1746576111] = "Mammatus",
+        [1349725314] = "Sentinel",
+        [330661258] = "Cogcabrio",
+        [-1193103848] = "Zion2",
+        [1581459400] = "Windsor",
+        [-89291282] = "Felon2",
+        [-624529134] = "Jackal",
+        [-511601230] = "Oracle2",
+        [-1930048799] = "Windsor2",
+        [-5153954] = "Exemplar",
+        [-391594584] = "Felon",
+        [-1122289213] = "Zion",
+        [-591610296] = "F620",
+        [873639469] = "Sentinel2",
+        [1348744438] = "Oracle",
+        [-1776615689] = "Rumpo2",
+        [893081117] = "Burrito4",
+        [1069929536] = "Bobcatxl",
+        [-119658072] = "Pony",
+        [121658888] = "Boxville3",
+        [1488164764] = "Paradise",
+        [1876516712] = "Camper",
+        [-1346687836] = "Burrito",
+        [-1745203402] = "Gburrito",
+        [699456151] = "Surfer",
+        [1475773103] = "Rumpo3 or boxvile3",
+        [1162065741] = "Rumpo",
+        [-233098306] = "Boxville2",
+        [444171386] = "Boxville4",
+        [-120287622] = "Journey",
+        [65402552] = "Youga",
+        [2072156101] = "Bison2",
+        [782665360] = "Rhino",
+        [-1435527158] = "Khanjali",
+        [-212993243] = "Barrage",
+        [1074326203] = "Barracks2",
+        [630371791] = "Barracks3",
+        [-1881846085] = "Trailersmall2",
+        [-692292317] = "Chernobog",
+        [562680400] = "Apc",
+        [321739290] = "Crusader",
+        [-823509173] = "Barracks",
+        [-32236122] = "Halftrack",
+        [-1214505995] = "Shamal",
+        [-1295027632] = "Nimbus",
+        [-1006919392] = "Cutter",
+        [444583674] = "Handler",
+        [1886712733] = "Bulldozer",
+        [-2130482718] = "Dump",
+        [-1705304628] = "Rubble",
+        [-784816453] = "Mixer",
+        [475220373] = "Mixer2",
+        [-2107990196] = "Guardian",
+        [1353720154] = "Flatbed",
+        [1269098716] = "Landstalker",
+        [-808457413] = "Patriot",
+        [1337041428] = "Serrano",
+        [1221512915] = "Seminole",
+        [-1543762099] = "Gresley",
+        [142944341] = "Baller2",
+        [1203490606] = "Xls",
+        [-1829436850] = "Novak",
+        [914654722] = "Mesa",
+        [-808831384] = "Baller",
+        [-789894171] = "Cavalcade2",
+        [-394074634] = "Dubsta2",
+        [666166960] = "Baller6",
+        [-420911112] = "Patriot2",
+        [850565707] = "Bjxl",
+        [3862958888] = "Xls2",
+        [634118882] = "Baller4",
+        [1878062887] = "Baller3",
+        [486987393] = "Huntley",
+        [-1137532101] = "Fq2",
+        [470404958] = "Baller5",
+        [-1775728740] = "Granger",
+        [683047626] = "Contender",
+        [-748008636] = "Mesa2",
+        [2006918058] = "Cavalcade",
+        [884422927] = "Habanero",
+        [-1168952148] = "Toros",
+        [1177543287] = "Dubsta",
+        [2136773105] = "Rocoto",
+        [-1651067813] = "Radi",
+        [1489874736] = "Thruster",
+        [-295689028] = "Sultanrs",
+        [-1403128555] = "Zentorno",
+        [2123327359] = "Prototipo",
+        [-1242608589] = "Vigilante",
+        [1031562256] = "Tezeract",
+        [819197656] = "Sheava",
+        [989294410] = "Voltic2",
+        [-682108547] = "Zorrusso",
+        [917809321] = "Xa21",
+        [338562499] = "Vacca",
+        [1392481335] = "Cyclone",
+        [-324618589] = "S80",
+        [1093792632] = "Nero2",
+        [-638562243] = "Scramjet",
+        [1352136073] = "Sc1",
+        [1987142870] = "Osiris",
+        [-1696146015] = "Bullet",
+        [-313185164] = "Autarch",
+        [-998177792] = "Visione",
+        [1034187331] = "Nero",
+        [-1622444098] = "Voltic",
+        [1426219628] = "Fmj",
+        [1663218586] = "T20",
+        [1234311532] = "Gp1",
+        [-664141241] = "Krieger",
+        [1323778901] = "Emerus",
+        [633712403] = "Banshee2",
+        [1939284556] = "Vagner",
+        [-1291952903] = "Entityxf",
+        [2067820283] = "Tyrus",
+        [272929391] = "Tempesta",
+        [234062309] = "Reaper",
+        [-482719877] = "Italigtb2",
+        [-1216765807] = "Adder",
+        [-1232836011] = "Le7b",
+        [408192225] = "Turismor",
+        [1044193113] = "Thrax",
+        [-947761570] = "Tiptruck2",
+        [48339065] = "Tiptruck",
+        [841808271] = "Rhapsody",
+        [-1177863319] = "Issi2",
+        [1682114128] = "Dilettante2",
+        [-1130810103] = "Dilettante",
+        [1723137093] = "Stratum",
+        [906642318] = "Cog55",
+        [-14495224] = "Regina",
+        [-1008861746] = "Tailgater",
+        [886934177] = "Intruder",
+        [-2040426790] = "Primo2",
+        [-1883869285] = "Premier",
+        [-1807623979] = "Asea2",
+        [1777363799] = "Washington",
+        [-1477580979] = "Stanier",
+        [321186144] = "Stafford",
+        [-1894894188] = "Surge",
+        [-1903012613] = "Asterope",
+        [1909141499] = "Fugitive",
+        [-1883002148] = "Emperor2",
+        [-1809822327] = "Asea",
+        [1123216662] = "Superd",
+        [-114627507] = "Limo2",
+        [704435172] = "Cog552",
+        [-685276541] = "Emperor",
+        [-1255452397] = "Schafter2",
+        [-604842630] = "Cognoscenti2",
+        [-1289722222] = "Ingot",
+        [-2030171296] = "Cognoscenti",
+        [1373123368] = "Warrener",
+        [-1150599089] = "Primo",
+        [75131841] = "Glendale",
+        [-1961627517] = "Stretch",
+        [627094268] = "Romero",
+        [-1241712818] = "Emperor3",
+        [-1829802492] = "Pfister811",
+        [-2048333973] = "Italigtb",
+        [-1758137366] = "Penetrator",
+        [-1311154784] = "Cheetah",
+        [-1361687965] = "Chino2",
+        [1896491931] = "Moonbeam2",
+        [-1790546981] = "Faction2",
+        [972671128] = "Tampa",
+        [2006667053] = "Voodoo",
+        [784565758] = "Coquette3",
+        [-589178377] = "Ratloader2",
+        [723973206] = "Dukes",
+        [-682211828] = "Buccaneer",
+        [349605904] = "Chino",
+        [525509695] = "Moonbeam",
+        [-1943285540] = "Nightshade",
+        [729783779] = "Slamvan",
+        [-1210451983] = "Tampa3",
+        [16646064] = "Virgo3",
+        [833469436] = "Slamvan2",
+        [-227741703] = "Ruiner",
+        [523724515] = "Voodoo2",
+        [-1800170043] = "Gauntlet",
+        [80636076] = "Dominator",
+        [1934384720] = "Gauntlet4",
+        [-1013450936] = "Buccaneer2",
+        [-667151410] = "Ratloader",
+        [37348240] = "Hotknife",
+        [15219735] = "Hermes",
+        [1119641113] = "Slamvan3",
+        [722226637] = "Gauntlet3",
+        [941494461] = "Ruiner2",
+        [-498054846] = "Virgo",
+        [-2039755226] = "Faction3",
+        [642617954] = "Freightgrain",
+        [1030400667] = "Freight",
+        [184361638] = "Freightcar",
+        [920453016] = "Freightcont1",
+        [240201337] = "Freightcont2",
+        [586013744] = "Tankercar",
+        [1549126457] = "Brioso",
+        [-431692672] = "Panto",
+        [-344943009] = "Blista",
+        [-1450650718] = "Prairie",
+        [1491375716] = "Forklift",
+        [-442313018] = "Towtruck2",
+        [2132890591] = "Utillitruck3",
+        [734217681] = "Sadler2",
+        [1560980623] = "Airtug",
+        [1641462412] = "Tractor",
+        [-884690486] = "Docktug",
+        [-537896628] = "Caddy2",
+        [1147287684] = "Caddy",
+        [516990260] = "Utillitruck",
+        [-2076478498] = "Tractor2",
+        [887537515] = "Utillitruck2",
+        [3525819835] = "Caddy3",
+        [-845979911] = "Ripley",
+        [-599568815] = "Sadler",
+        [-1323100960] = "Towtruck",
+        [1783355638] = "Mower",
+        [1445631933] = "Tractor3",
+        [-1700801569] = "Scrap",
+        [1871995513] = "Yosemite",
+        [-326143852] = "Dukes2",
+        [-49115651] = "Vamos",
+        [-915704871] = "Dominator2",
+        [-1804415708] = "Peyote2",
+        [-825837129] = "Vigero",
+        [223258115] = "Sabregt2",
+        [777714999] = "Ruiner3",
+        [-899509638] = "Virgo2",
+        [1456744817] = "Tulip",
+        [-2119578145] = "Faction",
+        [-2096690334] = "Impaler",
+        [-986944621] = "Dominator3",
+        [-1685021548] = "Sabregt",
+        [349315417] = "Gauntlet2",
+        [-401643538] = "Stalion2",
+        [-2095439403] = "Phoenix",
+        [1923400478] = "Stalion",
+        [-1205801634] = "Blade",
+        [2068293287] = "Lurcher",
+        [1507916787] = "Picador",
+        [-893984159] = "Obey 10F",
+        [-1029730482] = "Cavlacade XL",
+        [-1372798934] = "Karin Vivanite",
+        [-1233767450] = "Gauntlet Interceptor",
+        [-1674384553] = "Stanier LE Cruiser",
+        [-129283887] = "Phantom",
+        [167522317] = "Terminus",
+        [-671564942] = "Tow Truck",
+        [-122993285] = "Turismo Omaggio",
+        [372621319] = "Vigero ZX Convertible",
+        [-38879449] = "Aleutian",
+        [-741120335] = "Asterope GZ",
+        [-863358884] = "Baller ST-D",
+        [-441209695] = "Dominator GT",
+        [-768044142] = "Dorado",
+        [821121576] = "Drift Euros",
+        [-1479935577] = "Drift FR36",
+        [-181562642] = "Drift Futo",
+        [-1763273939] = "Drift Jester RR",
+        [-1624083468] = "Drift Remus",
+        [-1696319096] = "Drift Tampa",
+        [-1681653521] = "Drift Yosemite",
+        [1923534526] = "Drift ZR350",
+        [-465825307] = "FR36",
+        [-478639183] = "Impaler SZ",
+        [-178442374] = "Impaler LX",
+        [-902029319] = "Tow Truck"
     }
     print("Loading of Vehicle Hashes Complete")
 end
@@ -717,6 +801,8 @@ local defaultPlate = "ROCKSTAR"
 local debugMode = true            -- true for initial startup (reset to false after full script is loaded)
 local recordingKeystrokes = false -- keystroke recording for typing in custom plates
 local recordedKeys = {}
+local cursorPosition = 1
+local confirmingScrollText = false
 local newPlateText = nil
 local savedPlateVehicle = nil -- plate to match the vehicle it was from, else revert to default (to be fully implemented)
 local savedPlateText = nil
@@ -738,16 +824,36 @@ local rollTuneSettings = { -- EXPERIMENTAL!!
     newRear = nil
 }
 
+-- RGB Paint
+local RGBSpeeds = {
+    extraExtraFast = 0.005,
+    extraFast = 0.01,
+    fast = 0.05,
+    default = 0.10,
+    slow = 0.15,
+    extraSlow = 0.20
+}
+local colourChangeSpeed = RGBSpeeds.default
+local colourChanging = false
+local hue = 0
+local originalPaint = {
+    primary = { R = nil, G = nil, B = nil },
+    secondary = { R = nil, G = nil, B = nil }
+}
+
+-- Debug Mode Print Function
 local function debugPrint(text)
     if debugMode then
         print(text)
     end
 end
 
+-- Menu Text Only Function
 local function rip()
     debugPrint("i am dumb")
 end
 
+-- Drag Race Variables
 local raceDistanceOptions = {}
 local raceDistances = {
     ["1/8 Mile"] = 1609.34 / 8,
@@ -761,13 +867,13 @@ local raceFinished = false
 local raceDistance = raceDistances["1/8 Mile"]
 local startPosition
 local raceRunning = false
-speeds = {}
 for name, _ in pairs(raceDistances) do
     table.insert(raceDistanceOptions, name)
 end
 
+-- Speedometer Variables
+speeds = {}
 local speedoRunning = false -- Speedo controller
-
 local speedmode = {         -- Speed modes
     kph = 3.6,
     mph = 2.23694,
@@ -779,7 +885,14 @@ local function getVehicleNameFromHash(hash)
     return vehicleHashes[hash] or "Unsaved Vehicle (Please add to list with the option to print the hash)"
 end
 
--- Data Management
+local function carCheck()
+    if localplayer and localplayer:is_in_vehicle() then
+        return true
+    else
+        return false
+    end
+end
+
 -- Race Data Management
 local raceDataFilename = "race_data.json"
 local raceData = {}
@@ -796,12 +909,11 @@ function loadRaceData()
     end
 end
 
--- Load existing data or create an empty table if the file doesn't exist
+-- Load existing file or create a new one
 function saveRaceData()
     local existingData = json.loadfile(raceDataFilename) or {}
     local newData = raceData
 
-    -- Combine existing data with new data
     for key, value in pairs(newData) do
         existingData[key] = existingData[key] or {}
         for _, entry in ipairs(value) do
@@ -809,7 +921,6 @@ function saveRaceData()
         end
     end
 
-    -- Save the updated data
     json.savefile(raceDataFilename, existingData)
     debugPrint("Race data Saved.")
 end
@@ -820,7 +931,6 @@ local userSettings = {
     selectedSpeedMode = "kph", -- Defaults for if the file isnt present
     DebugMode = true
 }
-
 
 function loadUserSettings()
     local result, loadedSettings = pcall(function() return json.loadfile(userSettingsFilename) end)
@@ -849,6 +959,7 @@ function saveUserSettings()
     debugPrint("User settings Saved.")
 end
 
+-- Debug Mode Toggle
 local function toggleDebugMode()
     if debugMode == true then
         debugMode = false
@@ -898,7 +1009,7 @@ slowDriftStats = { -- Drift tune (Low Speed)
     upShift = 90,
     downShift = 80,
     driveBiasFront = 0,
-    turningRadius = 45,
+    turningRadius = 45, -- half of a right angle (for good angle control)
 }
 
 fastDriftStats = { -- Drift tune (High Speed)
@@ -910,7 +1021,7 @@ fastDriftStats = { -- Drift tune (High Speed)
     upShift = 9000,
     downShift = 9000,
     driveBiasFront = 0,
-    turningRadius = 45
+    turningRadius = 45 -- half of a right angle (for good angle control)
 }
 
 spoodBeastStats = { -- Speed Boost
@@ -924,6 +1035,7 @@ spoodBeastStats = { -- Speed Boost
     driveBiasFront = 48.9,
     turningRadius = 22.5, -- quarter of a right angle (for smoother turning at high speeds)
 }
+
 
 oldStats = { -- Old stats for reversal
     acceleration = nil,
@@ -939,7 +1051,7 @@ oldStats = { -- Old stats for reversal
 
 -- Save stats for Reversion
 function saveStats()
-    if localplayer and localplayer:is_in_vehicle() then
+    if carCheck() then
         local player = localplayer
         local v = player:get_current_vehicle()
 
@@ -958,7 +1070,7 @@ end
 
 -- Stat Reversion
 function revertStats()
-    if localplayer and localplayer:is_in_vehicle() then
+    if carCheck() then
         local player = localplayer
         local v = player:get_current_vehicle()
 
@@ -997,10 +1109,14 @@ function spoodBeast()
         revertStats()
     else
         tuningMode.spoodBeastMode = true
-        if localplayer and localplayer:is_in_vehicle() then
+        if carCheck() then
             local player = localplayer
             local veh = player:get_current_vehicle()
-            saveStats()
+            if oldStats.acceleration == nil then
+                saveStats()
+            else
+                debugPrint("Unable to save veh stats, stats are already present in table")
+            end
             veh:set_acceleration(spoodBeastStats.acceleration)
             veh:set_traction_curve_max(spoodBeastStats.tractionMax)
             veh:set_traction_curve_min(spoodBeastStats.tractionMin)
@@ -1022,10 +1138,14 @@ function slowDrift()
         tuningMode.slowDriftMode = false
         revertStats()
     else
-        if localplayer and localplayer:is_in_vehicle() then
+        if carCheck() then
             local player = localplayer
             local veh = player:get_current_vehicle()
-            saveStats()
+            if oldStats.acceleration == nil then
+                saveStats()
+            else
+                debugPrint("Unable to save veh stats, stats are already present in table")
+            end
             veh:set_acceleration(slowDriftStats.acceleration)
             veh:set_traction_curve_max(slowDriftStats.tractionMax)
             veh:set_traction_curve_min(slowDriftStats.tractionMin)
@@ -1047,10 +1167,14 @@ function fastDrift()
         tuningMode.fastDriftMode = false
         revertStats()
     else
-        if localplayer and localplayer:is_in_vehicle() then
+        if carCheck() then
             local player = localplayer
             local veh = player:get_current_vehicle()
-            saveStats()
+            if oldStats.acceleration == nil then
+                saveStats()
+            else
+                debugPrint("Unable to save veh stats, stats are already present in table")
+            end
             veh:set_acceleration(fastDriftStats.acceleration)
             veh:set_traction_curve_max(fastDriftStats.tractionMax)
             veh:set_traction_curve_min(fastDriftStats.tractionMin)
@@ -1065,28 +1189,40 @@ function fastDrift()
 end
 
 menu.register_callback("OnVehicleChanged", function()
-    if localplayer and localplayer:is_in_vehicle() then
+    if carCheck() then
         local currentveh = localplayer:get_current_vehicle()
-        if currentveh ~= savedPlateVehicle then
-            if savedPlateText ~= nil then
-                savedPlateText = localplayer:get_current_vehicle():get_number_plate_text()
-            end
+        if currentveh ~= savedPlateVehicle or savedPlateVehicle == nil then
+            savedPlateVehicle = currentveh
+            savedPlateText = currentveh:get_number_plate_text()
+            debugPrint("New Vehicle Detected, Attempting to resume script functions...")
+        else
+            debugPrint("vehicle change messed up, re-routing script")
+            return
         end
         if tuningMode.fastDriftMode then
             tuningMode.fastDriftMode = false
+            debugPrint("Fast Drift resuming")
             fastDrift()
         end
         if tuningMode.slowDriftMode then
             tuningMode.slowDriftMode = false
+            debugPrint("Slow Drift resuming")
             slowDrift()
         end
         if tuningMode.spoodBeastMode then
             tuningMode.spoodBeastMode = false
+            debugPrint("Spood Beast resuming")
             spoodBeast()
         end
         if infiniteScroll then
             infiniteScroll = false
+            debugPrint("Scrolling Text resuming")
             ScrollText(scrollTextSavedMessage, scrollTextSavedSpeed)
+        end
+        if colourChanging then
+            colourChanging = false
+            debugPrint("RGB Loop resuming")
+            toggleRGBLoop()
         end
     end
 end)
@@ -1097,7 +1233,7 @@ end)
 -----------------------------------------------------------------------------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------------------------------------------------------------------------
 
--- Mapping table for Java keycodes to alphanumeric characters
+-- Mapping table for Java keycodes
 local javaKeycodeMapping = {
     [65] = 'A',
     [66] = 'B',
@@ -1138,7 +1274,7 @@ local javaKeycodeMapping = {
 }
 
 function registerHotkeys()
-    -- Register hotkeys for alphanumeric keys (A-Z and 0-9)
+    -- Register alphanumeric keys (A-Z and 0-9)
     for keycode = 65, 90 do
         menu.register_hotkey(keycode, function() onKeyPress(keycode) end)
     end
@@ -1147,19 +1283,24 @@ function registerHotkeys()
         menu.register_hotkey(keycode, function() onKeyPress(keycode) end)
     end
 
-    -- Register hotkeys for special keys
-    menu.register_hotkey(27, function() onESC() end)            -- Escape key
-    menu.register_hotkey(8, function() onBackspace() end)       -- Backspace
-    menu.register_hotkey(32, function() onSpace() end)          -- Space
-    menu.register_hotkey(13, function() onFinishTyping() end)   -- Enter/Return
+    -- Register special keys
+    menu.register_hotkey(27, function() onESC() end)           -- Escape key
+    menu.register_hotkey(8, function() onBackspace() end)      -- Backspace
+    menu.register_hotkey(32, function() onSpace() end)         -- Space
+    menu.register_hotkey(13, function() onFinishTyping() end)  -- Enter/Return
+    menu.register_hotkey(37, function() moveCursorLeft() end)  -- Left arrow key
+    menu.register_hotkey(39, function() moveCursorRight() end) -- Right arrow key
+    menu.register_hotkey(46, function() onDel() end)           -- Delete key (right of cursor)
 end
 
 -- Function to start recording
 function startRecording()
+    infiniteScroll = false
     debugMode = true
     registerHotkeys()
     recordingKeystrokes = true
-    recordedKeys = {}
+    recordedKeys = {}  -- Reset recorded keys
+    cursorPosition = 1 -- Reset cursor position
     debugPrint(" ")
     debugPrint("Recording started...")
     debugPrint("Current input: " .. table.concat(recordedKeys, ""))
@@ -1177,32 +1318,78 @@ end
 -- Function to handle key press
 function onKeyPress(keycode)
     if recordingKeystrokes then
-        if #recordedKeys < 8 or allowMoreThan8Characters then
-            table.insert(recordedKeys, javaKeycodeMapping[keycode] or tostring(keycode))
-            newPlateText = table.concat(recordedKeys, "")
+        -- Insert the character at the cursor position
+        table.insert(recordedKeys, cursorPosition, javaKeycodeMapping[keycode] or tostring(keycode))
+        newPlateText = table.concat(recordedKeys, "")
+        -- Update cursor position
+        cursorPosition = cursorPosition + 1
+
+        -- Debug messages
+        debugPrint(" ")
+        debugPrint("Key pressed: " .. (javaKeycodeMapping[keycode] or tostring(keycode)))
+        debugPrint("Current input: " .. table.concat(recordedKeys, ""))
+        debugPrint("Cursor position: " .. cursorPosition)
+
+        -- Check for plate length limit
+        if not allowMoreThan8Characters and #recordedKeys == 8 then
+            debugPrint("Plate length reached")
             debugPrint(" ")
-            debugPrint("Key pressed: " .. (javaKeycodeMapping[keycode] or tostring(keycode)))
-            debugPrint("Current input: " .. table.concat(recordedKeys, ""))
-            if not allowMoreThan8Characters and #recordedKeys == 8 then
-                debugPrint("Plate length reached")
-                debugPrint(" ")
-                debugPrint("Turn on the option for scrolling text")
-                debugPrint("if you want to use text over 8 characters")
-                debugPrint("(buggy and semi permanent(make sure to turn off the infinite loop when done))")
-                stopRecording()
-            end
+            debugPrint("Turn on the option for scrolling text")
+            debugPrint("if you want to use text over 8 characters")
+            debugPrint("(buggy and semi permanent(make sure to turn off the infinite loop when done))")
+            stopRecording()
         end
+    end
+end
+
+-- Function to handle left arrow key -- have to fix this
+function moveCursorLeft()
+    if recordingKeystrokes and cursorPosition > 0 then
+        cursorPosition = cursorPosition - 1
+        debugPrint(" ")
+        debugPrint("Cursor moved left. Current cursor position: " .. cursorPosition)
+        debugPrint("Current input: " .. table.concat(recordedKeys, ""))
+        debugPrint("Cursor position: " .. cursorPosition) -- Print the cursor position
+    end
+end
+
+-- Function to handle right arrow key
+function moveCursorRight()
+    if recordingKeystrokes and cursorPosition < #recordedKeys + 1 then
+        cursorPosition = cursorPosition + 1
+        debugPrint(" ")
+        debugPrint("Cursor moved right. Current cursor position: " .. cursorPosition)
+        debugPrint("Current input: " .. table.concat(recordedKeys, ""))
+        debugPrint("Cursor position: " .. cursorPosition) -- Print the cursor position
     end
 end
 
 -- Function to handle backspace key
 function onBackspace()
     if recordingKeystrokes then
-        table.remove(recordedKeys)
-        newPlateText = table.concat(recordedKeys, "")
+        if cursorPosition > 1 then
+            cursorPosition = cursorPosition - 1
+            table.remove(recordedKeys, cursorPosition)
+            newPlateText = table.concat(recordedKeys, "")
+        end
         debugPrint(" ")
         debugPrint("Key pressed: Backspace")
         debugPrint("Current input: " .. table.concat(recordedKeys, ""))
+        debugPrint("Cursor position: " .. cursorPosition) -- Print the cursor position
+    end
+end
+
+-- Function to handle delete key
+function onDel()
+    if recordingKeystrokes then
+        if cursorPosition < #recordedKeys then
+            table.remove(recordedKeys, cursorPosition + 1)
+            newPlateText = table.concat(recordedKeys, "")
+            debugPrint(" ")
+            debugPrint("Key pressed: Delete")
+            debugPrint("Current input: " .. table.concat(recordedKeys, ""))
+            debugPrint("Cursor position: " .. cursorPosition) -- Print the cursor position
+        end
     end
 end
 
@@ -1210,11 +1397,13 @@ end
 function onSpace()
     if recordingKeystrokes then
         if #recordedKeys < 8 or allowMoreThan8Characters then
-            table.insert(recordedKeys, ' ')
+            table.insert(recordedKeys, cursorPosition, ' ')
             newPlateText = table.concat(recordedKeys, "")
+            cursorPosition = cursorPosition + 1
             debugPrint(" ")
             debugPrint("Key pressed: Spacebar")
             debugPrint("Current input: " .. table.concat(recordedKeys, ""))
+            debugPrint("Cursor position: " .. cursorPosition) -- Print the cursor position
             if not allowMoreThan8Characters and #recordedKeys == 8 then
                 stopRecording()
             end
@@ -1225,8 +1414,23 @@ end
 -- Function to handle ESC/Escape key
 function onESC()
     if recordingKeystrokes then
+        debugPrint(" ")
         debugPrint("Key Pressed: Escape")
-        toggleKeystrokeRecording()
+        cancelRecording()
+    end
+end
+
+function cancelRecording()
+    if recordingKeystrokes then
+        recordingKeystrokes = false
+        recordedKeys = {}
+        cursorPosition = 1
+        debugPrint(" ")
+        debugPrint("Recording of keystrokes has been cancelled abruptly. please toggle recording to begin again")
+        debugPrint(" ")
+        if userSettings.DebugMode == false then
+            debugMode = false
+        end
     end
 end
 
@@ -1255,9 +1459,9 @@ end
 function promptForConfirmation()
     debugPrint(" ")
     debugPrint("Are you sure you want to set your plate to: ")
-    print(newPlateText)
+    debugPrint(newPlateText)
     debugPrint(" ")
-    debugPrint("Please confirm: Y = Yes, N = No")
+    debugPrint("Please Confirm (HOLD): Y = Yes, N = No")
 
     local keypressY = false
     local keypressN = false
@@ -1283,6 +1487,7 @@ function promptForConfirmation()
                 debugPrint("Setting Plate to: " .. savedPlateText)
                 setPlate(savedPlateText)
                 recordedKeys = {}
+                cursorPosition = 1
 
                 if userSettings.DebugMode == false then
                     debugMode = false
@@ -1295,19 +1500,11 @@ function promptForConfirmation()
         elseif keypressN then
             debugPrint(" ")
             debugPrint("Key pressed: N")
-            debugPrint("Text Confirmation FAILED..")
+            debugPrint("Text Confirmation Cancelled..")
             newPlateText = nil
-            debugPrint("Resetting Process now.")
-            debugPrint("Resetting Process now..")
-            debugPrint("Resetting Process now...")
             recordedKeys = {}
-            debugPrint("Resetting Process now.")
-            debugPrint("Resetting Process now..")
-            debugPrint("Resetting Process now...")
             confirmingText = false
             debugPrint("Resetting Process now.")
-            debugPrint("Resetting Process now..")
-            debugPrint("Resetting Process now...")
             debugPrint(" ")
             startRecording()
             break
@@ -1326,7 +1523,7 @@ function confirmScrollText()
     debugPrint("you will need to make sure to disable scrolling before exiting the vehicle")
     debugPrint("to revert the plate to the last valid plate recorded by the script(8 characters or less)")
     debugPrint(" ")
-    debugPrint("Please confirm: Y = Yes, N = No")
+    debugPrint("Please Confirm (HOLD): Y = Yes, N = No")
     confirmingScrollText = true
     repeat
         if keypressY2 then
@@ -1342,6 +1539,8 @@ function confirmScrollText()
                 debugMode = false
             end
             ScrollText(newPlateText, 1)
+            recordedKeys = {}
+            cursorPosition = 1
             break
         elseif keypressN2 then
             debugPrint(" ")
@@ -1404,7 +1603,7 @@ end
 
 -- Speedo loop
 function runSpeedometer()
-    if localplayer and localplayer:is_in_vehicle() then
+    if carCheck() then
         local player = localplayer
         local vehicle = player:get_current_vehicle()
         if savedPlateText == nil then
@@ -1414,24 +1613,26 @@ function runSpeedometer()
         speedoRunning = true
         debugPrint("speedo starting 2")
         while speedoRunning == true do
-            local p = localplayer
-            local veh = p:get_current_vehicle()
-            if speedoRunning == false then
-                setPlate(savedPlateText)
-                break
-            end
-            sleep(0.0167) -- arbitrary number for 60 fps (test)
-            local velocity = veh:get_velocity()
-            local sped = math.sqrt(velocity.x ^ 2 + velocity.y ^ 2 + velocity.z ^ 2)
-            local speed = math.floor(sped * speedmode.current)
-            if speedoRunning == false then
-                setPlate(savedPlateText)
-                break
-            end
-            if speedmode.current == speedmode.mph then
-                setPlate(speed .. " MPH")
-            else
-                setPlate(speed .. " KPH")
+            if carCheck() then
+                local p = localplayer
+                local veh = p:get_current_vehicle()
+                if speedoRunning == false then
+                    setPlate(savedPlateText)
+                    break
+                end
+                sleep(0.0167) -- arbitrary number for 60 fps (test)
+                local velocity = veh:get_velocity()
+                local sped = math.sqrt(velocity.x ^ 2 + velocity.y ^ 2 + velocity.z ^ 2)
+                local speed = math.floor(sped * speedmode.current)
+                if speedoRunning == false then
+                    setPlate(savedPlateText)
+                    break
+                end
+                if speedmode.current == speedmode.mph then
+                    setPlate(speed .. " MPH")
+                else
+                    setPlate(speed .. " KPH")
+                end
             end
         end
     end
@@ -1440,14 +1641,14 @@ end
 -- Benny's Mode and F1 Mode
 function bennysModeToggle()
     if bennysMode == false then
-        if localplayer and localplayer:is_in_vehicle() and savedHash == 0 then
+        if carCheck() and savedHash == 0 then
             local p = localplayer
             local v = p:get_current_vehicle()
             savedHash = v:get_model_hash()
             v:set_model_hash(1896491931) -- silent uses 196747873
         end
     else
-        if localplayer and localplayer:is_in_vehicle() and savedHash ~= 0 then
+        if carCheck() and savedHash ~= 0 then
             local p = localplayer
             local v = p:get_current_vehicle()
             v:set_model_hash(savedHash)
@@ -1458,14 +1659,14 @@ end
 
 function f1ModeToggle()
     if f1Mode == false then
-        if localplayer and localplayer:is_in_vehicle() then
+        if carCheck() then
             local p = localplayer
             local v = p:get_current_vehicle()
             savedHash = v:get_model_hash()
             v:set_model_hash(-1960756985) -- silent uses 1492612435
         end
     else
-        if localplayer and localplayer:is_in_vehicle() and savedHash ~= 0 then
+        if carCheck() and savedHash ~= 0 then
             local p = localplayer
             local v = p:get_current_vehicle()
             v:set_model_hash(savedHash)
@@ -1587,7 +1788,7 @@ end
 
 -- Print the current vehicle hash
 function printHash()
-    if localplayer and localplayer:is_in_vehicle() then
+    if carCheck() then
         local p = localplayer
         local v = p:get_current_vehicle()
         local hash = v:get_model_hash()
@@ -1609,44 +1810,46 @@ local cumulativeCount = 0
 local vehiclesMoved = 0
 
 -- Main Loop (broken)
-co1 = coroutine.create(function(radius)
-    local playerPos = localplayer:get_position()
-    local playerVehicle = localplayer:get_current_vehicle()
+function removeVehicles()
+    while raceRunning do
+        local playerPos = localplayer:get_position()
+        local playerVehicle = localplayer:get_current_vehicle()
 
-    for veh in replayinterface.get_vehicles() do
-        if veh ~= playerVehicle then
-            local vehiclePosition = veh:get_position()
-            local distanceToMainPlayer = calculateDistance(vehiclePosition, playerPos)
-
-            local closeToAnyPlayer = false
-            for ped in replayinterface.get_peds() do
-                if IsPlayer(ped) and ped ~= localplayer then -- Exclude the local player
-                    local otherPlayerPos = ped:get_position()
-                    if calculateDistance(vehiclePosition, otherPlayerPos) <= Config.Safety then
-                        closeToAnyPlayer = true
-                        break
+        for veh in replayinterface.get_vehicles() do
+            if veh ~= playerVehicle then
+                local vehiclePosition = veh:get_position()
+                local distanceToMainPlayer = calculateDistance(vehiclePosition, playerPos)
+                if raceFinished then
+                    break
+                end
+                local closeToAnyPlayer = false
+                for ped in replayinterface.get_peds() do
+                    if IsPlayer(ped) and ped ~= localplayer then -- Exclude the local player
+                        local otherPlayerPos = ped:get_position()
+                        if calculateDistance(vehiclePosition, otherPlayerPos) <= Config.Safety then
+                            closeToAnyPlayer = true
+                            break
+                        end
                     end
                 end
+                if raceFinished then
+                    break
+                end
+                cumulativeCount = cumulativeCount + 1
+                if cumulativeCount >= 1000 then
+                    collectgarbage("collect")
+                    debugPrint("garbage collected")
+                    cumulativeCount = 0
+                end
+                if distanceToMainPlayer <= Config.OuterRadius and distanceToMainPlayer > Config.Safety and not closeToAnyPlayer then
+                    veh:set_position(vector3(0, 0, Config.OuterRadius) + vehiclePosition)
+                    vehiclesMoved = vehiclesMoved + 1
+                    debugPrint("vehicles moved so far: " .. vehiclesMoved)
+                end
             end
-
-            cumulativeCount = (cumulativeCount + 1)
-
-            if cumulativeCount >= 1000 then
-                collectgarbage("collect")
-                debugPrint("garbage collected")
-                cumulativeCount = 0
-            end
-
-            if distanceToMainPlayer <= Config.OuterRadius and distanceToMainPlayer > Config.Safety and not closeToAnyPlayer then
-                veh:set_position(vector3(0, 0, Config.OuterRadius) + vehiclePosition)
-                vehiclesMoved = vehiclesMoved + 1
-                debugPrint("vehicles moved so far: " .. vehiclesMoved)
-            end
-            coroutine.yield()
         end
     end
-end)
-
+end
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------------------------------------------------------------------------
@@ -1657,17 +1860,20 @@ end)
 -- Main Drag Race Function
 function DoDragRace()
     if scriptFree then
-        if localplayer and localplayer:is_in_vehicle() then
+        if carCheck() then
             checkPlate()
             --menu.emit_event("raceBeginning")
             local player = localplayer
             local vehicle = player:get_current_vehicle()
+            removeVehicles() -- Remove vehicles around the starting line (continues until raceRunning = false)
             raceRunning = true
             raceFinished = false
             startPosition = getCurrentPosition()
             reactionTime = 0
+            lastPosition = nil
             sixtyFootTime = 0
             sixtyFootSpeed = 0
+            totalDistanceTraveled = 0
             setPlate("GOODLUCK")
             sleep(1)
             setPlate("ENJOY ")
@@ -1690,11 +1896,10 @@ function DoDragRace()
                 sleep(1.25)
                 checkPlate()
             else
-                raceData = {}               -- Clear raceData for the current race to be saved
+                raceData = {} -- Clear raceData for the current race to be saved
                 setPlate("---GO---")
-                Timer.start()               -- Start the custom timer
+                Timer.start() -- Start the custom timer
                 while not raceFinished do
-                    coroutine.resume(co1)   -- Remove vehicles around the starting line
                     if reactionTime == 0 and getCurrentPosition() ~= startPosition then
                         reactionTime = formatTime(Timer.elapsedTime())
                     end
@@ -1741,7 +1946,7 @@ function DoDragRace()
                         debugPrint("60 Foot Time: " .. sixtyFootTime)
                         debugPrint("Race finished! Time: " .. formatTime(finalTime))
                         debugPrint("60 Foot SpeedTrap: " .. sixtyFootSpeed .. " " .. selectedMode)
-                        debugPrint("Final Speed: " .. finalSpeed .. " " .. selectedMode)
+                        debugPrint("Final Speed: " .. finalSpeed * speedmode.current .. " " .. selectedMode)
 
                         setPlate(formatTime(finalTime)) -- Display race time on the plate
                         sleep(5)
@@ -1787,7 +1992,7 @@ function checkPlate()
     scriptFree = false
     debugPrint("checking plate now. please wait.")
     stopEverything()
-    if localplayer and localplayer:is_in_vehicle() then
+    if carCheck() then
         debugPrint("checking plate now. please wait..")
         debugPrint("checking plate now. please wait...")
         debugPrint(" ")
@@ -1888,7 +2093,7 @@ end
 
 -- Function to scroll text on the number plate
 function ScrollText(message, speed)
-    if localplayer and localplayer:is_in_vehicle() then
+    if carCheck() then
         debugPrint("scroll text function called, checking plate before continuation")
         checkPlate()
         if not message or type(message) ~= 'string' then
@@ -1958,21 +2163,138 @@ end
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------- Colour Changing Functions ----------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+function RGBSpeedChange()
+    if colourChangeSpeed == RGBSpeeds.extraSlow then
+        colourChangeSpeed = RGBSpeeds.slow
+    elseif colourChangeSpeed == RGBSpeeds.slow then
+        colourChangeSpeed = RGBSpeeds.default
+    elseif colourChangeSpeed == RGBSpeeds.default then
+        colourChangeSpeed = RGBSpeeds.fast
+    elseif colourChangeSpeed == RGBSpeeds.fast then
+        colourChangeSpeed = RGBSpeeds.extraFast
+    elseif colourChangeSpeed == RGBSpeeds.extraFast then
+        colourChangeSpeed = RGBSpeeds.extraExtraFast
+    elseif colourChangeSpeed == RGBSpeeds.extraExtraFast then
+        colourChangeSpeed = RGBSpeeds.extraSlow
+    end
+end
+
+local function isValidColor(color)
+    for _, component in pairs(color) do
+        if component == nil then
+            return false
+        end
+    end
+    return true
+end
+
+function toggleRGBLoop()
+    if carCheck() then
+        local vehicle = localplayer:get_current_vehicle()
+        if colourChanging then
+            colourChanging = false
+            restorePaint(vehicle)
+        else
+            -- Retrieve current primary and secondary colors
+            originalPaint.primary.R, originalPaint.primary.G, originalPaint.primary.B = vehicle
+                :get_custom_primary_colour()
+            originalPaint.secondary.R, originalPaint.secondary.G, originalPaint.secondary.B = vehicle
+                :get_custom_secondary_colour()
+            debugPrint("Original Primary: " ..
+                "Red: " ..
+                originalPaint.primary.R ..
+                ". Green: " .. originalPaint.primary.G .. ". Blue: " .. originalPaint.primary.B)
+            debugPrint("Original Secondary: " ..
+                "Red: " ..
+                originalPaint.secondary.R ..
+                ". Green: " .. originalPaint.secondary.G .. ". Blue: " .. originalPaint.secondary.B)
+            colourChangeLoop(vehicle)
+        end
+    end
+end
+
+function restorePaint(vehicle)
+    if carCheck() then
+        if isValidColor(originalPaint.primary) and isValidColor(originalPaint.secondary) then
+            vehicle:set_custom_primary_colour(originalPaint.primary.R, originalPaint.primary.G, originalPaint.primary.B)
+            vehicle:set_custom_secondary_colour(originalPaint.secondary.R, originalPaint.secondary.G, originalPaint.secondary.B)
+            debugPrint("Colour has been reverted")
+        else
+            debugPrint("Error: Original colors are nil")
+        end
+    end
+end
+
+function colourChangeLoop(vehicle)
+    colourChanging = true
+    while colourChanging do
+        -- Calculate RGB values based on current hue
+        local r, g, b = hsv_to_rgb(hue, 1, 1)
+
+        -- Convert RGB values to integers
+        r, g, b = math.floor(r + 0.5), math.floor(g + 0.5), math.floor(b + 0.5)
+
+        -- Apply calculated RGB values to vehicle
+        vehicle:set_custom_primary_colour(r, g, b)
+        vehicle:set_custom_secondary_colour(r, g, b)
+
+        -- Increment hue for next iteration
+        hue = (hue + 1) % 360
+
+        sleep(colourChangeSpeed)
+
+        -- Check if the color change should be stopped
+        if not colourChanging then
+            return -- Exit the function if colourChanging is false
+        end
+    end
+end
+
+-- Helper function to convert HSV to RGB
+function hsv_to_rgb(h, s, v)
+    local c = v * s
+    local x = c * (1 - math.abs((h / 60) % 2 - 1))
+    local m = v - c
+    local r, g, b = 0, 0, 0
+
+    if h < 60 then
+        r, g, b = c, x, 0
+    elseif h < 120 then
+        r, g, b = x, c, 0
+    elseif h < 180 then
+        r, g, b = 0, c, x
+    elseif h < 240 then
+        r, g, b = 0, x, c
+    elseif h < 300 then
+        r, g, b = x, 0, c
+    else
+        r, g, b = c, 0, x
+    end
+
+    return r * 255, g * 255, b * 255
+end
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------ Drift Plate Function -------------------------------------------------------------
 -----------------------------------------------------------------------------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------------------------------------------------------------------------
 local driftAngles = {}
-local maxDriftAngleHistory = 5          -- The number of angles to keep in history for averaging
-local updateDelay = 0.25                -- delay between refresh
+local maxDriftAngleHistory = 5 -- The number of angles to keep in history for averaging
+local updateDelay = 0.25       -- delay between refresh
 local driftPoints = 0
 local comboStreak = 0
-local angleMultiplier = 2               -- Adjust as needed
-local speedBonusThreshold = 30 * 3.5    -- Adjust as needed
-local transitionAngleThreshold = 45     -- Adjust as needed, in degrees
-local transitionPoints = 50             -- Adjust as needed
+local angleMultiplier = 2            -- Adjust as needed
+local speedBonusThreshold = 30 * 3.5 -- Adjust as needed
+local transitionAngleThreshold = 45  -- Adjust as needed, in degrees
+local transitionPoints = 50          -- Adjust as needed
 
 function setUpdateDelay(value)
-    updateDelay = value / 1000          -- Convert milliseconds to seconds
+    updateDelay = value / 1000 -- Convert milliseconds to seconds
 end
 
 -- Vector operations (drift plate functionality)
@@ -2061,7 +2383,7 @@ function startDriftPlate()
     local prevDriftAngle = 0 -- To track the previous drift angle for transition detection
 
     while driftPlate do
-        if localplayer and localplayer:is_in_vehicle() then
+        if carCheck() then
             local veh = localplayer:get_current_vehicle()
             local driftAngle = calculateDriftAngle(veh)
             local speed = vectorMagnitude(veh:get_velocity())
@@ -2130,11 +2452,12 @@ local daytonsDragMenu = daytonsMenu:add_submenu("Drag Section")
 local daytonsTuning = daytonsMenu:add_submenu("1 click Tuning")
 local daytonsCustomPlates = daytonsMenu:add_submenu("Custom Plates")
 local daytonsRims = daytonsMenu:add_submenu("Tire Mods (Use in CEO Office)")
+local textcolormenu = daytonsMenu:add_submenu("Plate Text Colors")
 
 -- Static Plate SubMenus
-local PermanentPlateChangeMenu = daytonsCustomPlates:add_submenu("Permanent/Static Plates")
+local PermanentPlateChangeMenu = daytonsCustomPlates:add_submenu("Pre-Made Custom Plates")
 local KeefsPlateInputMenu = daytonsCustomPlates:add_submenu("User Input Plate Changer(user typed)")
-local userPlateMenu = PermanentPlateChangeMenu:add_submenu("User Plates(pre-made)")
+local userPlateMenu = PermanentPlateChangeMenu:add_submenu("Random User Plates")
 local starWarsMenu = PermanentPlateChangeMenu:add_submenu("Star Wars Plates")
 local gtaMenu = PermanentPlateChangeMenu:add_submenu("GTA Plates")
 local racersGearheadsMenu = PermanentPlateChangeMenu:add_submenu("Racers & Gearheads Plates")
@@ -2151,8 +2474,6 @@ local scrollingtextmenu = DynamicPlateMenu:add_submenu("Scrolling Message Plates
 -- MERRY CHRISTMAS SCROLL
 local MerryChristmasScrollMenu = scrollingtextmenu:add_submenu("EAT SHIT AND DIE Loop")
 
--- Plate Designs (Colours)
-local textcolormenu = PermanentPlateChangeMenu:add_submenu("Plate Text Colors")
 
 -- User Input Menu
 local userInputMenu = KeefsPlateInputMenu:add_submenu("Keyboard Input (experimental)", function()
@@ -2225,7 +2546,9 @@ daytonsDragMenu:add_action("Start Drag Race",
             checkPlate()
             debugPrint("starting the DoDragRace function now")
             DoDragRace()
-        else rip() end
+        else
+            rip()
+        end
     end)
 daytonsDragMenu:add_action("", function() rip() end)
 daytonsDragMenu:add_action("Quit Race (Do NOT Hold)", function() abortrace() end)
@@ -2325,7 +2648,7 @@ KeefsPlateInputMenu:add_action("Write your own plates by opening", rip)
 KeefsPlateInputMenu:add_action("the debug log", rip)
 KeefsPlateInputMenu:add_action("while the debug log is open,", rip)
 KeefsPlateInputMenu:add_action("select the option", rip)
-KeefsPlateInputMenu:add_action("to allow more than 8 characters if you want to", rip)
+KeefsPlateInputMenu:add_action("to allow more than 8 characters", rip)
 KeefsPlateInputMenu:add_action("if you want to use scrolling text", rip)
 KeefsPlateInputMenu:add_action("on your license plate", rip)
 KeefsPlateInputMenu:add_action("", rip)
@@ -2339,7 +2662,8 @@ KeefsPlateInputMenu:add_action("STOP SCROLLING TEXT", function()
     checkPlate()
 end)
 -- Add toggle for allowing more than 8 characters
-userInputMenu:add_toggle("Toggle Keystroke Recording", function() return recordingKeystrokes end, function() toggleKeystrokeRecording() end)
+userInputMenu:add_toggle("Toggle Keystroke Recording", function() return recordingKeystrokes end,
+    function() toggleKeystrokeRecording() end)
 -- Add toggle for allowing more than 8 characters
 userInputMenu:add_toggle("Allow More Than 8 Characters", function() return allowMoreThan8Characters end,
     function()
@@ -2355,7 +2679,7 @@ userInputMenu:add_action("Stop Scrolling Text",
     end)
 userPlateMenu:add_array_item("Custom Plates", customPlates["USERPLATES"], function() end,
     function(value)
-        if localplayer and localplayer:is_in_vehicle() then
+        if carCheck() then
             stopEverything()
             setPlate(customPlates["USERPLATES"][value])
             savedPlateText = customPlates["USERPLATES"][value]
@@ -2366,7 +2690,7 @@ userPlateMenu:add_array_item("Custom Plates", customPlates["USERPLATES"], functi
 -- STAR WARS Categories
 starWarsMenu:add_array_item("Characters", customPlates["starWarsCharacterPlates"], function() end,
     function(value)
-        if localplayer and localplayer:is_in_vehicle() then
+        if carCheck() then
             stopEverything()
             setPlate(customPlates["starWarsCharacterPlates"][value])
             savedPlateText = customPlates["starWarsCharacterPlates"][value]
@@ -2376,7 +2700,7 @@ starWarsMenu:add_array_item("Characters", customPlates["starWarsCharacterPlates"
     end)
 starWarsMenu:add_array_item("Ships", customPlates["starWarsShipPlates"], function() end,
     function(value)
-        if localplayer and localplayer:is_in_vehicle() then
+        if carCheck() then
             stopEverything()
             setPlate(customPlates["starWarsShipPlates"][value])
             savedPlateText = customPlates["starWarsShipPlates"][value]
@@ -2387,7 +2711,7 @@ starWarsMenu:add_array_item("Ships", customPlates["starWarsShipPlates"], functio
 -- GTA Categories
 gtaMenu:add_array_item("Vice City", customPlates["gtaViceCityPlates"], function() end,
     function(value)
-        if localplayer and localplayer:is_in_vehicle() then
+        if carCheck() then
             stopEverything()
             setPlate(customPlates["gtaViceCityPlates"][value])
             savedPlateText = customPlates["gtaViceCityPlates"][value]
@@ -2397,7 +2721,7 @@ gtaMenu:add_array_item("Vice City", customPlates["gtaViceCityPlates"], function(
     end)
 gtaMenu:add_array_item("San Andreas", customPlates["gtaSanAndreasPlates"], function() end,
     function(value)
-        if localplayer and localplayer:is_in_vehicle() then
+        if carCheck() then
             stopEverything()
             setPlate(customPlates["gtaSanAndreasPlates"][value])
             savedPlateText = customPlates["gtaSanAndreasPlates"][value]
@@ -2407,7 +2731,7 @@ gtaMenu:add_array_item("San Andreas", customPlates["gtaSanAndreasPlates"], funct
     end)
 gtaMenu:add_array_item("IV", customPlates["gtaIVPlates"], function() end,
     function(value)
-        if localplayer and localplayer:is_in_vehicle() then
+        if carCheck() then
             stopEverything()
             setPlate(customPlates["gtaIVPlates"][value])
             savedPlateText = customPlates["gtaIVPlates"][value]
@@ -2417,7 +2741,7 @@ gtaMenu:add_array_item("IV", customPlates["gtaIVPlates"], function() end,
     end)
 gtaMenu:add_array_item("V", customPlates["gtaVPlates"], function() end,
     function(value)
-        if localplayer and localplayer:is_in_vehicle() then
+        if carCheck() then
             stopEverything()
             setPlate(customPlates["gtaVPlates"][value])
             savedPlateText = customPlates["gtaVPlates"][value]
@@ -2427,7 +2751,7 @@ gtaMenu:add_array_item("V", customPlates["gtaVPlates"], function() end,
     end)
 gtaMenu:add_array_item("VI", customPlates["gta6CharactersLocationsPlates"], function() end,
     function(value)
-        if localplayer and localplayer:is_in_vehicle() then
+        if carCheck() then
             stopEverything()
             setPlate(customPlates["gta6CharactersLocationsPlates"][value])
             savedPlateText = customPlates["gta6CharactersLocationsPlates"][value]
@@ -2438,7 +2762,7 @@ gtaMenu:add_array_item("VI", customPlates["gta6CharactersLocationsPlates"], func
 -- Racers & Gearheads Categories
 racersGearheadsMenu:add_array_item("Off-Roaders", customPlates["offRoadPlates"], function() end,
     function(value)
-        if localplayer and localplayer:is_in_vehicle() then
+        if carCheck() then
             stopEverything()
             setPlate(customPlates["offRoadPlates"][value])
             savedPlateText = customPlates["offRoadPlates"][value]
@@ -2448,7 +2772,7 @@ racersGearheadsMenu:add_array_item("Off-Roaders", customPlates["offRoadPlates"],
     end)
 racersGearheadsMenu:add_array_item("Supercars", customPlates["supercarPlates"], function() end,
     function(value)
-        if localplayer and localplayer:is_in_vehicle() then
+        if carCheck() then
             stopEverything()
             setPlate(customPlates["supercarPlates"][value])
             savedPlateText = customPlates["supercarPlates"][value]
@@ -2458,7 +2782,7 @@ racersGearheadsMenu:add_array_item("Supercars", customPlates["supercarPlates"], 
     end)
 racersGearheadsMenu:add_array_item("Street Tuners", customPlates["streetTunerPlates"], function() end,
     function(value)
-        if localplayer and localplayer:is_in_vehicle() then
+        if carCheck() then
             stopEverything()
             setPlate(customPlates["streetTunerPlates"][value])
             savedPlateText = customPlates["streetTunerPlates"][value]
@@ -2468,7 +2792,7 @@ racersGearheadsMenu:add_array_item("Street Tuners", customPlates["streetTunerPla
     end)
 racersGearheadsMenu:add_array_item("Muscle Cars", customPlates["muscleCarPlates"], function() end,
     function(value)
-        if localplayer and localplayer:is_in_vehicle() then
+        if carCheck() then
             stopEverything()
             setPlate(customPlates["muscleCarPlates"][value])
             savedPlateText = customPlates["muscleCarPlates"][value]
@@ -2478,7 +2802,7 @@ racersGearheadsMenu:add_array_item("Muscle Cars", customPlates["muscleCarPlates"
     end)
 racersGearheadsMenu:add_array_item("Vintage Classics", customPlates["vintageClassicPlates"], function() end,
     function(value)
-        if localplayer and localplayer:is_in_vehicle() then
+        if carCheck() then
             stopEverything()
             setPlate(customPlates["vintageClassicPlates"][value])
             savedPlateText = customPlates["vintageClassicPlates"][value]
@@ -2489,7 +2813,7 @@ racersGearheadsMenu:add_array_item("Vintage Classics", customPlates["vintageClas
 -- Pop Culture Categories
 popCultureMenu:add_array_item("Game Characters", customPlates["gameCharacterPlates"], function() end,
     function(value)
-        if localplayer and localplayer:is_in_vehicle() then
+        if carCheck() then
             stopEverything()
             setPlate(customPlates["gameCharacterPlates"][value])
             savedPlateText = customPlates["gameCharacterPlates"][value]
@@ -2500,7 +2824,7 @@ popCultureMenu:add_array_item("Game Characters", customPlates["gameCharacterPlat
 )
 popCultureMenu:add_array_item("Game Vehicles", customPlates["gameVehiclePlates"], function() end,
     function(value)
-        if localplayer and localplayer:is_in_vehicle() then
+        if carCheck() then
             stopEverything()
             setPlate(customPlates["gameVehiclePlates"][value])
             savedPlateText = customPlates["gameVehiclePlates"][value]
@@ -2509,7 +2833,63 @@ popCultureMenu:add_array_item("Game Vehicles", customPlates["gameVehiclePlates"]
         end
     end)
 daytonsCustomPlates:add_action("Stop Scrolling!!", function() stopEverything() end)
+
+function printPOS()
+    if carCheck() then
+        local veh = localplayer:get_current_vehicle()
+        local pos = veh:get_position()
+        local rotation = veh:get_rotation()
+        print("Current Position: " .. tostring(pos))
+        print("Current rotation: " .. tostring(rotation))
+    end
+end
+
+local debugrotation = nil
+local debugpos = nil
+local debugveh = nil
+
+function savePOS()
+    if carCheck() then
+        debugveh = localplayer:get_current_vehicle()
+        debugpos = debugveh:get_position()
+        debugrotation = debugveh:get_rotation()
+        print("saving POS: " .. tostring(debugpos))
+    end
+end
+
+function returnToPOS()
+    if carCheck() then
+        if debugveh then
+            print("moving to: " .. tostring(debugpos))
+            debugveh:set_position(debugpos)
+            debugveh:set_rotation(debugrotation)
+        end
+    end
+end
+
 userSettingsMenu:add_toggle("Debug Mode", function() return debugMode end, function() toggleDebugMode() end)
 userSettingsMenu:add_toggle("MPH Speedometer",
     function() if speedmode.current == speedmode.kph then return false else return true end end,
     function() toggleSpeedmode() end)
+
+--[[ Freeway Race Line 1 Vector3(2778.724, 4485.23, 46.33649)]]
+userSettingsMenu:add_action("teleport to freeway",
+    function()
+        if carCheck() then
+            local veh = localplayer:get_current_vehicle()
+            veh:set_position(2778.724, 4485.23, 46.33649)
+            print("teleported")
+        end
+    end)
+userSettingsMenu:add_action("print location and rotation", function() printPOS() end)
+userSettingsMenu:add_action("save pos for tp", function() savePOS() end)
+userSettingsMenu:add_action("teleport to saved pos", function() returnToPOS() end)
+local paintMenu = daytonsMenu:add_submenu("experimental rgb paint mode")
+paintMenu:add_action("Work In Progress!!", function() rip() end)
+paintMenu:add_action("WILL NOT REVERT TO ORIGINAL COLOUR", function() rip() end)
+paintMenu:add_action(" ", function() rip() end)
+paintMenu:add_toggle("RGB Paint", function() return colourChanging end, function() toggleRGBLoop() end)
+
+paintMenu:add_action("Change RGB Speed", function() RGBSpeedChange() end)
+userSettingsMenu:add_action("rgb manual off", function() colourChanging = false end)
+userSettingsMenu:add_action("enter pv", function() menu.enter_personal_vehicle() end)
