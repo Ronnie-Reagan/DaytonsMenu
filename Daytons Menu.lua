@@ -1,34 +1,33 @@
 --This is a test scrip to show dayton how to code.
-
+-- Daytons Menu V4
 function printFlag()
     print(" ")
     print(" ")
     print(" ")
-    print("--DACANADACANADACANADACANADACANADACANADACANADACANADACANADACANADACANAD")
-    print("--ACANADACANADACAN                                   NADACANADACANADA")
-    print("--CANADACANADACANA                 A                 ADACANADACANADAC")
-    print("--ANADACANADACANAD                ADA                DACANADACANADACA")
-    print("--NADACANADACANADA           AC  ADACA  DA           ACANADACANADACAN")
-    print("--ADACANADACANADAC            ANADACANADA            CANADACANADACANA")
-    print("--DACANADACANADACA        DA   ADACANADA   AD        ANADACANADACANAD")
-    print("--ACANADACANADACAN    ANADACAN  ACANADA  NADACANA    NADACANADACANADA")
-    print("--CANADACANADACANA     ADACANADACANADACANADACANA     ADACANADACANADAC")
-    print("--ANADACANADACANAD   NADACANADACANADACANADACANADAC   DACANADACANADACA")
-    print("--NADACANADACANADA      CANADACANADACANADACANAD      ACANADACANADACAN")
-    print("--ADACANADACANADAC         DACANADACANADACAN         CANADACANADACANA")
-    print("--DACANADACANADACA           ANADACANADACA           ANADACANADACANAD")
-    print("--ACANADACANADACAN         CANADACANADACANAD         NADACANADACANADA")
-    print("--CANADACANADACANA                 A                 ADACANADACANADAC")
-    print("--ANADACANADACANAD                 D                 DACANADACANADACA")
-    print("--NADACANADACANADA                 A                 ACANADACANADACAN")
-    print("--ADACANADACANADAC                                   CANADACANADACANA")
-    print("--DACANADACANADACANADACANADACANADACANADACANADACANADACANADACANADACANAD")
+    print("DACANADACANADACANADACANADACANADACANADACANADACANADACANADACANADACANAD")
+    print("ACANADACANADACAN                                   NADACANADACANADA")
+    print("CANADACANADACANA                 A                 ADACANADACANADAC")
+    print("ANADACANADACANAD                ADA                DACANADACANADACA")
+    print("NADACANADACANADA           AC  ADACA  DA           ACANADACANADACAN")
+    print("ADACANADACANADAC            ANADACANADA            CANADACANADACANA")
+    print("DACANADACANADACA        DA   ADACANADA   AD        ANADACANADACANAD")
+    print("ACANADACANADACAN    ANADACAN  ACANADA  NADACANA    NADACANADACANADA")
+    print("CANADACANADACANA     ADACANADACANADACANADACANA     ADACANADACANADAC")
+    print("ANADACANADACANAD   NADACANADACANADACANADACANADAC   DACANADACANADACA")
+    print("NADACANADACANADA      CANADACANADACANADACANAD      ACANADACANADACAN")
+    print("ADACANADACANADAC         DACANADACANADACAN         CANADACANADACANA")
+    print("DACANADACANADACA           ANADACANADACA           ANADACANADACANAD")
+    print("ACANADACANADACAN         CANADACANADACANAD         NADACANADACANADA")
+    print("CANADACANADACANA                 A                 ADACANADACANADAC")
+    print("ANADACANADACANAD                 D                 DACANADACANADACA")
+    print("NADACANADACANADA                 A                 ACANADACANADACAN")
+    print("ADACANADACANADAC                                   CANADACANADACANA")
+    print("DACANADACANADACANADACANADACANADACANADACANADACANADACANADACANADACANAD")
     print(" ")
     print("Love From Canada.")
     print(" ")
     print(" ")
 end
-
 
 --[[ To be implemented
 local positiveMessages = {}
@@ -780,12 +779,13 @@ function loadVehicleHashes()
     print("Loading of Vehicle Hashes Complete")
 end
 
+print("Current Usage: " .. collectgarbage("count") .. " KB")
 print("Loading Vehicle Hashes Now")
 loadVehicleHashes()
-
+print("Current Usage: " .. collectgarbage("count") .. " KB")
 print("Loading Custom Plates Now")
 loadCustomPlates()
-
+print("Current Usage: " .. collectgarbage("count") .. " KB")
 print("Accesory Functions, Variables and Strings Loaded.")
 
 -- Global variable to control infinite scrolling
@@ -798,7 +798,13 @@ local XMASPLATE = false
 local lastPosition = nil
 local allowMoreThan8Characters = false
 local defaultPlate = "ROCKSTAR"
-local debugMode = true            -- true for initial startup (reset to false after full script is loaded)
+local debugMode = true -- true for initial startup (reset to false after full script is loaded)
+local debugMenuLoaded = false
+local speedCounter = 0
+local xmasPlateCounter = 0
+local RGBCounter = 0
+local scrollcouter = 0
+local driftPlateCounter = 0
 local recordingKeystrokes = false -- keystroke recording for typing in custom plates
 local recordedKeys = {}
 local cursorPosition = 1
@@ -826,12 +832,12 @@ local rollTuneSettings = { -- EXPERIMENTAL!!
 
 -- RGB Paint
 local RGBSpeeds = {
-    extraExtraFast = 0.005,
-    extraFast = 0.01,
-    fast = 0.05,
-    default = 0.10,
-    slow = 0.15,
-    extraSlow = 0.20
+    extraExtraFast = 0.01,
+    extraFast = 0.05,
+    fast = 0.10,
+    default = 0.15,
+    slow = 0.20,
+    extraSlow = 0.25
 }
 local colourChangeSpeed = RGBSpeeds.default
 local colourChanging = false
@@ -851,6 +857,7 @@ end
 -- Menu Text Only Function
 local function rip()
     debugPrint("i am dumb")
+    debugPrint("Memory Usage: " .. collectgarbage("count") .. " KB")
 end
 
 -- Drag Race Variables
@@ -938,7 +945,12 @@ function loadUserSettings()
     if result and loadedSettings then
         if loadedSettings.DebugMode ~= nil then
             userSettings = loadedSettings
-            debugMode = userSettings.DebugMode              -- Set to the setting stored in the file.
+            debugMode = userSettings.DebugMode -- Set to the setting stored in the file.
+            if debugMode == false then
+                print("Debug Mode OFF")
+            else
+                print("Debug Mode Active")
+            end
             if userSettings.selectedSpeedMode == "kph" then -- convert from one mode to another (with/without values)
                 speedmode.current = speedmode.kph
             else
@@ -965,6 +977,9 @@ local function toggleDebugMode()
         debugMode = false
     else
         debugMode = true
+        if not debugMenuLoaded then
+            loadDebugMenu()
+        end
     end
     userSettings.DebugMode = debugMode
     json.savefile(userSettingsFilename, userSettings)
@@ -990,6 +1005,11 @@ menu.register_callback("OnScriptsLoaded", function()
     debugPrint(" ")
     print("Thank you for trying my latest creation. Please Enjoy.")
     print("                    - Don Reagan")
+    if debugMode then
+        if not debugMenuLoaded then
+            loadDebugMenu()
+        end
+    end
 end
 )
 
@@ -1108,7 +1128,6 @@ function spoodBeast()
         tuningMode.spoodBeastMode = false
         revertStats()
     else
-        tuningMode.spoodBeastMode = true
         if carCheck() then
             local player = localplayer
             local veh = player:get_current_vehicle()
@@ -1126,6 +1145,7 @@ function spoodBeast()
             veh:set_down_shift(spoodBeastStats.downShift)
             veh:set_drive_bias_front(spoodBeastStats.driveBiasFront)
             veh:set_steering_lock(spoodBeastStats.turningRadius)
+            tuningMode.spoodBeastMode = true
         end
     end
 end
@@ -1155,6 +1175,7 @@ function slowDrift()
             veh:set_down_shift(slowDriftStats.downShift)
             veh:set_drive_bias_front(slowDriftStats.driveBiasFront)
             veh:set_steering_lock(slowDriftStats.turningRadius)
+            tuningMode.slowDriftMode = true
         end
     end
 end
@@ -1184,6 +1205,7 @@ function fastDrift()
             veh:set_down_shift(fastDriftStats.downShift)
             veh:set_drive_bias_front(fastDriftStats.driveBiasFront)
             veh:set_steering_lock(fastDriftStats.turningRadius)
+            tuningMode.fastDriftMode = true
         end
     end
 end
@@ -1194,7 +1216,7 @@ menu.register_callback("OnVehicleChanged", function()
         if currentveh ~= savedPlateVehicle or savedPlateVehicle == nil then
             savedPlateVehicle = currentveh
             savedPlateText = currentveh:get_number_plate_text()
-            debugPrint("New Vehicle Detected, Attempting to resume script functions...")
+            debugPrint("New Vehicle Detected")
         else
             debugPrint("vehicle change messed up, re-routing script")
             return
@@ -1575,6 +1597,45 @@ end
 -----------------------------------------------------------------------------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------------------------------------------------------------------------
 
+-- Returns Player speed in Meters per second
+local function getCurrentSpeed(vehicle)
+    local velocity = vehicle:get_velocity()
+    local speedms = math.sqrt(velocity.x ^ 2 + velocity.y ^ 2 + velocity.z ^ 2)
+    return speedms
+end
+
+-- Returns the weighted average and total amount of values being used
+local function getWeightedAverage(t)
+    local weightedSum = 0
+    local totalWeights = 0
+    for i, v in ipairs(t) do
+        weightedSum = weightedSum + v * i
+        totalWeights = totalWeights + i
+    end
+    return weightedSum / totalWeights
+end
+
+-- Display the current speed
+local function displaySpeed()
+    local vehicle = localplayer:get_current_vehicle()
+    local currentSpeed = getCurrentSpeed(vehicle)
+    table.insert(speeds, currentSpeed)
+    if #speeds > 5
+    then
+        table.remove(speeds, 1)
+    end
+    local predictedSpeed = getWeightedAverage(speeds)
+    local displayedSpeed = math.floor(predictedSpeed * speedmode.current)
+    local speedStr = string.format("%3s", displayedSpeed > 0 and tostring(displayedSpeed) or "")
+    if speedmode.current == speedmode.mph then
+        local plateText = speedStr .. "  MPH"
+        setPlate(plateText)
+    else
+        local plateText = speedStr .. "  KPH"
+        setPlate(plateText)
+    end
+end
+
 -- Function to toggle the Speedometer Mode
 function toggleSpeedmode()
     if speedmode.current == speedmode.kph then
@@ -1611,32 +1672,33 @@ function runSpeedometer()
             savedPlateVehicle = vehicle
         end
         speedoRunning = true
-        debugPrint("speedo starting 2")
+        speedCounter = 0
         while speedoRunning == true do
             if carCheck() then
-                local p = localplayer
-                local veh = p:get_current_vehicle()
                 if speedoRunning == false then
                     setPlate(savedPlateText)
                     break
+                end
+                displaySpeed()
+                speedCounter = speedCounter + 1
+                if speedCounter > 1000 then
+                    debugPrint("")
+                    debugPrint("Garbage Cleanup Started")
+                    debugPrint("")
+                    debugPrint("Memory Usage: " .. collectgarbage("count") .. " KB")
+                    debugPrint("Garbage Cleaning in Progress.")
+                    collectgarbage("collect")
+                    speedCounter = 0
+                    debugPrint("Garbage Cleanup finished")
+                    debugPrint("Memory Usage: " .. collectgarbage("count") .. " KB")
                 end
                 sleep(0.0167) -- arbitrary number for 60 fps (test)
-                local velocity = veh:get_velocity()
-                local sped = math.sqrt(velocity.x ^ 2 + velocity.y ^ 2 + velocity.z ^ 2)
-                local speed = math.floor(sped * speedmode.current)
-                if speedoRunning == false then
-                    setPlate(savedPlateText)
-                    break
-                end
-                if speedmode.current == speedmode.mph then
-                    setPlate(speed .. " MPH")
-                else
-                    setPlate(speed .. " KPH")
-                end
             end
         end
     end
 end
+
+------------------------------------------------Bennys and F1----------------------------------------------------------
 
 -- Benny's Mode and F1 Mode
 function bennysModeToggle()
@@ -1747,45 +1809,6 @@ function hasReachedFinishLine()
     end
 end
 
--- Returns Player speed in Meters per second
-local function getCurrentSpeed(vehicle)
-    local velocity = vehicle:get_velocity()
-    local speedms = math.sqrt(velocity.x ^ 2 + velocity.y ^ 2 + velocity.z ^ 2)
-    return speedms
-end
-
--- Returns the weighted average and total amount of values being used
-local function getWeightedAverage(t)
-    local weightedSum = 0
-    local totalWeights = 0
-    for i, v in ipairs(t) do
-        weightedSum = weightedSum + v * i
-        totalWeights = totalWeights + i
-    end
-    return weightedSum / totalWeights
-end
-
--- Display the current speed
-local function displaySpeed()
-    local vehicle = localplayer:get_current_vehicle()
-    local currentSpeed = getCurrentSpeed(vehicle)
-    table.insert(speeds, currentSpeed)
-    if #speeds > 5
-    then
-        table.remove(speeds, 1)
-    end
-    local predictedSpeed = getWeightedAverage(speeds)
-    local displayedSpeed = math.floor(predictedSpeed * speedmode.current)
-    local speedStr = string.format("%3s", displayedSpeed > 0 and tostring(displayedSpeed) or "")
-    if speedmode.current == speedmode.mph then
-        local plateText = speedStr .. "  MPH"
-        setPlate(plateText)
-    else
-        local plateText = speedStr .. "  KPH"
-        setPlate(plateText)
-    end
-end
-
 -- Print the current vehicle hash
 function printHash()
     if carCheck() then
@@ -1837,8 +1860,11 @@ function removeVehicles()
                 end
                 cumulativeCount = cumulativeCount + 1
                 if cumulativeCount >= 1000 then
+                    debugPrint("Garbage Collection Started")
+                    debugPrint("")
+                    debugPrint("Current Usage: " .. collectgarbage() .. " KB")
                     collectgarbage("collect")
-                    debugPrint("garbage collected")
+                    debugPrint("Garbage Collection Finished")
                     cumulativeCount = 0
                 end
                 if distanceToMainPlayer <= Config.OuterRadius and distanceToMainPlayer > Config.Safety and not closeToAnyPlayer then
@@ -2054,7 +2080,19 @@ function Christmasplate(XMASSPEED)
         savedPlateText = veh:get_number_plate_text()
         savedPlateVehicle = veh
         XMASPLATE = true
+        xmasPlateCounter = 0
         while XMASPLATE == true do
+            xmasPlateCounter = xmasPlateCounter + 1
+            if xmasPlateCounter > 1000 then
+                debugPrint("")
+                debugPrint("Garbage Collection Started")
+                debugPrint("")
+                debugPrint("Memory Usage: " .. collectgarbage("count") .. " KB")
+                collectgarbage("collect")
+                xmasPlateCounter = 0
+                debugPrint("Memory cleanup finished")
+                debugPrint("Memory Usage: " .. collectgarbage("count") .. " KB")
+            end
             setPlate("HO      ")
             sleep(baseSleep)
             setPlate("   HO   ")
@@ -2103,8 +2141,6 @@ function ScrollText(message, speed)
             debugPrint("Invalid or negative speed")
             speed = 1
         end
-        scrollTextSavedMessage = message
-        scrollTextSavedSpeed = speed
 
         local calculatedSpeed = speed * 0.25 -- Change the speed to a delay
         -- Ensure localplayer and setPlate functions are defined
@@ -2112,6 +2148,8 @@ function ScrollText(message, speed)
             debugPrint("Error: No vehicle detected")
             return
         else
+            scrollTextSavedMessage = message
+            scrollTextSavedSpeed = calculatedSpeed
             local p = localplayer
             local v = p:get_current_vehicle()
             savedPlateText = v:get_number_plate_text()
@@ -2123,6 +2161,16 @@ function ScrollText(message, speed)
                 for i = 1, plateLength do
                     if not infiniteScroll then
                         break
+                    end
+                    scrollCounter = scrollcouter + 1
+                    if scrollCounter > 1000 then
+                        debugPrint("")
+                        debugPrint("Garbage Collection Starting")
+                        debugPrint("Current Usage :" .. collectgarbage("count") .. " KB")
+                        debugPrint("")
+                        collectgarbage("collect")
+                        debugPrint("Garbage Collection Finished")
+                        debugPrint("Memory Usage: " .. collectgarbage("count") .. " KB")
                     end
 
                     local displayText = plateText:sub(i, i + plateLength - 1)
@@ -2221,7 +2269,8 @@ function restorePaint(vehicle)
     if carCheck() then
         if isValidColor(originalPaint.primary) and isValidColor(originalPaint.secondary) then
             vehicle:set_custom_primary_colour(originalPaint.primary.R, originalPaint.primary.G, originalPaint.primary.B)
-            vehicle:set_custom_secondary_colour(originalPaint.secondary.R, originalPaint.secondary.G, originalPaint.secondary.B)
+            vehicle:set_custom_secondary_colour(originalPaint.secondary.R, originalPaint.secondary.G,
+                originalPaint.secondary.B)
             debugPrint("Colour has been reverted")
         else
             debugPrint("Error: Original colors are nil")
@@ -2245,6 +2294,16 @@ function colourChangeLoop(vehicle)
         -- Increment hue for next iteration
         hue = (hue + 1) % 360
 
+        RGBCounter = RGBCounter + 1
+        if RGBCounter > 1000 then
+            debugPrint("")
+            debugPrint("Garbage Collection Starting")
+            debugPrint("Current Usage: " .. collectgarbage("count") .. " KB")
+            debugPrint("")
+            collectgarbage("collect")
+            debugPrint("Garbage Collection Finished")
+            debugPrint("Memory Usage: " .. collectgarbage("count") .. " KB")
+        end
         sleep(colourChangeSpeed)
 
         -- Check if the color change should be stopped
@@ -2288,7 +2347,7 @@ local maxDriftAngleHistory = 5 -- The number of angles to keep in history for av
 local updateDelay = 0.25       -- delay between refresh
 local driftPoints = 0
 local comboStreak = 0
-local angleMultiplier = 2            -- Adjust as needed
+local angleMultiplier = 1.5          -- Adjust as needed
 local speedBonusThreshold = 30 * 3.5 -- Adjust as needed
 local transitionAngleThreshold = 45  -- Adjust as needed, in degrees
 local transitionPoints = 50          -- Adjust as needed
@@ -2426,6 +2485,17 @@ function startDriftPlate()
             local angleStr = string.format("%3.0f°", driftAngle)
             setPlate(angleStr)
 
+            driftPlateCounter = driftPlateCounter + 1
+            if driftPlateCounter > 1000 then
+                debugPrint("Garbage Collection Started")
+                debugPrint("")
+                debugPrint("Current Usage: " .. collectgarbage("count") .. " KB")
+                debugPrint("Garbage Collection in Progress")
+                collectgarbage("collect")
+                debugPrint("Current Usage: " .. collectgarbage("count") .. " KB")
+                debugPrint("Garbage Collection Finished")
+            end
+
             -- Update previous drift angle for the next iteration
             prevDriftAngle = driftAngle
         else
@@ -2453,6 +2523,7 @@ local daytonsTuning = daytonsMenu:add_submenu("1 click Tuning")
 local daytonsCustomPlates = daytonsMenu:add_submenu("Custom Plates")
 local daytonsRims = daytonsMenu:add_submenu("Tire Mods (Use in CEO Office)")
 local textcolormenu = daytonsMenu:add_submenu("Plate Text Colors")
+local paintMenu = daytonsMenu:add_submenu("RGB Paint")
 
 -- Static Plate SubMenus
 local PermanentPlateChangeMenu = daytonsCustomPlates:add_submenu("Pre-Made Custom Plates")
@@ -2834,62 +2905,94 @@ popCultureMenu:add_array_item("Game Vehicles", customPlates["gameVehiclePlates"]
     end)
 daytonsCustomPlates:add_action("Stop Scrolling!!", function() stopEverything() end)
 
+userSettingsMenu:add_toggle("Debug Mode", function() return debugMode end, function() toggleDebugMode() end)
+userSettingsMenu:add_toggle("MPH Speedometer",
+    function() if speedmode.current == speedmode.kph then return false else return true end end,
+    function() toggleSpeedmode() end
+)
+
+-------------------------------------------------------------------------------
+--------------------------------   RGB PAINT   --------------------------------
+-------------------------------------------------------------------------------
+
+
+paintMenu:add_action("Work In Progress!!", function() rip() end)
+paintMenu:add_action(" ", function() rip() end)
+paintMenu:add_toggle("RGB Paint", function() return colourChanging end, function() toggleRGBLoop() end)
+
+paintMenu:add_action("Change RGB Speed", function() RGBSpeedChange() end)
+
+-------------------------------------------------------------------------------
+--------------------------------  DEBUG ITEMS  --------------------------------
+-------------------------------------------------------------------------------
+
+local raceLocations = {
+    mainFreewaySouthX = 2778.724,
+    mainFreewaySouthY = 4485.23,
+    mainFreewaySouthZ = 46.33649,
+    mainFreewayNorth = nil,
+    nil,
+    nil
+}
+local debugrotation = nil
+local debugpos = nil
+local debugveh = nil
+
 function printPOS()
     if carCheck() then
         local veh = localplayer:get_current_vehicle()
         local pos = veh:get_position()
         local rotation = veh:get_rotation()
-        print("Current Position: " .. tostring(pos))
-        print("Current rotation: " .. tostring(rotation))
+        debugPrint("Current Position: " .. tostring(pos))
+        debugPrint("Current rotation: " .. tostring(rotation))
     end
 end
-
-local debugrotation = nil
-local debugpos = nil
-local debugveh = nil
 
 function savePOS()
     if carCheck() then
         debugveh = localplayer:get_current_vehicle()
         debugpos = debugveh:get_position()
         debugrotation = debugveh:get_rotation()
-        print("saving POS: " .. tostring(debugpos))
+        debugPrint("saving POS: " .. tostring(debugpos))
     end
 end
 
 function returnToPOS()
     if carCheck() then
         if debugveh then
-            print("moving to: " .. tostring(debugpos))
+            debugPrint("moving to: " .. tostring(debugpos))
             debugveh:set_position(debugpos)
             debugveh:set_rotation(debugrotation)
         end
     end
 end
 
-userSettingsMenu:add_toggle("Debug Mode", function() return debugMode end, function() toggleDebugMode() end)
-userSettingsMenu:add_toggle("MPH Speedometer",
-    function() if speedmode.current == speedmode.kph then return false else return true end end,
-    function() toggleSpeedmode() end)
+function loadDebugMenu()
+    local DEBUGMENU = daytonsMenu:add_submenu("DEBUG MENU")
 
---[[ Freeway Race Line 1 Vector3(2778.724, 4485.23, 46.33649)]]
-userSettingsMenu:add_action("teleport to freeway",
-    function()
-        if carCheck() then
-            local veh = localplayer:get_current_vehicle()
-            veh:set_position(2778.724, 4485.23, 46.33649)
-            print("teleported")
-        end
-    end)
-userSettingsMenu:add_action("print location and rotation", function() printPOS() end)
-userSettingsMenu:add_action("save pos for tp", function() savePOS() end)
-userSettingsMenu:add_action("teleport to saved pos", function() returnToPOS() end)
-local paintMenu = daytonsMenu:add_submenu("experimental rgb paint mode")
-paintMenu:add_action("Work In Progress!!", function() rip() end)
-paintMenu:add_action("WILL NOT REVERT TO ORIGINAL COLOUR", function() rip() end)
-paintMenu:add_action(" ", function() rip() end)
-paintMenu:add_toggle("RGB Paint", function() return colourChanging end, function() toggleRGBLoop() end)
+    DEBUGMENU:add_action("Teleport to freeway",
+        function()
+            if carCheck() then
+                local veh = localplayer:get_current_vehicle()
+                veh:set_position(raceLocations.mainFreewaySouthX, raceLocations.mainFreewaySouthY,
+                    raceLocations.mainFreewaySouthZ)
+                debugPrint("teleported")
+            else
+                localplayer:set_position(raceLocations.mainFreewaySouthX, raceLocations.mainFreewaySouthY,
+                    raceLocations.mainFreewaySouthZ)
+            end
+        end)
 
-paintMenu:add_action("Change RGB Speed", function() RGBSpeedChange() end)
-userSettingsMenu:add_action("rgb manual off", function() colourChanging = false end)
-userSettingsMenu:add_action("enter pv", function() menu.enter_personal_vehicle() end)
+    DEBUGMENU:add_action("Print Location and Rotation", function() printPOS() end)
+
+    DEBUGMENU:add_action("Save POS for Teleport", function() savePOS() end)
+
+    DEBUGMENU:add_action("Teleport to Saved POS", function() returnToPOS() end)
+
+    DEBUGMENU:add_action("rgb manual off", function() colourChanging = false end)
+    DEBUGMENU:add_action("enter pv", function() menu.enter_personal_vehicle() end)
+    DEBUGMENU:add_action("Print Memory Usage",
+        function() print("Current Usage: " .. collectgarbage("count") .. " KB") end)
+    DEBUGMENU:add_action("Clean Memory", function() print("Cleaning Memory Now") collectgarbage("collect") print("Cleaning Memory Finished. Current Usage: " .. collectgarbage("count") .. " KB") end)
+    debugMenuLoaded = true
+end
