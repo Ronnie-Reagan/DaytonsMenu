@@ -995,7 +995,7 @@ function checkBuild()
         tenSpaces .. "        You are using an outdated menu. \n" ..
         tenSpaces .. "       Permanent Plate Changing Disabled \n" ..
         tenSpaces .. " Please Contact Don Reagan On Discord At ronnie.r.1989")
-    if build == 3096 then
+    if build == 3095 then
         gi = globals.get_int
         g = { pv = { n = 2359980, c = 1586504, s = 2738886, i = 2672804 } }
     else
