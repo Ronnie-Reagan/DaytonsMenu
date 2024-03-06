@@ -1,33 +1,35 @@
 --This is a test scrip to show dayton how to code.
--- Daytons Menu V4
+-- Daytons Menu V5
 function printFlag()
-    print(" ")
-    print(" ")
-    print(" ")
-    print("DACANADACANADACANADACANADACANADACANADACANADACANADACANADACANADACANAD")
-    print("ACANADACANADACAN                                   NADACANADACANADA")
-    print("CANADACANADACANA                 A                 ADACANADACANADAC")
-    print("ANADACANADACANAD                ADA                DACANADACANADACA")
-    print("NADACANADACANADA           AC  ADACA  DA           ACANADACANADACAN")
-    print("ADACANADACANADAC            ANADACANADA            CANADACANADACANA")
-    print("DACANADACANADACA        DA   ADACANADA   AD        ANADACANADACANAD")
-    print("ACANADACANADACAN    ANADACAN  ACANADA  NADACANA    NADACANADACANADA")
-    print("CANADACANADACANA     ADACANADACANADACANADACANA     ADACANADACANADAC")
-    print("ANADACANADACANAD   NADACANADACANADACANADACANADAC   DACANADACANADACA")
-    print("NADACANADACANADA      CANADACANADACANADACANAD      ACANADACANADACAN")
-    print("ADACANADACANADAC         DACANADACANADACAN         CANADACANADACANA")
-    print("DACANADACANADACA           ANADACANADACA           ANADACANADACANAD")
-    print("ACANADACANADACAN         CANADACANADACANAD         NADACANADACANADA")
-    print("CANADACANADACANA                 A                 ADACANADACANADAC")
-    print("ANADACANADACANAD                 D                 DACANADACANADACA")
-    print("NADACANADACANADA                 A                 ACANADACANADACAN")
-    print("ADACANADACANADAC                                   CANADACANADACANA")
-    print("DACANADACANADACANADACANADACANADACANADACANADACANADACANADACANADACANAD")
-    print(" ")
-    print("Love From Canada.")
-    print(" ")
-    print(" ")
+    print("  ")
+    print("  ")
+    print("  ")
+    print(" DACANADACANADACANADACANADACANADACANADACANADACANADACANADACANADACANAD")
+    print(" ACANADACANADACAN                                   NADACANADACANADA")
+    print(" CANADACANADACANA                 A                 ADACANADACANADAC")
+    print(" ANADACANADACANAD                ADA                DACANADACANADACA")
+    print(" NADACANADACANADA           AC  ADACA  DA           ACANADACANADACAN")
+    print(" ADACANADACANADAC            ANADACANADA            CANADACANADACANA")
+    print(" DACANADACANADACA        DA   ADACANADA   AD        ANADACANADACANAD")
+    print(" ACANADACANADACAN    ANADACAN  ACANADA  NADACANA    NADACANADACANADA")
+    print(" CANADACANADACANA     ADACANADACANADACANADACANA     ADACANADACANADAC")
+    print(" ANADACANADACANAD   NADACANADACANADACANADACANADAC   DACANADACANADACA")
+    print(" NADACANADACANADA      CANADACANADACANADACANAD      ACANADACANADACAN")
+    print(" ADACANADACANADAC         DACANADACANADACAN         CANADACANADACANA")
+    print(" DACANADACANADACA           ANADACANADACA           ANADACANADACANAD")
+    print(" ACANADACANADACAN         CANADACANADACANAD         NADACANADACANADA")
+    print(" CANADACANADACANA                 A                 ADACANADACANADAC")
+    print(" ANADACANADACANAD                 D                 DACANADACANADACA")
+    print(" NADACANADACANADA                 A                 ACANADACANADACAN")
+    print(" ADACANADACANADAC                                   CANADACANADACANA")
+    print(" DACANADACANADACANADACANADACANADACANADACANADACANADACANADACANADACANAD")
+    print("  ")
+    print(" Love From Canada.")
+    print("  ")
+    print("  ")
 end
+
+local daytonsMenu = menu.add_submenu("Dayton's Menu")
 
 --[[ To be implemented
 local positiveMessages = {}
@@ -218,11 +220,10 @@ function loadCustomPlates()
 
     }
 
-    print("Loading of Custom Plates Complete")
+    print(" Loading of Custom Plates Complete")
 end
 
 local Timer = {}
-local startTimeInCar = stats.get_int("MP" .. stats.get_int("MPPLY_LAST_MP_CHAR") .. "_TIME_IN_CAR")
 
 -- start the timer
 function Timer.start()
@@ -238,7 +239,7 @@ end
 
 -- Function to get the current time in car
 function getTimeInCar()
-    return stats.get_int("MP" .. stats.get_int("MPPLY_LAST_MP_CHAR") .. "_TIME_IN_CAR")
+    return stats.get_int(" MP" .. stats.get_int(" MPPLY_LAST_MP_CHAR") .. "_TIME_IN_CAR")
 end
 
 -- Vehicle Hash Data
@@ -776,17 +777,18 @@ function loadVehicleHashes()
         [-178442374] = "Impaler LX",
         [-902029319] = "Tow Truck"
     }
-    print("Loading of Vehicle Hashes Complete")
+    print(" Loading of Vehicle Hashes Complete")
 end
 
-print("Current Usage: " .. collectgarbage("count") .. " KB")
-print("Loading Vehicle Hashes Now")
+print(" Current Usage: " .. collectgarbage("count") .. " KB")
+print(" Loading Vehicle Hashes Now")
 loadVehicleHashes()
-print("Current Usage: " .. collectgarbage("count") .. " KB")
-print("Loading Custom Plates Now")
+print(" Current Usage: " .. collectgarbage("count") .. " KB")
+print(" Loading Custom Plates Now")
 loadCustomPlates()
-print("Current Usage: " .. collectgarbage("count") .. " KB")
-print("Accesory Functions, Variables and Strings Loaded.")
+print(" Current Usage: " .. collectgarbage("count") .. " KB")
+print(" Accesory Functions, Variables and Strings Loaded.")
+
 
 -- Global variable to control infinite scrolling
 local scrollTextSavedMessage = nil
@@ -856,8 +858,8 @@ end
 
 -- Menu Text Only Function
 local function rip()
-    debugPrint("i am dumb")
-    debugPrint("Memory Usage: " .. collectgarbage("count") .. " KB")
+    debugPrint(" i am dumb")
+    debugPrint(" Memory Usage: " .. collectgarbage("count") .. " KB")
 end
 
 -- Drag Race Variables
@@ -909,9 +911,9 @@ function loadRaceData()
 
     if result and loadedData then
         raceData = loadedData
-        debugPrint("Race data loaded.")
+        debugPrint(" Race data loaded.")
     else
-        debugPrint("Race data file not found or unreadable. Creating a new one.")
+        debugPrint(" Race data file not found or unreadable. Creating a new one.")
         json.savefile(raceDataFilename, raceData)
     end
 end
@@ -929,7 +931,7 @@ function saveRaceData()
     end
 
     json.savefile(raceDataFilename, existingData)
-    debugPrint("Race data Saved.")
+    debugPrint(" Race data Saved.")
 end
 
 -- User Settings Management
@@ -945,30 +947,25 @@ function loadUserSettings()
     if result and loadedSettings then
         if loadedSettings.DebugMode ~= nil then
             userSettings = loadedSettings
-            debugMode = userSettings.DebugMode -- Set to the setting stored in the file.
-            if debugMode == false then
-                print("Debug Mode OFF")
-            else
-                print("Debug Mode Active")
-            end
+            debugMode = userSettings.DebugMode              -- Set to the setting stored in the file.
             if userSettings.selectedSpeedMode == "kph" then -- convert from one mode to another (with/without values)
                 speedmode.current = speedmode.kph
             else
                 speedmode.current = speedmode.mph
             end
-            debugPrint("User settings loaded.")
+            debugPrint(" User settings loaded.")
         else
-            debugPrint("DebugMode not found in loaded settings. Using default settings.")
+            debugPrint(" DebugMode not found in loaded settings. Using default settings.")
         end
     else
-        debugPrint("User settings file not found or unreadable. Creating a new one with default options.")
+        debugPrint(" User settings file not found or unreadable. Creating a new one with default options.")
         json.savefile(userSettingsFilename, userSettings)
     end
 end
 
 function saveUserSettings()
     json.savefile(userSettingsFilename, userSettings)
-    debugPrint("User settings Saved.")
+    debugPrint(" User settings Saved.")
 end
 
 -- Debug Mode Toggle
@@ -983,36 +980,121 @@ local function toggleDebugMode()
     end
     userSettings.DebugMode = debugMode
     json.savefile(userSettingsFilename, userSettings)
-    debugPrint("User Setting: Debug Mode saved to " .. tostring(debugMode))
+    debugPrint(" User Setting: Debug Mode saved to " .. tostring(debugMode))
+end
+
+function checkBuild()
+    -- Build Version Check
+    M, m, build, patch = menu.get_game_version()
+    thirtySpaces = "                              "
+    tenSpaces = "          "
+    fiveSpaces = "     "
+    outdated = false
+    outdatedMessage = tostring("\n" ..
+        thirtySpaces .. "       " .. "WARNING  \n \n " ..
+        tenSpaces .. "        You are using an outdated menu. \n" ..
+        tenSpaces .. "       Permanent Plate Changing Disabled \n" ..
+        tenSpaces .. " Please Contact Don Reagan On Discord At ronnie.r.1989")
+    if build == 3096 then
+        gi = globals.get_int
+        g = { pv = { n = 2359980, c = 1586504, s = 2738886, i = 2672804 } }
+    else
+        outdated = true
+    end
 end
 
 menu.register_callback("OnScriptsLoaded", function()
     -- Load Data
     scriptFree = true
-    debugPrint("Attempting to load User Settings")
+    checkBuild()
+    addPodiumChanger()
+    print("  ")
+    print(" Build Number is: " .. tostring(build))
+    print("  ")
+    debugPrint(" Attempting to load User Settings")
     loadUserSettings()
-    debugPrint("Loading of User Settings Complete")
-    debugPrint(" ")
-    debugPrint("Attempting to load Race Data")
+    debugPrint(" Loading of User Settings Complete")
+    debugPrint("  ")
+    debugPrint(" Attempting to load Race Data")
     loadRaceData()
-    debugPrint("Loading of Race Data Complete")
+    debugPrint(" Loading of Race Data Complete")
     debugPrint(" ")
     printFlag()
-    debugPrint("You can turn off debug mode (the print outs)")
-    debugPrint("by going to the settings submenu and toggling off")
-    debugPrint("Debug Mode and confirming it was saved by checking")
-    debugPrint("User Settings JSON in your Modest Menu folder.")
-    debugPrint(" ")
-    print("Thank you for trying my latest creation. Please Enjoy.")
+    debugPrint(" You can turn off debug mode (the print outs)")
+    debugPrint(" by going to the settings submenu and toggling off")
+    debugPrint(" Debug Mode and confirming it was saved by checking")
+    debugPrint(" User Settings JSON in your Modest Menu folder.")
+    debugPrint("  ")
+    print(" Thank you for trying my latest creation. Please Enjoy.")
     print("                    - Don Reagan")
     if debugMode then
         if not debugMenuLoaded then
             loadDebugMenu()
         end
     end
+    if outdated then
+        print("  ")
+        print("      -WARNING - WARNING - WARNING - WARNING - WARNING - WARNING - WARNING - WARNING - WARNING - WARNING-")
+        print("  ")
+        print("  Daytons Menu Is OutDated. Please Contact Don Reagan On Discord At ronnie.r.1989 For Details")
+        print("  ")
+        print("      -WARNING - WARNING - WARNING - WARNING - WARNING - WARNING - WARNING - WARNING - WARNING - WARNING-")
+        daytonsMenu:add_action("", function() rip() end)
+        daytonsMenu:add_action("- WARNING - WARNING - WARNING -", function() rip() end)
+        daytonsMenu:add_action("Do Not Use Unless Told To Do So", function() rip() end)
+        daytonsMenu:add_action("Enable Globals (Build - 3095)", function() outdated = false addPodiumChanger() gi = globals.get_int g = { pv = { n = 2359980, c = 1586504, s = 2738886, i = 2672804 } } end)
+        error(outdatedMessage, 0)
+    end
 end
 )
 
+
+-- Podium Vehicle Changer
+
+local vehicleOptions = {}
+
+-- Populate the array with the vehicle names from the vehicleHashes table
+for _, name in pairs(vehicleHashes) do
+    table.insert(vehicleOptions, name)
+end
+
+local selectedVehicleIndex = 1 -- Default to the first vehicle in the list
+
+-- Function to get the vehicle hash based on its name
+local function getVehicleHash(vehicleName)
+    for hash, name in pairs(vehicleHashes) do
+        if name == vehicleName then
+            return hash
+        end
+    end
+end
+
+-- Add the menu item for selecting a vehicle
+function addPodiumChanger()
+    if not outdated then
+        podium = menu.add_submenu("Podium Car Changer")
+        podium:add_action("------------ Podium Vehicle ----------", function() rip() end)
+        podium:add_action("-----------------------------------------", function() rip() end)
+        podium:add_action("------------- Select Vehicle -----------", function() rip() end)
+        podium:add_array_item("------------- Vehicle -->", vehicleOptions,
+            function()
+                return selectedVehicleIndex
+            end,
+            function(index)
+                selectedVehicleIndex = index
+                local selectedVehicle = vehicleOptions[index]
+                local selectedVehicleHash = getVehicleHash(selectedVehicle)
+                globals.set_int(289178, selectedVehicleHash)
+            end
+        )
+        podium:add_action(" ", function() rip() end)
+        podium:add_action("-WARNING - WARNING -", function() rip() end)
+        podium:add_action(" ", function() rip() end)
+        podium:add_action("  Black Listed Vehicles!", function() rip() end)
+        podium:add_action("            WILL", function() rip() end)
+        podium:add_action("  Fuck Your Game Up ", function() rip() end)
+    end
+end
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------------------------------------------------------------------------
@@ -1134,7 +1216,7 @@ function spoodBeast()
             if oldStats.acceleration == nil then
                 saveStats()
             else
-                debugPrint("Unable to save veh stats, stats are already present in table")
+                debugPrint(" Unable to save veh stats, stats are already present in table")
             end
             veh:set_acceleration(spoodBeastStats.acceleration)
             veh:set_traction_curve_max(spoodBeastStats.tractionMax)
@@ -1164,7 +1246,7 @@ function slowDrift()
             if oldStats.acceleration == nil then
                 saveStats()
             else
-                debugPrint("Unable to save veh stats, stats are already present in table")
+                debugPrint(" Unable to save veh stats, stats are already present in table")
             end
             veh:set_acceleration(slowDriftStats.acceleration)
             veh:set_traction_curve_max(slowDriftStats.tractionMax)
@@ -1194,7 +1276,7 @@ function fastDrift()
             if oldStats.acceleration == nil then
                 saveStats()
             else
-                debugPrint("Unable to save veh stats, stats are already present in table")
+                debugPrint(" Unable to save veh stats, stats are already present in table")
             end
             veh:set_acceleration(fastDriftStats.acceleration)
             veh:set_traction_curve_max(fastDriftStats.tractionMax)
@@ -1216,34 +1298,34 @@ menu.register_callback("OnVehicleChanged", function()
         if currentveh ~= savedPlateVehicle or savedPlateVehicle == nil then
             savedPlateVehicle = currentveh
             savedPlateText = currentveh:get_number_plate_text()
-            debugPrint("New Vehicle Detected")
+            debugPrint(" New Vehicle Detected, Attempting to resume script functions...")
         else
-            debugPrint("vehicle change messed up, re-routing script")
+            debugPrint(" vehicle change messed up, re-routing script")
             return
         end
         if tuningMode.fastDriftMode then
             tuningMode.fastDriftMode = false
-            debugPrint("Fast Drift resuming")
+            debugPrint(" Fast Drift resuming")
             fastDrift()
         end
         if tuningMode.slowDriftMode then
             tuningMode.slowDriftMode = false
-            debugPrint("Slow Drift resuming")
+            debugPrint(" Slow Drift resuming")
             slowDrift()
         end
         if tuningMode.spoodBeastMode then
             tuningMode.spoodBeastMode = false
-            debugPrint("Spood Beast resuming")
+            debugPrint(" Spood Beast resuming")
             spoodBeast()
         end
         if infiniteScroll then
             infiniteScroll = false
-            debugPrint("Scrolling Text resuming")
+            debugPrint(" Scrolling Text resuming")
             ScrollText(scrollTextSavedMessage, scrollTextSavedSpeed)
         end
         if colourChanging then
             colourChanging = false
-            debugPrint("RGB Loop resuming")
+            debugPrint(" RGB Loop resuming")
             toggleRGBLoop()
         end
     end
@@ -1323,17 +1405,17 @@ function startRecording()
     recordingKeystrokes = true
     recordedKeys = {}  -- Reset recorded keys
     cursorPosition = 1 -- Reset cursor position
-    debugPrint(" ")
-    debugPrint("Recording started...")
-    debugPrint("Current input: " .. table.concat(recordedKeys, ""))
+    debugPrint("  ")
+    debugPrint(" Recording started...")
+    debugPrint(" Current input: " .. table.concat(recordedKeys, ""))
 end
 
 -- Function to stop recording
 function stopRecording()
     recordingKeystrokes = false
-    debugPrint(" ")
-    debugPrint("Recording stopped.")
-    debugPrint("Recorded input: " .. table.concat(recordedKeys, ""))
+    debugPrint("  ")
+    debugPrint(" Recording stopped.")
+    debugPrint(" Recorded input: " .. table.concat(recordedKeys, ""))
     promptForConfirmation()
 end
 
@@ -1347,18 +1429,18 @@ function onKeyPress(keycode)
         cursorPosition = cursorPosition + 1
 
         -- Debug messages
-        debugPrint(" ")
-        debugPrint("Key pressed: " .. (javaKeycodeMapping[keycode] or tostring(keycode)))
-        debugPrint("Current input: " .. table.concat(recordedKeys, ""))
-        debugPrint("Cursor position: " .. cursorPosition)
+        debugPrint("  ")
+        debugPrint(" Key pressed: " .. (javaKeycodeMapping[keycode] or tostring(keycode)))
+        debugPrint(" Current input: " .. table.concat(recordedKeys, ""))
+        debugPrint(" Cursor position: " .. cursorPosition)
 
         -- Check for plate length limit
         if not allowMoreThan8Characters and #recordedKeys == 8 then
-            debugPrint("Plate length reached")
-            debugPrint(" ")
-            debugPrint("Turn on the option for scrolling text")
-            debugPrint("if you want to use text over 8 characters")
-            debugPrint("(buggy and semi permanent(make sure to turn off the infinite loop when done))")
+            debugPrint(" Plate length reached")
+            debugPrint("  ")
+            debugPrint(" Turn on the option for scrolling text")
+            debugPrint(" if you want to use text over 8 characters")
+            debugPrint(" (buggy and semi permanent(make sure to turn off the infinite loop when done))")
             stopRecording()
         end
     end
@@ -1368,10 +1450,10 @@ end
 function moveCursorLeft()
     if recordingKeystrokes and cursorPosition > 0 then
         cursorPosition = cursorPosition - 1
-        debugPrint(" ")
-        debugPrint("Cursor moved left. Current cursor position: " .. cursorPosition)
-        debugPrint("Current input: " .. table.concat(recordedKeys, ""))
-        debugPrint("Cursor position: " .. cursorPosition) -- Print the cursor position
+        debugPrint("  ")
+        debugPrint(" Cursor moved left. Current cursor position: " .. cursorPosition)
+        debugPrint(" Current input: " .. table.concat(recordedKeys, ""))
+        debugPrint(" Cursor position: " .. cursorPosition) -- Print the cursor position
     end
 end
 
@@ -1379,10 +1461,10 @@ end
 function moveCursorRight()
     if recordingKeystrokes and cursorPosition < #recordedKeys + 1 then
         cursorPosition = cursorPosition + 1
-        debugPrint(" ")
-        debugPrint("Cursor moved right. Current cursor position: " .. cursorPosition)
-        debugPrint("Current input: " .. table.concat(recordedKeys, ""))
-        debugPrint("Cursor position: " .. cursorPosition) -- Print the cursor position
+        debugPrint("  ")
+        debugPrint(" Cursor moved right. Current cursor position: " .. cursorPosition)
+        debugPrint(" Current input: " .. table.concat(recordedKeys, ""))
+        debugPrint(" Cursor position: " .. cursorPosition) -- Print the cursor position
     end
 end
 
@@ -1394,10 +1476,10 @@ function onBackspace()
             table.remove(recordedKeys, cursorPosition)
             newPlateText = table.concat(recordedKeys, "")
         end
-        debugPrint(" ")
-        debugPrint("Key pressed: Backspace")
-        debugPrint("Current input: " .. table.concat(recordedKeys, ""))
-        debugPrint("Cursor position: " .. cursorPosition) -- Print the cursor position
+        debugPrint("  ")
+        debugPrint(" Key pressed: Backspace")
+        debugPrint(" Current input: " .. table.concat(recordedKeys, ""))
+        debugPrint(" Cursor position: " .. cursorPosition) -- Print the cursor position
     end
 end
 
@@ -1407,10 +1489,10 @@ function onDel()
         if cursorPosition < #recordedKeys then
             table.remove(recordedKeys, cursorPosition + 1)
             newPlateText = table.concat(recordedKeys, "")
-            debugPrint(" ")
-            debugPrint("Key pressed: Delete")
-            debugPrint("Current input: " .. table.concat(recordedKeys, ""))
-            debugPrint("Cursor position: " .. cursorPosition) -- Print the cursor position
+            debugPrint("  ")
+            debugPrint(" Key pressed: Delete")
+            debugPrint(" Current input: " .. table.concat(recordedKeys, ""))
+            debugPrint(" Cursor position: " .. cursorPosition) -- Print the cursor position
         end
     end
 end
@@ -1422,10 +1504,10 @@ function onSpace()
             table.insert(recordedKeys, cursorPosition, ' ')
             newPlateText = table.concat(recordedKeys, "")
             cursorPosition = cursorPosition + 1
-            debugPrint(" ")
-            debugPrint("Key pressed: Spacebar")
-            debugPrint("Current input: " .. table.concat(recordedKeys, ""))
-            debugPrint("Cursor position: " .. cursorPosition) -- Print the cursor position
+            debugPrint("  ")
+            debugPrint(" Key pressed: Spacebar")
+            debugPrint(" Current input: " .. table.concat(recordedKeys, ""))
+            debugPrint(" Cursor position: " .. cursorPosition) -- Print the cursor position
             if not allowMoreThan8Characters and #recordedKeys == 8 then
                 stopRecording()
             end
@@ -1436,8 +1518,8 @@ end
 -- Function to handle ESC/Escape key
 function onESC()
     if recordingKeystrokes then
-        debugPrint(" ")
-        debugPrint("Key Pressed: Escape")
+        debugPrint("  ")
+        debugPrint(" Key Pressed: Escape")
         cancelRecording()
     end
 end
@@ -1447,9 +1529,9 @@ function cancelRecording()
         recordingKeystrokes = false
         recordedKeys = {}
         cursorPosition = 1
-        debugPrint(" ")
-        debugPrint("Recording of keystrokes has been cancelled abruptly. please toggle recording to begin again")
-        debugPrint(" ")
+        debugPrint("  ")
+        debugPrint(" Recording of keystrokes has been cancelled abruptly. please toggle recording to begin again")
+        debugPrint("  ")
         if userSettings.DebugMode == false then
             debugMode = false
         end
@@ -1459,9 +1541,9 @@ end
 -- Function to handle Enter/Return key
 function onFinishTyping()
     if recordingKeystrokes then
-        debugPrint(" ")
-        debugPrint("Key pressed: Enter")
-        debugPrint("Prompting Confirmation next...")
+        debugPrint("  ")
+        debugPrint(" Key pressed: Enter")
+        debugPrint(" Prompting Confirmation next...")
         stopRecording()
     end
 end
@@ -1470,20 +1552,20 @@ function toggleKeystrokeRecording()
     if recordingKeystrokes then
         recordingKeystrokes = false
         stopRecording()
-        debugPrint("Keystroke Recording Concluded")
+        debugPrint(" Keystroke Recording Concluded")
     else
         recordingKeystrokes = true
-        debugPrint("Keystroke Recording Started")
+        debugPrint(" Keystroke Recording Started")
     end
 end
 
 -- Function to confirm inputted text and check if its over 8 characters
 function promptForConfirmation()
-    debugPrint(" ")
-    debugPrint("Are you sure you want to set your plate to: ")
+    debugPrint("  ")
+    debugPrint(" Are you sure you want to set your plate to: ")
     debugPrint(newPlateText)
-    debugPrint(" ")
-    debugPrint("Please Confirm (HOLD): Y = Yes, N = No")
+    debugPrint("  ")
+    debugPrint(" Please Confirm (HOLD): Y = Yes, N = No")
 
     local keypressY = false
     local keypressN = false
@@ -1495,18 +1577,18 @@ function promptForConfirmation()
     local confirmingText = true
     repeat
         if keypressY then
-            debugPrint(" ")
-            debugPrint("Key pressed: Y")
-            debugPrint(" ")
-            debugPrint("Confirming number of characters is 8 or less.")
-            debugPrint(" ")
-            debugPrint("New plate showing up as: " .. newPlateText)
+            debugPrint("  ")
+            debugPrint(" Key pressed: Y")
+            debugPrint("  ")
+            debugPrint(" Confirming number of characters is 8 or less.")
+            debugPrint("  ")
+            debugPrint(" New plate showing up as: " .. newPlateText)
             if #recordedKeys <= 8 then
-                debugPrint("New plate confirmed to be 8 characters or less.")
+                debugPrint(" New plate confirmed to be 8 characters or less.")
                 savedPlateText = newPlateText
                 savedPlateVehicle = localplayer:get_current_vehicle()
                 confirmingText = false
-                debugPrint("Setting Plate to: " .. savedPlateText)
+                debugPrint(" Setting Plate to: " .. savedPlateText)
                 setPlate(savedPlateText)
                 recordedKeys = {}
                 cursorPosition = 1
@@ -1520,14 +1602,14 @@ function promptForConfirmation()
                 break
             end
         elseif keypressN then
-            debugPrint(" ")
-            debugPrint("Key pressed: N")
-            debugPrint("Text Confirmation Cancelled..")
+            debugPrint("  ")
+            debugPrint(" Key pressed: N")
+            debugPrint(" Text Confirmation Cancelled..")
             newPlateText = nil
             recordedKeys = {}
             confirmingText = false
-            debugPrint("Resetting Process now.")
-            debugPrint(" ")
+            debugPrint(" Resetting Process now.")
+            debugPrint("  ")
             startRecording()
             break
         else
@@ -1540,12 +1622,12 @@ end
 function confirmScrollText()
     menu.register_hotkey(89, function() keypressY2 = true end) -- 'Y2'
     menu.register_hotkey(78, function() keypressN2 = true end) -- 'N2'
-    debugPrint(" ")
-    debugPrint("Plate length exceeded! Are you sure you want to scroll text?")
-    debugPrint("you will need to make sure to disable scrolling before exiting the vehicle")
-    debugPrint("to revert the plate to the last valid plate recorded by the script(8 characters or less)")
-    debugPrint(" ")
-    debugPrint("Please Confirm (HOLD): Y = Yes, N = No")
+    debugPrint("  ")
+    debugPrint(" Plate length exceeded! Are you sure you want to scroll text?")
+    debugPrint(" you will need to make sure to disable scrolling before exiting the vehicle")
+    debugPrint(" to revert the plate to the last valid plate recorded by the script(8 characters or less)")
+    debugPrint("  ")
+    debugPrint(" Please Confirm (HOLD): Y = Yes, N = No")
     confirmingScrollText = true
     repeat
         if keypressY2 then
@@ -1554,9 +1636,9 @@ function confirmScrollText()
                 savedPlateVehicle = localplayer:get_current_vehicle()
             end
             confirmingScrollText = false
-            debugPrint("New plate text is confirmed to be over 8 characters")
-            debugPrint("scrolling the text accross the plate instead")
-            debugPrint(" ")
+            debugPrint(" New plate text is confirmed to be over 8 characters")
+            debugPrint(" scrolling the text accross the plate instead")
+            debugPrint("  ")
             if userSettings.DebugMode == false then
                 debugMode = false
             end
@@ -1565,24 +1647,24 @@ function confirmScrollText()
             cursorPosition = 1
             break
         elseif keypressN2 then
-            debugPrint(" ")
-            debugPrint("Key pressed: N")
-            debugPrint("Text Confirmation FAILED..")
+            debugPrint("  ")
+            debugPrint(" Key pressed: N")
+            debugPrint(" Text Confirmation FAILED..")
             newPlateText = nil
-            debugPrint("Resetting Process now.")
-            debugPrint("Resetting Process now..")
-            debugPrint("Resetting Process now...")
+            debugPrint(" Resetting Process now.")
+            debugPrint(" Resetting Process now..")
+            debugPrint(" Resetting Process now...")
             recordedKeys = {}
-            debugPrint("Resetting Process now.")
-            debugPrint("Resetting Process now..")
-            debugPrint("Resetting Process now...")
+            debugPrint(" Resetting Process now.")
+            debugPrint(" Resetting Process now..")
+            debugPrint(" Resetting Process now...")
             confirmingScrollText = false
-            debugPrint("Resetting Process now.")
-            debugPrint("Resetting Process now..")
-            debugPrint("Resetting Process now...")
+            debugPrint(" Resetting Process now.")
+            debugPrint(" Resetting Process now..")
+            debugPrint(" Resetting Process now...")
             menu.remove_hotkey(89)
             menu.remove_hotkey(78)
-            debugPrint(" ")
+            debugPrint("  ")
             startRecording()
             break
         else
@@ -1626,7 +1708,7 @@ local function displaySpeed()
     end
     local predictedSpeed = getWeightedAverage(speeds)
     local displayedSpeed = math.floor(predictedSpeed * speedmode.current)
-    local speedStr = string.format("%3s", displayedSpeed > 0 and tostring(displayedSpeed) or "")
+    local speedStr = string.format(" %3s", displayedSpeed > 0 and tostring(displayedSpeed) or "")
     if speedmode.current == speedmode.mph then
         local plateText = speedStr .. "  MPH"
         setPlate(plateText)
@@ -1641,11 +1723,11 @@ function toggleSpeedmode()
     if speedmode.current == speedmode.kph then
         speedmode.current = speedmode.mph
         userSettings.selectedSpeedMode = "mph"
-        debugPrint("User Settings Saved with MPH being selected")
+        debugPrint(" User Settings Saved with MPH being selected")
     else
         speedmode.current = speedmode.kph
         userSettings.selectedSpeedMode = "kph"
-        debugPrint("User Settings Saved with KPH being selected")
+        debugPrint(" User Settings Saved with KPH being selected")
     end
     json.savefile(userSettingsFilename, userSettings)
 end
@@ -1653,11 +1735,11 @@ end
 -- Function to toggle the Speedometer
 function speedoToggle()
     if speedoRunning then
-        debugPrint("Speedo Stopping!")
+        debugPrint(" Speedo Stopping!")
         speedoRunning = false
         checkPlate()
     else
-        debugPrint("Speedo Starting!")
+        debugPrint(" Speedo Starting!")
         runSpeedometer()
     end
 end
@@ -1682,15 +1764,15 @@ function runSpeedometer()
                 displaySpeed()
                 speedCounter = speedCounter + 1
                 if speedCounter > 1000 then
-                    debugPrint("")
-                    debugPrint("Garbage Cleanup Started")
-                    debugPrint("")
-                    debugPrint("Memory Usage: " .. collectgarbage("count") .. " KB")
-                    debugPrint("Garbage Cleaning in Progress.")
+                    debugPrint(" ")
+                    debugPrint(" Garbage Cleanup Started")
+                    debugPrint(" ")
+                    debugPrint(" Memory Usage: " .. collectgarbage("count") .. " KB")
+                    debugPrint(" Garbage Cleaning in Progress.")
                     collectgarbage("collect")
                     speedCounter = 0
-                    debugPrint("Garbage Cleanup finished")
-                    debugPrint("Memory Usage: " .. collectgarbage("count") .. " KB")
+                    debugPrint(" Garbage Cleanup finished")
+                    debugPrint(" Memory Usage: " .. collectgarbage("count") .. " KB")
                 end
                 sleep(0.0167) -- arbitrary number for 60 fps (test)
             end
@@ -1741,7 +1823,7 @@ end
 
 -- Returns the players total time spent in cars (in milliseconds)
 function getTimeInCar()
-    return stats.get_int("MP" .. stats.get_int("MPPLY_LAST_MP_CHAR") .. "_TIME_IN_CAR")
+    return stats.get_int(" MP" .. stats.get_int(" MPPLY_LAST_MP_CHAR") .. "_TIME_IN_CAR")
 end
 
 -- Formats milliseconds into regular time (s.ms)
@@ -1749,7 +1831,7 @@ function formatTime(milliseconds)
     if type(milliseconds) == "number" then
         local seconds = math.floor(milliseconds / 1000)
         local remainingMilliseconds = milliseconds % 1000
-        return string.format("%d.%03d", seconds, remainingMilliseconds)
+        return string.format(" %d.%03d", seconds, remainingMilliseconds)
     else
         rip()
         return nil
@@ -1815,8 +1897,8 @@ function printHash()
         local p = localplayer
         local v = p:get_current_vehicle()
         local hash = v:get_model_hash()
-        debugPrint("Vehicle hash is: " .. tostring(hash))
-        debugPrint("Please add it if its missing from the json.")
+        debugPrint(" Vehicle hash is: " .. tostring(hash))
+        debugPrint(" Please add it if its missing from the json.")
     end
 end
 
@@ -1860,17 +1942,17 @@ function removeVehicles()
                 end
                 cumulativeCount = cumulativeCount + 1
                 if cumulativeCount >= 1000 then
-                    debugPrint("Garbage Collection Started")
-                    debugPrint("")
-                    debugPrint("Current Usage: " .. collectgarbage() .. " KB")
+                    debugPrint(" Garbage Collection Started")
+                    debugPrint(" ")
+                    debugPrint(" Current Usage: " .. collectgarbage() .. " KB")
                     collectgarbage("collect")
-                    debugPrint("Garbage Collection Finished")
+                    debugPrint(" Garbage Collection Finished")
                     cumulativeCount = 0
                 end
                 if distanceToMainPlayer <= Config.OuterRadius and distanceToMainPlayer > Config.Safety and not closeToAnyPlayer then
                     veh:set_position(vector3(0, 0, Config.OuterRadius) + vehiclePosition)
                     vehiclesMoved = vehiclesMoved + 1
-                    debugPrint("vehicles moved so far: " .. vehiclesMoved)
+                    debugPrint(" vehicles moved so far: " .. vehiclesMoved)
                 end
             end
         end
@@ -1888,7 +1970,7 @@ function DoDragRace()
     if scriptFree then
         if carCheck() then
             checkPlate()
-            --menu.emit_event("raceBeginning")
+            --menu.emit_event(" raceBeginning")
             local player = localplayer
             local vehicle = player:get_current_vehicle()
             removeVehicles() -- Remove vehicles around the starting line (continues until raceRunning = false)
@@ -1918,7 +2000,7 @@ function DoDragRace()
                 setPlate("JUMPED!")
                 raceFinished = true
                 raceRunning = false
-                debugPrint("Race Aborted: Jumped The Start")
+                debugPrint(" Race Aborted: Jumped The Start")
                 sleep(1.25)
                 checkPlate()
             else
@@ -1934,7 +2016,7 @@ function DoDragRace()
                         sixtyFootSpeed = getCurrentSpeed(vehicle)
                     end
                     if hasReachedFinishLine() then
-                        --menu.emit_event("raceEnded") -- TO BE USED FOR MULTI THREADING
+                        --menu.emit_event(" raceEnded") -- TO BE USED FOR MULTI THREADING
                         raceRunning = false
                         raceFinished = true
                         local finalTime = Timer.elapsedTime()
@@ -1966,13 +2048,13 @@ function DoDragRace()
                         saveRaceData()
 
                         -- Print the data
-                        debugPrint("Race Data Saved for " .. vehicleName)
-                        debugPrint("Race Distance: " .. selectedDistance)
-                        debugPrint("Reaction Time: " .. reactionTime)
-                        debugPrint("60 Foot Time: " .. sixtyFootTime)
-                        debugPrint("Race finished! Time: " .. formatTime(finalTime))
-                        debugPrint("60 Foot SpeedTrap: " .. sixtyFootSpeed .. " " .. selectedMode)
-                        debugPrint("Final Speed: " .. finalSpeed * speedmode.current .. " " .. selectedMode)
+                        debugPrint(" Race Data Saved for " .. vehicleName)
+                        debugPrint(" Race Distance: " .. selectedDistance)
+                        debugPrint(" Reaction Time: " .. reactionTime)
+                        debugPrint(" 60 Foot Time: " .. sixtyFootTime)
+                        debugPrint(" Race finished! Time: " .. formatTime(finalTime))
+                        debugPrint(" 60 Foot SpeedTrap: " .. sixtyFootSpeed .. " " .. selectedMode)
+                        debugPrint(" Final Speed: " .. finalSpeed * speedmode.current .. " " .. selectedMode)
 
                         setPlate(formatTime(finalTime)) -- Display race time on the plate
                         sleep(5)
@@ -1987,7 +2069,7 @@ function DoDragRace()
                 end
             end
         else
-            debugPrint("Not in a vehicle! You cant race barefoot!!")
+            debugPrint(" Not in a vehicle! You cant race barefoot!!")
             error("Not in a vehicle! You can't race barefoot!!", 2)
         end
     else
@@ -2001,7 +2083,7 @@ local function abortrace()
     raceFinished = true
     raceRunning = false
     setPlate("ABORTED!")
-    debugPrint("Race Aborted")
+    debugPrint(" Race Aborted")
     sleep(5)
     checkPlate()
 end
@@ -2016,24 +2098,24 @@ end
 -- Check for ensured reversal
 function checkPlate()
     scriptFree = false
-    debugPrint("checking plate now. please wait.")
+    debugPrint(" checking plate now. please wait.")
     stopEverything()
     if carCheck() then
-        debugPrint("checking plate now. please wait..")
-        debugPrint("checking plate now. please wait...")
-        debugPrint(" ")
-        debugPrint("Checking plate for need of reversion")
+        debugPrint(" checking plate now. please wait..")
+        debugPrint(" checking plate now. please wait...")
+        debugPrint("  ")
+        debugPrint(" Checking plate for need of reversion")
         if savedPlateText == nil then
-            debugPrint(" ")
-            debugPrint("Saved plate text is currently nil (start of plate check)")
+            debugPrint("  ")
+            debugPrint(" Saved plate text is currently nil (start of plate check)")
             setPlate(defaultPlate)
         else
             local player = localplayer
             local veh = player:get_current_vehicle()
             local currentPlate = veh:get_number_plate_text()
             if savedPlateText ~= currentPlate then
-                debugPrint(" ")
-                debugPrint("the plate is showing up as: " ..
+                debugPrint("  ")
+                debugPrint(" the plate is showing up as: " ..
                     tostring(currentPlate) .. " and the saved plate is showing up as: " .. tostring(savedPlateText))
                 if savedPlateText == "cruising" or savedPlateText == "chilling" or savedPlateText == " MPH" or savedPlateText == " KPH" or savedPlateText == "0" then
                     setPlate(defaultPlate)
@@ -2041,27 +2123,25 @@ function checkPlate()
                     setPlate(savedPlateText)
                 end
             else
-                debugPrint(" ")
-                debugPrint("Plate confirmed to match saved plate text.")
-                debugPrint(" ")
+                debugPrint("  ")
+                debugPrint(" Plate confirmed to match saved plate text.")
+                debugPrint("  ")
             end
         end
     end
     scriptFree = true
 end
 
--- Globals for setting custom plate !!Permanent!!
-gi = globals.get_int
-g = { pv = { n = 2359980, c = 1586504, s = 2738886, i = 2672804 } }
-
 function setPlate(xx) -- Permanent Plate Changer (affects personal vehicles)
     if xx then
         c = localplayer
         if localplayer:is_in_vehicle() then
             local veh = localplayer:get_current_vehicle()
-            if gi(g.pv.s) ~= -1 and gi(g.pv.i) == 0 then
-                local x = gi(g.pv.n)
-                globals.set_string(g.pv.c + 2 + (x == -1 and 0 or x) * 142, xx, 32)
+            if outdated == false then
+                if gi(g.pv.s) ~= -1 and gi(g.pv.i) == 0 then
+                    local x = gi(g.pv.n)
+                    globals.set_string(g.pv.c + 2 + (x == -1 and 0 or x) * 142, xx, 32)
+                end
             end
             veh:set_number_plate_text(xx)
         end
@@ -2084,14 +2164,14 @@ function Christmasplate(XMASSPEED)
         while XMASPLATE == true do
             xmasPlateCounter = xmasPlateCounter + 1
             if xmasPlateCounter > 1000 then
-                debugPrint("")
-                debugPrint("Garbage Collection Started")
-                debugPrint("")
-                debugPrint("Memory Usage: " .. collectgarbage("count") .. " KB")
+                debugPrint(" ")
+                debugPrint(" Garbage Collection Started")
+                debugPrint(" ")
+                debugPrint(" Memory Usage: " .. collectgarbage("count") .. " KB")
                 collectgarbage("collect")
                 xmasPlateCounter = 0
-                debugPrint("Memory cleanup finished")
-                debugPrint("Memory Usage: " .. collectgarbage("count") .. " KB")
+                debugPrint(" Memory cleanup finished")
+                debugPrint(" Memory Usage: " .. collectgarbage("count") .. " KB")
             end
             setPlate("HO      ")
             sleep(baseSleep)
@@ -2132,24 +2212,24 @@ end
 -- Function to scroll text on the number plate
 function ScrollText(message, speed)
     if carCheck() then
-        debugPrint("scroll text function called, checking plate before continuation")
+        debugPrint(" scroll text function called, checking plate before continuation")
         checkPlate()
         if not message or type(message) ~= 'string' then
-            debugPrint("Invalid message")
+            debugPrint(" Invalid message")
             return
         elseif not speed or type(speed) ~= 'number' or speed < 0 then
-            debugPrint("Invalid or negative speed")
+            debugPrint(" Invalid or negative speed")
             speed = 1
         end
+        scrollTextSavedMessage = message
+        scrollTextSavedSpeed = speed
 
         local calculatedSpeed = speed * 0.25 -- Change the speed to a delay
         -- Ensure localplayer and setPlate functions are defined
         if localplayer:is_in_vehicle() == false then
-            debugPrint("Error: No vehicle detected")
+            debugPrint(" Error: No vehicle detected")
             return
         else
-            scrollTextSavedMessage = message
-            scrollTextSavedSpeed = calculatedSpeed
             local p = localplayer
             local v = p:get_current_vehicle()
             savedPlateText = v:get_number_plate_text()
@@ -2164,13 +2244,13 @@ function ScrollText(message, speed)
                     end
                     scrollCounter = scrollcouter + 1
                     if scrollCounter > 1000 then
-                        debugPrint("")
-                        debugPrint("Garbage Collection Starting")
-                        debugPrint("Current Usage :" .. collectgarbage("count") .. " KB")
-                        debugPrint("")
+                        debugPrint(" ")
+                        debugPrint(" Garbage Collection Starting")
+                        debugPrint(" Current Usage :" .. collectgarbage("count") .. " KB")
+                        debugPrint(" ")
                         collectgarbage("collect")
-                        debugPrint("Garbage Collection Finished")
-                        debugPrint("Memory Usage: " .. collectgarbage("count") .. " KB")
+                        debugPrint(" Garbage Collection Finished")
+                        debugPrint(" Memory Usage: " .. collectgarbage("count") .. " KB")
                     end
 
                     local displayText = plateText:sub(i, i + plateLength - 1)
@@ -2183,7 +2263,7 @@ function ScrollText(message, speed)
             if savedPlateText then
                 setPlate(savedPlateText) -- Set it to the original message
             else
-                debugPrint("No saved Plate Data, Setting plate to the default")
+                debugPrint(" No saved Plate Data, Setting plate to the default")
                 setPlate(defaultPlate)
             end
         end
@@ -2198,7 +2278,7 @@ function ToggleInfiniteScroll()
 end
 
 -- Example usage
--- ScrollText("HELLO WORLD", 0.5) -- FUNCTION("MESSAGE", TIME)
+-- ScrollText(" HELLO WORLD", 0.5) -- FUNCTION("MESSAGE", TIME)
 
 function stopEverything()
     speedoRunning = false
@@ -2252,11 +2332,11 @@ function toggleRGBLoop()
                 :get_custom_primary_colour()
             originalPaint.secondary.R, originalPaint.secondary.G, originalPaint.secondary.B = vehicle
                 :get_custom_secondary_colour()
-            debugPrint("Original Primary: " ..
+            debugPrint(" Original Primary: " ..
                 "Red: " ..
                 originalPaint.primary.R ..
                 ". Green: " .. originalPaint.primary.G .. ". Blue: " .. originalPaint.primary.B)
-            debugPrint("Original Secondary: " ..
+            debugPrint(" Original Secondary: " ..
                 "Red: " ..
                 originalPaint.secondary.R ..
                 ". Green: " .. originalPaint.secondary.G .. ". Blue: " .. originalPaint.secondary.B)
@@ -2271,9 +2351,9 @@ function restorePaint(vehicle)
             vehicle:set_custom_primary_colour(originalPaint.primary.R, originalPaint.primary.G, originalPaint.primary.B)
             vehicle:set_custom_secondary_colour(originalPaint.secondary.R, originalPaint.secondary.G,
                 originalPaint.secondary.B)
-            debugPrint("Colour has been reverted")
+            debugPrint(" Colour has been reverted")
         else
-            debugPrint("Error: Original colors are nil")
+            debugPrint(" Error: Original colors are nil")
         end
     end
 end
@@ -2296,13 +2376,13 @@ function colourChangeLoop(vehicle)
 
         RGBCounter = RGBCounter + 1
         if RGBCounter > 1000 then
-            debugPrint("")
-            debugPrint("Garbage Collection Starting")
-            debugPrint("Current Usage: " .. collectgarbage("count") .. " KB")
-            debugPrint("")
+            debugPrint(" ")
+            debugPrint(" Garbage Collection Starting")
+            debugPrint(" Current Usage: " .. collectgarbage("count") .. " KB")
+            debugPrint(" ")
             collectgarbage("collect")
-            debugPrint("Garbage Collection Finished")
-            debugPrint("Memory Usage: " .. collectgarbage("count") .. " KB")
+            debugPrint(" Garbage Collection Finished")
+            debugPrint(" Memory Usage: " .. collectgarbage("count") .. " KB")
         end
         sleep(colourChangeSpeed)
 
@@ -2422,22 +2502,22 @@ function toggleDriftPlate()
         checkPlate()
     end
     if driftPlate then
-        debugPrint("drift plate active, de-activating it now...")
+        debugPrint(" drift plate active, de-activating it now...")
         driftPlate = false
         checkPlate()
     else
-        debugPrint("drift plate is in-active, activating now...")
+        debugPrint(" drift plate is in-active, activating now...")
         driftPlate = true
         startDriftPlate()
     end
 end
 
 function startDriftPlate()
-    debugPrint("saving current plate for reversal")
+    debugPrint(" saving current plate for reversal")
     local v = localplayer:get_current_vehicle()
     savedPlateText = v:get_number_plate_text()
     savedPlateVehicle = v
-    debugPrint("drift plate starting...")
+    debugPrint(" drift plate starting...")
 
     local prevDriftAngle = 0 -- To track the previous drift angle for transition detection
 
@@ -2469,31 +2549,31 @@ function startDriftPlate()
             driftPoints = driftPoints + totalPoints
 
             -- Print the current drift points and stats
-            debugPrint("Move and resize the window so you dont see this text (controller player only)")
-            debugPrint(" ") -- simulate a constantly changing display
-            debugPrint(" ")
-            debugPrint(" ")
-            debugPrint("Current Drift Points: " .. driftPoints)
-            debugPrint("Angle Points: " .. anglePoints)
-            debugPrint("Speed Points: " .. speedPoints)
-            debugPrint("Transition Bonus: " .. transitionBonus)
-            debugPrint("Combo Streak: " .. comboStreak)
-            debugPrint("Transition: " .. (isTransition and "Yes" or "No"))
-            debugPrint("Total Points: " .. totalPoints)
+            debugPrint(" Move and resize the window so you dont see this text (controller player only)")
+            debugPrint("  ") -- simulate a constantly changing display
+            debugPrint("  ")
+            debugPrint("  ")
+            debugPrint(" Current Drift Points: " .. driftPoints)
+            debugPrint(" Angle Points: " .. anglePoints)
+            debugPrint(" Speed Points: " .. speedPoints)
+            debugPrint(" Transition Bonus: " .. transitionBonus)
+            debugPrint(" Combo Streak: " .. comboStreak)
+            debugPrint(" Transition: " .. (isTransition and "Yes" or "No"))
+            debugPrint(" Total Points: " .. totalPoints)
 
             -- Print the angle to the plate
-            local angleStr = string.format("%3.0f°", driftAngle)
+            local angleStr = string.format(" %3.0f°", driftAngle)
             setPlate(angleStr)
 
             driftPlateCounter = driftPlateCounter + 1
             if driftPlateCounter > 1000 then
-                debugPrint("Garbage Collection Started")
-                debugPrint("")
-                debugPrint("Current Usage: " .. collectgarbage("count") .. " KB")
-                debugPrint("Garbage Collection in Progress")
+                debugPrint(" Garbage Collection Started")
+                debugPrint(" ")
+                debugPrint(" Current Usage: " .. collectgarbage("count") .. " KB")
+                debugPrint(" Garbage Collection in Progress")
                 collectgarbage("collect")
-                debugPrint("Current Usage: " .. collectgarbage("count") .. " KB")
-                debugPrint("Garbage Collection Finished")
+                debugPrint(" Current Usage: " .. collectgarbage("count") .. " KB")
+                debugPrint(" Garbage Collection Finished")
             end
 
             -- Update previous drift angle for the next iteration
@@ -2513,7 +2593,13 @@ end
 
 
 -- Main Menu Layout (order)
-local daytonsMenu = menu.add_submenu("Dayton's Menu")
+
+
+if outdated then
+    daytonsMenu:add_action(tenSpaces .. "WARNING", function() print(outdatedMessage) end)
+    daytonsMenu:add_action(fiveSpaces .. "SCRIPT OUTDATED", function() print(outdatedMessage) end)
+    daytonsMenu:add_action("PERMANENT CHANGING DISABLED", function() print(outdatedMessage) end)
+end
 
 -- SubMenus
 local daytonsDriftPlate = daytonsMenu:add_submenu("Drift Plate")
@@ -2549,12 +2635,12 @@ local MerryChristmasScrollMenu = scrollingtextmenu:add_submenu("EAT SHIT AND DIE
 -- User Input Menu
 local userInputMenu = KeefsPlateInputMenu:add_submenu("Keyboard Input (experimental)", function()
     debugMode = true
-    debugPrint("Stopping Everything Before Recording Keystrokes")
+    debugPrint(" Stopping Everything Before Recording Keystrokes")
     stopEverything()
-    debugPrint(" ")
-    debugPrint("Welcome to Don Reagan's Experimental User Input Method")
-    debugPrint("Please give an honest review and report any bugs you find.")
-    debugPrint(" ")
+    debugPrint("  ")
+    debugPrint(" Welcome to Don Reagan's Experimental User Input Method")
+    debugPrint(" Please give an honest review and report any bugs you find.")
+    debugPrint("  ")
     startRecording()
 end)
 
@@ -2566,11 +2652,11 @@ daytonsDriftPlate:add_int_range("Update Delay (ms)", 20, 20, 1000, function()
     return updateDelay * 1000 -- Convert seconds back to milliseconds for display
 end, function(value)
     setUpdateDelay(value)
-    debugPrint("update set to " .. value)
+    debugPrint(" update set to " .. value)
 end)
 daytonsDriftPlate:add_toggle("Drift Plate Toggle", function() return driftPlate end,
     function()
-        debugPrint("drift plate pressed")
+        debugPrint(" drift plate pressed")
         toggleDriftPlate()
     end)
 daytonsSpeedoMenu:add_toggle("Speedo ON/OFF", function() return speedoRunning end,
@@ -2597,7 +2683,7 @@ daytonsDragMenu:add_array_item("Distance", raceDistanceOptions,
         selectedDistance = raceDistanceOptions[index]
         raceDistance = raceDistances[selectedDistance]
         if savedPlateText == nil then
-            debugPrint("saving the plate")
+            debugPrint(" saving the plate")
             local p = localplayer
             local v = p:get_current_vehicle()
             savedPlateText = v:get_number_plate_text()
@@ -2605,7 +2691,7 @@ daytonsDragMenu:add_array_item("Distance", raceDistanceOptions,
         end
         checkPlate()
         setPlate(selectedDistance)
-        debugPrint("selected distance: " .. selectedDistance)
+        debugPrint(" selected distance: " .. selectedDistance)
     end)
 daytonsDragMenu:add_action("Start Drag Race",
     function()
@@ -2615,7 +2701,7 @@ daytonsDragMenu:add_action("Start Drag Race",
         if vehicle then
             raceDistance = distance
             checkPlate()
-            debugPrint("starting the DoDragRace function now")
+            debugPrint(" starting the DoDragRace function now")
             DoDragRace()
         else
             rip()
@@ -2665,18 +2751,18 @@ DaytonsScrollMenu:add_action("Stop Scrolling!!", function() stopEverything() end
 
 scrollingtextmenu:add_toggle("Infinite Loop", function() return infiniteScroll end,
     function() ToggleInfiniteScroll() end)
-MerryChristmasScrollMenu:add_action("EAT SHIT AND DIE TOO FAST", function() ScrollText("EAT SHIT AND DIE", 0.75) end)
-MerryChristmasScrollMenu:add_action("EAT SHIT AND DIE FAST", function() ScrollText("EAT SHIT AND DIE", 1) end)
-MerryChristmasScrollMenu:add_action("EAT SHIT AND DIE NORMAL", function() ScrollText("EAT SHIT AND DIE", 2) end)
-MerryChristmasScrollMenu:add_action("EAT SHIT AND DIE SLOW", function() ScrollText("EAT SHIT AND DIE", 3) end)
-MerryChristmasScrollMenu:add_action("EAT SHIT AND DIE TOO SLOW", function() ScrollText("EAT SHIT AND DIE", 4) end)
+MerryChristmasScrollMenu:add_action("EAT SHIT AND DIE TOO FAST", function() ScrollText(" EAT SHIT AND DIE", 0.75) end)
+MerryChristmasScrollMenu:add_action("EAT SHIT AND DIE FAST", function() ScrollText(" EAT SHIT AND DIE", 1) end)
+MerryChristmasScrollMenu:add_action("EAT SHIT AND DIE NORMAL", function() ScrollText(" EAT SHIT AND DIE", 2) end)
+MerryChristmasScrollMenu:add_action("EAT SHIT AND DIE SLOW", function() ScrollText(" EAT SHIT AND DIE", 3) end)
+MerryChristmasScrollMenu:add_action("EAT SHIT AND DIE TOO SLOW", function() ScrollText(" EAT SHIT AND DIE", 4) end)
 --Dayton's Dynamic Plates
 DaytonsScrollMenu:add_action("Move bitch, get out the way hoe",
-    function() ScrollText("move bitch  get out the way hoe", 1) end)
-DaytonsScrollMenu:add_action("Swearing", function() ScrollText("Fuck DICK SHIT BITCH CUNT PUSSY ass COCKSUCKER ", 1) end)
-DaytonsScrollMenu:add_action("FASTER THAN YOU", function() ScrollText("IM FASTER THAN YOU", 1) end)
-DaytonsScrollMenu:add_action("BOATS N HOES", function() ScrollText("BOATS N HOES", 2) end)
-DaytonsScrollMenu:add_action("SKRT", function() ScrollText("SKKRRRRRRRRRT", 2) end)
+    function() ScrollText(" move bitch  get out the way hoe", 1) end)
+DaytonsScrollMenu:add_action("Swearing", function() ScrollText(" Fuck DICK SHIT BITCH CUNT PUSSY ass COCKSUCKER ", 1) end)
+DaytonsScrollMenu:add_action("FASTER THAN YOU", function() ScrollText(" IM FASTER THAN YOU", 1) end)
+DaytonsScrollMenu:add_action("BOATS N HOES", function() ScrollText(" BOATS N HOES", 2) end)
+DaytonsScrollMenu:add_action("SKRT", function() ScrollText(" SKKRRRRRRRRRT", 2) end)
 -- HO HO HO PLATES
 xmasDynamicPlateMenu:add_action("Very Fast", function() Christmasplate(0.5) end)
 xmasDynamicPlateMenu:add_action("Fast", function() Christmasplate(0.75) end)
@@ -2739,7 +2825,7 @@ userInputMenu:add_toggle("Toggle Keystroke Recording", function() return recordi
 userInputMenu:add_toggle("Allow More Than 8 Characters", function() return allowMoreThan8Characters end,
     function()
         allowMoreThan8Characters = not allowMoreThan8Characters
-        debugPrint("Allowing more than 8 characters: " .. tostring(allowMoreThan8Characters))
+        debugPrint(" Allowing more than 8 characters: " .. tostring(allowMoreThan8Characters))
     end)
 userInputMenu:add_action("Stop Scrolling Text",
     function()
@@ -2943,8 +3029,8 @@ function printPOS()
         local veh = localplayer:get_current_vehicle()
         local pos = veh:get_position()
         local rotation = veh:get_rotation()
-        debugPrint("Current Position: " .. tostring(pos))
-        debugPrint("Current rotation: " .. tostring(rotation))
+        debugPrint(" Current Position: " .. tostring(pos))
+        debugPrint(" Current rotation: " .. tostring(rotation))
     end
 end
 
@@ -2953,14 +3039,14 @@ function savePOS()
         debugveh = localplayer:get_current_vehicle()
         debugpos = debugveh:get_position()
         debugrotation = debugveh:get_rotation()
-        debugPrint("saving POS: " .. tostring(debugpos))
+        debugPrint(" saving POS: " .. tostring(debugpos))
     end
 end
 
 function returnToPOS()
     if carCheck() then
         if debugveh then
-            debugPrint("moving to: " .. tostring(debugpos))
+            debugPrint(" moving to: " .. tostring(debugpos))
             debugveh:set_position(debugpos)
             debugveh:set_rotation(debugrotation)
         end
@@ -2976,7 +3062,7 @@ function loadDebugMenu()
                 local veh = localplayer:get_current_vehicle()
                 veh:set_position(raceLocations.mainFreewaySouthX, raceLocations.mainFreewaySouthY,
                     raceLocations.mainFreewaySouthZ)
-                debugPrint("teleported")
+                debugPrint(" teleported")
             else
                 localplayer:set_position(raceLocations.mainFreewaySouthX, raceLocations.mainFreewaySouthY,
                     raceLocations.mainFreewaySouthZ)
@@ -2992,7 +3078,7 @@ function loadDebugMenu()
     DEBUGMENU:add_action("rgb manual off", function() colourChanging = false end)
     DEBUGMENU:add_action("enter pv", function() menu.enter_personal_vehicle() end)
     DEBUGMENU:add_action("Print Memory Usage",
-        function() print("Current Usage: " .. collectgarbage("count") .. " KB") end)
-    DEBUGMENU:add_action("Clean Memory", function() print("Cleaning Memory Now") collectgarbage("collect") print("Cleaning Memory Finished. Current Usage: " .. collectgarbage("count") .. " KB") end)
+        function() print(" Current Usage: " .. collectgarbage("count") .. " KB") end)
+    DEBUGMENU:add_action("Clean Memory", function() collectgarbage("collect") end)
     debugMenuLoaded = true
 end
