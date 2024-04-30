@@ -983,6 +983,12 @@ local function toggleDebugMode()
     debugPrint(" User Setting: Debug Mode saved to " .. tostring(debugMode))
 end
 
+function loadGlobals()
+    gi = globals.get_int
+    g = { pv = { n = 2359980, c = 1586504, s = 2738886, i = 2672804 } }
+    podium = 289178
+end
+
 function checkBuild()
     -- Build Version Check
     M, m, build, patch = menu.get_game_version()
@@ -995,9 +1001,8 @@ function checkBuild()
         tenSpaces .. "        You are using an outdated menu. \n" ..
         tenSpaces .. "       Permanent Plate Changing Disabled \n" ..
         tenSpaces .. " Please Contact Don Reagan On Discord At ronnie.r.1989")
-    if build == 3095 then
-        gi = globals.get_int
-        g = { pv = { n = 2359980, c = 1586504, s = 2738886, i = 2672804 } }
+    if build == 3179 then
+        loadGlobals()
     else
         outdated = true
     end
@@ -1042,7 +1047,7 @@ menu.register_callback("OnScriptsLoaded", function()
         daytonsMenu:add_action("", function() rip() end)
         daytonsMenu:add_action("- WARNING - WARNING - WARNING -", function() rip() end)
         daytonsMenu:add_action("Do Not Use Unless Told To Do So", function() rip() end)
-        daytonsMenu:add_action("Enable Globals (Build - 3095)", function() outdated = false addPodiumChanger() gi = globals.get_int g = { pv = { n = 2359980, c = 1586504, s = 2738886, i = 2672804 } } end)
+        daytonsMenu:add_action("Enable Globals (Build - 3095)", function() outdated = false addPodiumChanger() loadGlobals() end)
         error(outdatedMessage, 0)
     end
 end
@@ -1084,7 +1089,7 @@ function addPodiumChanger()
                 selectedVehicleIndex = index
                 local selectedVehicle = vehicleOptions[index]
                 local selectedVehicleHash = getVehicleHash(selectedVehicle)
-                globals.set_int(289178, selectedVehicleHash)
+                globals.set_int(podium, selectedVehicleHash)
             end
         )
         podium:add_action(" ", function() rip() end)
