@@ -28,6 +28,96 @@ function printFlag()
     print("  ")
 end
 
+--[[To Be Implemented:
+
+
+-- Vehicle Searching By Name Functionality
+
+-- Levenshtein distance function
+local function levenshtein(s, t)
+   local len_s, len_t = #s, #t
+   local matrix = {}
+
+   for i = 0, len_s do
+      matrix[i] = {}
+      matrix[i][0] = i
+   end
+
+   for j = 0, len_t do
+      matrix[0][j] = j
+   end
+
+   for i = 1, len_s do
+      for j = 1, len_t do
+         local cost = (s:sub(i, i) == t:sub(j, j)) and 0 or 1
+         matrix[i][j] = math.min(matrix[i - 1][j] + 1,    -- deletion
+         matrix[i][j - 1] + 1,    -- insertion
+         matrix[i - 1][j - 1] + cost)  -- substitution
+      end
+   end
+
+   return matrix[len_s][len_t]
+end
+
+ -- Function to search for cars by name
+local function search_cars_by_name(vehicleHashes, search_name)
+    local results = {}
+    local threshold = 3  -- Adjusted threshold for better matching
+    local search_name_lower = search_name:lower()
+    for hash, name in pairs(vehicleHashes) do
+        local name_lower = name:lower()
+        local distance = levenshtein(name_lower, search_name_lower)
+        local relevance = distance
+        if name_lower:find(search_name_lower, 1, true) then
+            relevance = -1  -- Higher relevance for partial matches
+        end
+        if name_lower == search_name_lower then
+            relevance = -2  -- Highest relevance for exact matches
+        end
+        if relevance <= threshold or relevance == -1 or relevance == -2 then
+            table.insert(results, {hash = hash, name = name, relevance = relevance})
+        end
+    end
+    return results
+end
+
+-- Function to print the search results
+local function print_search_results(results)
+    if #results == 0 then
+        print("No cars found matching the search criteria.")
+    else
+        table.sort(results, function(a, b) return a.relevance < b.relevance end)
+        for _, car in ipairs(results) do
+            print("Hash: " .. car.hash .. ", Name: " .. car.name)
+        end
+    end
+end
+
+-- Example usage
+local search_name = "drift"  -- Try different search terms
+local results = search_cars_by_name(vehicleHashes, search_name)
+print_search_results(results)
+
+"should" print this:
+
+Hash: 821121576, Name: Drift Euros
+Hash: -1763273939, Name: Drift Jester RR
+Hash: -1696319096, Name: Drift Tampa
+Hash: -181562642, Name: Drift Futo
+Hash: -1681653521, Name: Drift Yosemite
+Hash: -1624083468, Name: Drift Remus
+Hash: -1479935577, Name: Drift FR36
+Hash: 1923534526, Name: Drift ZR350
+Hash: -1205689942, Name: Riot
+Hash: -1150599089, Name: Primo
+Hash: -349601129, Name: Bifta
+Hash: 686471183, Name: Drafter
+Hash: -1532697517, Name: Riata
+
+
+]]
+
+
 local version = 3179
 local M, m, build, patch = menu.get_game_version()
 local ReagansMenu = menu.add_submenu("Reagan's Menu")
