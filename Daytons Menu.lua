@@ -3044,14 +3044,14 @@ end
 
 function opBuildCheck()
     if build == version then
-        opMenu = ReagansMenu:add_submenu("Don's OP Recovery")
+        opMenu = ReagansMenu:add_submenu("Don's OP Recovery (unsafe)")
         loopMenu = opMenu:add_submenu("Loops")
-        loopMenu:add_action("1M/S", function() oneM() end)
+        loopMenu:add_action("1M/S (unsafe)", function() oneM() end)
         loopMenu:add_action("unsafe loop", function() unsafeloop() end)
         loopMenu:add_action("STOP LOOP", function() stopLoop() end)
         manualTransactionMenu = opMenu:add_submenu("Manual Transactions")
         for i, key in ipairs(transactions) do
-            manualTransactionMenu:add_action(key.name,
+            manualTransactionMenu:add_action(key.name .. "(unsafe)",
                 function()
                     TriggerTransaction(key.hash, key.amount)
                     if userIncome.MoneyTracking then
