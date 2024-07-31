@@ -1,4 +1,4 @@
--- Reagans Menu V1.420
+-- Don's Modest Selection V01
 function printFlag()
     print("  ")
     print("  ")
@@ -28,150 +28,28 @@ function printFlag()
     print("  ")
 end
 
---[[To Be Implemented:
-
-
--- Vehicle Searching By Name Functionality
-
--- Levenshtein distance function
-local function levenshtein(s, t)
-   local len_s, len_t = #s, #t
-   local matrix = {}
-
-   for i = 0, len_s do
-      matrix[i] = {}
-      matrix[i][0] = i
-   end
-
-   for j = 0, len_t do
-      matrix[0][j] = j
-   end
-
-   for i = 1, len_s do
-      for j = 1, len_t do
-         local cost = (s:sub(i, i) == t:sub(j, j)) and 0 or 1
-         matrix[i][j] = math.min(matrix[i - 1][j] + 1,    -- deletion
-         matrix[i][j - 1] + 1,    -- insertion
-         matrix[i - 1][j - 1] + cost)  -- substitution
-      end
-   end
-
-   return matrix[len_s][len_t]
-end
-
- -- Function to search for cars by name
-local function search_cars_by_name(vehicleHashes, search_name)
-    local results = {}
-    local threshold = 3  -- Adjusted threshold for better matching
-    local search_name_lower = search_name:lower()
-    for hash, name in pairs(vehicleHashes) do
-        local name_lower = name:lower()
-        local distance = levenshtein(name_lower, search_name_lower)
-        local relevance = distance
-        if name_lower:find(search_name_lower, 1, true) then
-            relevance = -1  -- Higher relevance for partial matches
-        end
-        if name_lower == search_name_lower then
-            relevance = -2  -- Highest relevance for exact matches
-        end
-        if relevance <= threshold or relevance == -1 or relevance == -2 then
-            table.insert(results, {hash = hash, name = name, relevance = relevance})
-        end
-    end
-    return results
-end
-
--- Function to print the search results
-local function print_search_results(results)
-    if #results == 0 then
-        print("No cars found matching the search criteria.")
-    else
-        table.sort(results, function(a, b) return a.relevance < b.relevance end)
-        for _, car in ipairs(results) do
-            print("Hash: " .. car.hash .. ", Name: " .. car.name)
-        end
-    end
-end
-
--- Example usage
-local search_name = "drift"  -- Try different search terms
-local results = search_cars_by_name(vehicleHashes, search_name)
-print_search_results(results)
-
-"should" print this:
-
-Hash: 821121576, Name: Drift Euros
-Hash: -1763273939, Name: Drift Jester RR
-Hash: -1696319096, Name: Drift Tampa
-Hash: -181562642, Name: Drift Futo
-Hash: -1681653521, Name: Drift Yosemite
-Hash: -1624083468, Name: Drift Remus
-Hash: -1479935577, Name: Drift FR36
-Hash: 1923534526, Name: Drift ZR350
-Hash: -1205689942, Name: Riot
-Hash: -1150599089, Name: Primo
-Hash: -349601129, Name: Bifta
-Hash: 686471183, Name: Drafter
-Hash: -1532697517, Name: Riata
-
-
-]]
-
-
-local version = 3179
+local globalsAreBlocked = true
+local version = 3258
 local M, m, build, patch = menu.get_game_version()
-local ReagansMenu = menu.add_submenu("Reagan's Menu")
+local ReagansMenu = menu.add_submenu("Don's Modest Selection")
 
-local positiveMessages = {
-    "Life's too short to be anything but happy.",
-    "Keep moving forward, one step at a time.",
-    "Embrace the journey, not just the destination.",
-    "Believe in yourself and all that you are.",
-    "Every moment is a fresh beginning.",
-    "Dream big and dare to fail.",
-    "Happiness is a choice, not a result.",
-    "You are capable of amazing things.",
-    "Chase your dreams, but always know the road that'll lead you home again.",
-    "Success is not final, failure is not fatal: It is the courage to continue that counts.",
-    "Be creative  live a fun life  and dont be an asshole"
-}
+local positiveMessages = {"Life's too short to be anything but happy.", "Keep moving forward, one step at a time.",
+                          "Embrace the journey, not just the destination.", "Believe in yourself and all that you are.",
+                          "Every moment is a fresh beginning.", "Dream big and dare to fail.",
+                          "Happiness is a choice, not a result.", "You are capable of amazing things.",
+                          "Chase your dreams, but always know the road that'll lead you home again.",
+                          "Success is not final, failure is not fatal: It is the courage to continue that counts.",
+                          "Be creative  live a fun life  and dont be an asshole"}
 
-local LINEMESSAGES = {
-    "III11i1ii11ii11i1i1i1ii111ii11i1i1i1ii111ii11ii11ii1i11ii1111ii11ii11i1i1i1",
-    "iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii"
-}
+local LINEMESSAGES = {"III11i1ii11ii11i1i1i1ii111ii11i1i1i1ii111ii11ii11ii1i11ii1111ii11ii11i1i1i1",
+                      "iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii"}
 
-local rickMortyMessages = {
-    "DONT BE A DICK MORTY",
-    "WUBBA LUBBA DUB DUB",
-    "PASS ME A DRINK MORTY",
-    "SHUT UP RICK"
-}
+local rickMortyMessages = {"DONT BE A DICK MORTY", "WUBBA LUBBA DUB DUB", "PASS ME A DRINK MORTY", "SHUT UP RICK"}
 
-local ganjaMessages = {
-    "puff puff pass",
-    "roll one for the skipper",
-    "roll roll roll your joints",
-    "SMOK ONE",
-    "OG KUSH",
-    "FOUR 20",
-    "420",
-    "THC",
-    "CALI BUD",
-    "BC BUD",
-    "BONGMEUP",
-    "BONG ME UP",
-    "BONG RIP",
-    "CHILLOUT",
-    "SPARK ME UP SCOTTY",
-    "GANJA",
-    "GAS WEED",
-    "WEED DEDLIVERY",
-    "GRASSMAN",
-    "KEEF IT UP",
-    "GRN CRAK",
-    "GREEN CRACK,"
-}
+local ganjaMessages = {"puff puff pass", "roll one for the skipper", "roll roll roll your joints", "SMOK ONE",
+                       "OG KUSH", "FOUR 20", "420", "THC", "CALI BUD", "BC BUD", "BONGMEUP", "BONG ME UP", "BONG RIP",
+                       "CHILLOUT", "SPARK ME UP SCOTTY", "GANJA", "GAS WEED", "WEED DEDLIVERY", "GRASSMAN",
+                       "KEEF IT UP", "GRN CRAK", "GREEN CRACK,"}
 
 local scriptFree = false
 local customPlates = {}
@@ -184,124 +62,85 @@ function loadCustomPlates()
         17, 29, 41, 53, 65, 77 and 89
         ]]
 
-        USERPLATES = {
-            "Made by", "D Reagan", "BEAM NG", "COOTER", "RACEWIN", "NOS 9999", "SPDLGHT",
-            "GT RACE", "DRIV4FUN", "SPEDWAY", "QUICKWIN", "RALLY X", "CATCHME", "TOO FAST",
-            "ROCKET1", "SPD RCR", "ZOOM ZM", "FLY BY", "RACER X", "DRFT KNG", "GTA RCR",
-            "HOT ROD", "SPD DEMN", "TURBO 1", "VROOOM", "FASTCAR", "NITRO US", "1ST PLC",
-            "WINNING", "CHKR FLG", "RD STR", "REVV IT", "GO FSTGO", "RALLY CR", "GRN FLAG",
-            "BURN OUT", "OVRTAKE", "QUICK 1", "SWIFT", "GO GO", "RAC DAY", "SPRINT",
-            "RPM 9999", "PDL 2MTL", "LAP TIME", "BLITZ", "SUPRSON", "THRILL", "ENGNE",
-            "TRBO CHG", "CAR LOVR", "DRVR", "RACE ON", "SPEEDY", "2FAST4U", "JMP STR",
-            "ACEL RT", "VELOCIT", "CRN ZON", "NEED4SPD", "GLIDE", "AIRBRNE", "RUSH HR"
-        },
+        USERPLATES = {"Made by", "D Reagan", "BEAM NG", "COOTER", "RACEWIN", "NOS 9999", "SPDLGHT", "GT RACE",
+                      "DRIV4FUN", "SPEDWAY", "QUICKWIN", "RALLY X", "CATCHME", "TOO FAST", "ROCKET1", "SPD RCR",
+                      "ZOOM ZM", "FLY BY", "RACER X", "DRFT KNG", "GTA RCR", "HOT ROD", "SPD DEMN", "TURBO 1", "VROOOM",
+                      "FASTCAR", "NITRO US", "1ST PLC", "WINNING", "CHKR FLG", "RD STR", "REVV IT", "GO FSTGO",
+                      "RALLY CR", "GRN FLAG", "BURN OUT", "OVRTAKE", "QUICK 1", "SWIFT", "GO GO", "RAC DAY", "SPRINT",
+                      "RPM 9999", "PDL 2MTL", "LAP TIME", "BLITZ", "SUPRSON", "THRILL", "ENGNE", "TRBO CHG", "CAR LOVR",
+                      "DRVR", "RACE ON", "SPEEDY", "2FAST4U", "JMP STR", "ACEL RT", "VELOCIT", "CRN ZON", "NEED4SPD",
+                      "GLIDE", "AIRBRNE", "RUSH HR"},
 
-        starWarsCharacterPlates = {
-            "STORMTRP", "CLONE", "EWOK", "DROID", "GALAXY", "EMPIRE", "REBELS",
-            "YODA 1", "VADER", "LUKE SKY", "LEIA ORG", "KENOBI", "R2 D2", "C3 PO",
-            "BOBAFET", "JABBA", "CHEWBACA", "REY4CE", "KYLO REN", "SITHLOR", "JEDI KNT",
-            "MAUL", "GRIEVS", "PADME", "MANDO", "ASHOKA", "TARKIN", "WICKET",
-            "LANDO", "HAN SOLO", "QUI GON", "FINN"
-        },
+        starWarsCharacterPlates = {"STORMTRP", "CLONE", "EWOK", "DROID", "GALAXY", "EMPIRE", "REBELS", "YODA 1",
+                                   "VADER", "LUKE SKY", "LEIA ORG", "KENOBI", "R2 D2", "C3 PO", "BOBAFET", "JABBA",
+                                   "CHEWBACA", "REY4CE", "KYLO REN", "SITHLOR", "JEDI KNT", "MAUL", "GRIEVS", "PADME",
+                                   "MANDO", "ASHOKA", "TARKIN", "WICKET", "LANDO", "HAN SOLO", "QUI GON", "FINN"},
 
-        starWarsShipPlates = {
-            "XWING 1", "TIE X1", "MILLENNM", "STRTSTR", "JEDI STR", "SITH SP", "REBL SH",
-            "FALCON", "X WING", "TIE FGHT", "SLAVE 1", "ROGUE", "ST DEST", "TANTIVE",
-            "NABOO", "EXECUTR", "CORVET", "INTRCPT", "VENATOR", "DEFSATL", "SIDIOUS",
-            "GHOST", "ARCLGHT", "BWING", "AWING", "UWING", "JEDSTAR", "TIEBOMB",
-            "TIEADV", "SITHINF", "REBEL", "IMPERIAL"
-        },
+        starWarsShipPlates = {"XWING 1", "TIE X1", "MILLENNM", "STRTSTR", "JEDI STR", "SITH SP", "REBL SH", "FALCON",
+                              "X WING", "TIE FGHT", "SLAVE 1", "ROGUE", "ST DEST", "TANTIVE", "NABOO", "EXECUTR",
+                              "CORVET", "INTRCPT", "VENATOR", "DEFSATL", "SIDIOUS", "GHOST", "ARCLGHT", "BWING",
+                              "AWING", "UWING", "JEDSTAR", "TIEBOMB", "TIEADV", "SITHINF", "REBEL", "IMPERIAL"},
 
-        gtaViceCityPlates = {
-            "RACER V", "SPEEDVC", "FAST GT", "TROPIC", "GANGSTA", "COP CHS", "SCARFACE",
-            "VICE CTY", "TOMMY V", "LANCE", "VERCETI", "DIAZ", "MALIBU", "CUBANS",
-            "BIKER", "LUVFIST", "CORTZ", "RICARDO", "KENROSE", "MERCENY", "PHILCAS",
-            "BANKJOB", "YATCHT", "V ROCK", "FEVER", "WILDSTY", "BANDSIX", "GOLF CRT",
-            "CHEETAH", "SABRETT", "STINGER", "HOTRING"
-        },
+        gtaViceCityPlates = {"RACER V", "SPEEDVC", "FAST GT", "TROPIC", "GANGSTA", "COP CHS", "SCARFACE", "VICE CTY",
+                             "TOMMY V", "LANCE", "VERCETI", "DIAZ", "MALIBU", "CUBANS", "BIKER", "LUVFIST", "CORTZ",
+                             "RICARDO", "KENROSE", "MERCENY", "PHILCAS", "BANKJOB", "YATCHT", "V ROCK", "FEVER",
+                             "WILDSTY", "BANDSIX", "GOLF CRT", "CHEETAH", "SABRETT", "STINGER", "HOTRING"},
 
-        gtaSanAndreasPlates = {
-            "GANGWAR", "SA RACE", "FLY AWAY", "GROVEST", "CRIMINAL", "SAN FLY", "SA HERO",
-            "GROVE ST", "CJ 1992", "BIGSMOKE", "SWEET", "RYDER", "OG LOC", "KENDL",
-            "CESAR", "ZER0", "TRUTH", "WUZIMU", "AZTECA", "BALLAS", "VAGOS",
-            "NITRO", "BURGLRY", "HYDRA", "TANK", "BMXBIKE", "LOWRIDER", "JETPACK",
-            "CASINO", "HEIST", "TRIBOSS", "CJ MOM", "K DST", "K ROSE", "BUSTA"
-        },
+        gtaSanAndreasPlates = {"GANGWAR", "SA RACE", "FLY AWAY", "GROVEST", "CRIMINAL", "SAN FLY", "SA HERO",
+                               "GROVE ST", "CJ 1992", "BIGSMOKE", "SWEET", "RYDER", "OG LOC", "KENDL", "CESAR", "ZER0",
+                               "TRUTH", "WUZIMU", "AZTECA", "BALLAS", "VAGOS", "NITRO", "BURGLRY", "HYDRA", "TANK",
+                               "BMXBIKE", "LOWRIDER", "JETPACK", "CASINO", "HEIST", "TRIBOSS", "CJ MOM", "K DST",
+                               "K ROSE", "BUSTA"},
 
-        gtaIVPlates = {
-            "GANG IV", "LC RACE", "CRIME IV", "LIB CTY", "MOBGAME", "IV HERO", "COP IV",
-            "NIKO B", "ROMAN", "LIBERTY", "VLAD", "DIMITRI", "PACKIE", "FAUSTIN",
-            "BELLECI", "DARDAN", "RAY B", "PEGORIN", "ULPC", "LILJACOB", "BULGARN",
-            "GAMBETI", "GRACIE", "IVAN", "KIKI", "LYLE", "MALLORI", "MANNY",
-            "PHIL B", "PLAYBOY", "RICKY", "VLAD M"
-        },
+        gtaIVPlates = {"GANG IV", "LC RACE", "CRIME IV", "LIB CTY", "MOBGAME", "IV HERO", "COP IV", "NIKO B", "ROMAN",
+                       "LIBERTY", "VLAD", "DIMITRI", "PACKIE", "FAUSTIN", "BELLECI", "DARDAN", "RAY B", "PEGORIN",
+                       "ULPC", "LILJACOB", "BULGARN", "GAMBETI", "GRACIE", "IVAN", "KIKI", "LYLE", "MALLORI", "MANNY",
+                       "PHIL B", "PLAYBOY", "RICKY", "VLAD M"},
 
-        gtaVPlates = {
-            "GTAVWIN", "LS RACE", "CRIME V", "V HERO", "GANG V", "COP V", "V FAST",
-            "LSANTOS", "TREVOR", "FRANKLN", "MICHAEL", "LAMAR", "CHOP", "TRACEY",
-            "JIMMY", "LESTER", "DEVIN", "AMANDA", "FIB", "HEIST", "VINEWD",
-            "BALLAD", "GROVE", "DELPRRO", "LS CSTM", "ECLIPSE", "HAO", "SIMION",
-            "OMEGA", "TONYA", "HANGER", "YACHT"
-        },
+        gtaVPlates = {"GTAVWIN", "LS RACE", "CRIME V", "V HERO", "GANG V", "COP V", "V FAST", "LSANTOS", "TREVOR",
+                      "FRANKLN", "MICHAEL", "LAMAR", "CHOP", "TRACEY", "JIMMY", "LESTER", "DEVIN", "AMANDA", "FIB",
+                      "HEIST", "VINEWD", "BALLAD", "GROVE", "DELPRRO", "LS CSTM", "ECLIPSE", "HAO", "SIMION", "OMEGA",
+                      "TONYA", "HANGER", "YACHT"},
 
-        gameCharacterPlates = {
-            "PACMAN", "TOMB RD", "GHOST", "WIZARD", "PRINCES", "HERO", "VILLAIN",
-            "MARIO", "SONIC", "LARA C", "MASTCHF", "KIRBY", "PEEK A", "LINK",
-            "ZELDA", "DKONG", "CLOUD", "SNAKE", "SAMUS", "POKEMON", "KRATOS",
-            "MEGAMAN", "EARTHBD", "SIMCITY", "BOMBRMN", "TETRIS", "GORDON", "ALTAIR",
-            "EZIO", "LEE", "CLEMENT", "NATHAN", "MEGATRON", "OPTIMUS"
-        },
+        gameCharacterPlates = {"PACMAN", "TOMB RD", "GHOST", "WIZARD", "PRINCES", "HERO", "VILLAIN", "MARIO", "SONIC",
+                               "LARA C", "MASTCHF", "KIRBY", "PEEK A", "LINK", "ZELDA", "DKONG", "CLOUD", "SNAKE",
+                               "SAMUS", "POKEMON", "KRATOS", "MEGAMAN", "EARTHBD", "SIMCITY", "BOMBRMN", "TETRIS",
+                               "GORDON", "ALTAIR", "EZIO", "LEE", "CLEMENT", "NATHAN", "MEGATRON", "OPTIMUS"},
 
-        gameVehiclePlates = {
-            "TIMECAR", "FUTURE", "SPACESH", "ROCKET", "FASTCAR", "GAMECAR", "HEROCAR",
-            "KART", "WARTHOG", "GHST RDR", "P WAGON", "VIPER", "BAT MBL", "KITT",
-            "GEN LEE", "OPTIMUS", "GADGETV", "HERBIE", "A TEAM", "PEACEMKR", "ECTO1",
-            "MILANO", "ELEANOR", "AKIRA", "NCC1707", "MACH 5", "MAXIMUS", "SERENITY",
-            "NOSTROMO", "MCQUEEN", "MATER", "KARR", "MCFLY", "BEAUTY"
-        },
+        gameVehiclePlates = {"TIMECAR", "FUTURE", "SPACESH", "ROCKET", "FASTCAR", "GAMECAR", "HEROCAR", "KART",
+                             "WARTHOG", "GHST RDR", "P WAGON", "VIPER", "BAT MBL", "KITT", "GEN LEE", "OPTIMUS",
+                             "GADGETV", "HERBIE", "A TEAM", "PEACEMKR", "ECTO1", "MILANO", "ELEANOR", "AKIRA",
+                             "NCC1707", "MACH 5", "MAXIMUS", "SERENITY", "NOSTROMO", "MCQUEEN", "MATER", "KARR",
+                             "MCFLY", "BEAUTY"},
 
-        gta6CharactersLocationsPlates = {
-            "LUCIA", "JASON", "BONCLYD", "SAN4SAN", "GRDIBRO", "MILITIA", "PORTGLH",
-            "SBEACH", "NMIA", "OKECHO", "MALIBU", "PAWNSHP", "STRIPCLB", "GASSTN",
-            "JWLRYLP", "HAPPYJU", "SHOPWEL", "COPARST", "DNUTBRN", "TIRESWG", "SHADYMI",
-            "IGUANA", "LAUNDRY", "THIEFIE", "CRIMINAL"
-        },
+        gta6CharactersLocationsPlates = {"LUCIA", "JASON", "BONCLYD", "SAN4SAN", "GRDIBRO", "MILITIA", "PORTGLH",
+                                         "SBEACH", "NMIA", "OKECHO", "MALIBU", "PAWNSHP", "STRIPCLB", "GASSTN",
+                                         "JWLRYLP", "HAPPYJU", "SHOPWEL", "COPARST", "DNUTBRN", "TIRESWG", "SHADYMI",
+                                         "IGUANA", "LAUNDRY", "THIEFIE", "CRIMINAL"},
 
-        muscleCarPlates = {
-            "MUSCLE", "V8 BEAST", "DRAGSTR", "OLD COOL", "HEMI 68", "GTO 1967", "SS 454",
-            "MUSCLPR", "V8POWER", "DRAGBURN", "OLDSCOOL", "ROARLOUD", "FASTLNE", "HOTROD",
-            "CLASSIC", "TORQUE", "GRITTY", "REVMAX", "POWRIDE", "STREETKN", "VINTMUSC",
-            "CHARGER", "CAMARO", "MUSTANG", "RUMBLE", "PONYCAR", "HORSEPWR"
-        },
+        muscleCarPlates = {"MUSCLE", "V8 BEAST", "DRAGSTR", "OLD COOL", "HEMI 68", "GTO 1967", "SS 454", "MUSCLPR",
+                           "V8POWER", "DRAGBURN", "OLDSCOOL", "ROARLOUD", "FASTLNE", "HOTROD", "CLASSIC", "TORQUE",
+                           "GRITTY", "REVMAX", "POWRIDE", "STREETKN", "VINTMUSC", "CHARGER", "CAMARO", "MUSTANG",
+                           "RUMBLE", "PONYCAR", "HORSEPWR"},
 
-        streetTunerPlates = {
-            "TURBO X", "LOW 4U", "DRFTKNG", "TUNE IT", "NOSRUSH", "RACETRK", "SPRTSTR",
-            "TURBOCH", "NITROUS", "LOWRIDE", "SPRTCOMP", "DRFTKING", "NEONS", "SPOILER",
-            "AERO", "SHIFTQCK", "TUNEDUP", "MODLIFE", "SUSPENS", "TWINTRBO", "DRAGSTR",
-            "SLICKTYR", "RALLYRD", "STREETR", "QUICKSHF", "PERFTUNE", "CUSTMOD"
-        },
+        streetTunerPlates = {"TURBO X", "LOW 4U", "DRFTKNG", "TUNE IT", "NOSRUSH", "RACETRK", "SPRTSTR", "TURBOCH",
+                             "NITROUS", "LOWRIDE", "SPRTCOMP", "DRFTKING", "NEONS", "SPOILER", "AERO", "SHIFTQCK",
+                             "TUNEDUP", "MODLIFE", "SUSPENS", "TWINTRBO", "DRAGSTR", "SLICKTYR", "RALLYRD", "STREETR",
+                             "QUICKSHF", "PERFTUNE", "CUSTMOD"},
 
-        supercarPlates = {
-            "SPD DEM", "SUPRCAR", "FAST V8", "HYPRCAR", "LUX SPD", "AERO X", "TOPSPD",
-            "SUPRSPD", "HYPER", "EXOTIC", "LUXFAST", "AERODYN", "CARBON", "SLEEK",
-            "ELITE", "TOPGEAR", "SPEED", "V MAX", "ULTMTE", "PREMIUM", "FASTLN",
-            "JETSET", "FIBRE", "PINNACLE", "GTSTYLE", "RACERDY", "SPEEDMON"
-        },
+        supercarPlates = {"SPD DEM", "SUPRCAR", "FAST V8", "HYPRCAR", "LUX SPD", "AERO X", "TOPSPD", "SUPRSPD", "HYPER",
+                          "EXOTIC", "LUXFAST", "AERODYN", "CARBON", "SLEEK", "ELITE", "TOPGEAR", "SPEED", "V MAX",
+                          "ULTMTE", "PREMIUM", "FASTLN", "JETSET", "FIBRE", "PINNACLE", "GTSTYLE", "RACERDY", "SPEEDMON"},
 
-        offRoadPlates = {
-            "MUD FUN", "4X4 LIFE", "OFFROAD", "TRAILX", "JEEP 4X4", "JEEP", "ROCKCRWL",
-            "4X4TOUGH", "DIRTROAD", "MUDKING", "TRALBLAZ", "RAIDER", "ALLTERRN", "RUGGED",
-            "OFFTRCK", "JEEPLIFE", "CLIMBER", "BOUNTY", "EXPLORE", "ROCKCWL", "DIRTRDR",
-            "LANDROV", "SAFARI", "ADVENTR", "OFFBEAT", "TRAILHN", "RUGGEDX"
-        },
+        offRoadPlates = {"MUD FUN", "4X4 LIFE", "OFFROAD", "TRAILX", "JEEP 4X4", "JEEP", "ROCKCRWL", "4X4TOUGH",
+                         "DIRTROAD", "MUDKING", "TRALBLAZ", "RAIDER", "ALLTERRN", "RUGGED", "OFFTRCK", "JEEPLIFE",
+                         "CLIMBER", "BOUNTY", "EXPLORE", "ROCKCWL", "DIRTRDR", "LANDROV", "SAFARI", "ADVENTR",
+                         "OFFBEAT", "TRAILHN", "RUGGEDX"},
 
-        vintageClassicPlates = {
-            "OLDTIME", "RETRO 8", "ANTQ CAR", "VINTAGE", "CLSC CAR", "OLDLOVE", "ERA GOLD",
-            "TIMELESS", "RETRO", "VINTELEG", "ANTIQUE", "OLDTIMER", "CLASSY", "VINTROD",
-            "NOSTLGIA", "LEGEND", "HISTORC", "ERAICON", "AGED FN", "CLASSICA", "OLDCHARM",
-            "RELVINT", "PASTIME", "VINTAGE", "OLDGOLD", "TIMEHNR", "RETROLV"
-
-        }
+        vintageClassicPlates = {"OLDTIME", "RETRO 8", "ANTQ CAR", "VINTAGE", "CLSC CAR", "OLDLOVE", "ERA GOLD",
+                                "TIMELESS", "RETRO", "VINTELEG", "ANTIQUE", "OLDTIMER", "CLASSY", "VINTROD", "NOSTLGIA",
+                                "LEGEND", "HISTORC", "ERAICON", "AGED FN", "CLASSICA", "OLDCHARM", "RELVINT", "PASTIME",
+                                "VINTAGE", "OLDGOLD", "TIMEHNR", "RETROLV"}
 
     }
 
@@ -907,9 +746,9 @@ local javaKeycodeMapping = {
     [55] = '7',
     [56] = '8',
     [57] = '9',
-    [18] = 'Alt',          -- OPTION 2
-    [17] = 'Ctrl',         -- OPTION 3
-    [16] = 'Shift',        -- OPTION 1
+    [18] = 'Alt', -- OPTION 2
+    [17] = 'Ctrl', -- OPTION 3
+    [16] = 'Shift', -- OPTION 1
     [110] = 'NUM Decimal', -- OPTION 4
     [34] = 'PgDn',
     [37] = 'Left',
@@ -969,7 +808,7 @@ local javaKeycodeMapping = {
     [219] = '[',
     [220] = '\\',
     [221] = ']',
-    [222] = '\'',
+    [222] = '\''
 }
 
 -- Global variable to control infinite scrolling
@@ -996,27 +835,34 @@ local confirmingScrollText = false
 local newPlateText = nil
 local savedPlateVehicle = nil -- plate to match the vehicle it was from, else revert to default (to be fully implemented)
 local savedPlateText = nil
-local Config = { OuterRadius = 150, Safety = 20 }
-local plateLength = 8    -- maximum allowable characters on a license plate
+local Config = {
+    OuterRadius = 150,
+    Safety = 20
+}
+local plateLength = 8 -- maximum allowable characters on a license plate
 local sixtyFeet = 18.288 -- 60 feet in meters
 local reactionTime = nil
 local sixtyFootTime = nil
 local sixtyFootSpeed = nil
-local tuningMode = { fastDriftMode = false, slowDriftMode = false, spoodBeastMode = false }
+local tuningMode = {
+    fastDriftMode = false,
+    slowDriftMode = false,
+    spoodBeastMode = false
+}
 local bennysMode = false
 local f1Mode = false
 local savedHash = 0
 local driftPlate = false
 local rollTuneSettings = { -- EXPERIMENTAL!!
-    front = nil,           -- Front roll
+    front = nil, -- Front roll
     newFront = nil,
-    rear = nil,            -- Rear roll
+    rear = nil, -- Rear roll
     newRear = nil
 }
 
 -- RGB Paint
 local RGBSpeeds = {
-    extraExtraFast = 0.01,
+    extraExtraFast = 0.025,
     extraFast = 0.05,
     fast = 0.10,
     default = 0.15,
@@ -1027,8 +873,16 @@ local colourChangeSpeed = RGBSpeeds.default
 local colourChanging = false
 local hue = 0
 local originalPaint = {
-    primary = { R = nil, G = nil, B = nil },
-    secondary = { R = nil, G = nil, B = nil }
+    primary = {
+        R = nil,
+        G = nil,
+        B = nil
+    },
+    secondary = {
+        R = nil,
+        G = nil,
+        B = nil
+    }
 }
 
 -- Debug Mode Print Function
@@ -1070,7 +924,7 @@ end
 -- Speedometer Variables
 local speeds = {}
 local speedoRunning = false -- Speedo controller
-local speedmode = {         -- Speed modes
+local speedmode = { -- Speed modes
     kph = 3.6,
     mph = 2.23694,
     current = 3.6 -- Default to kph mode conversion value
@@ -1118,7 +972,7 @@ local slowDriftStats = {
     upShift = 90,
     downShift = 80,
     driveBiasFront = 0,
-    turningRadius = 45, -- half of a right angle (for good angle control)
+    turningRadius = 45 -- half of a right angle (for good angle control)
 }
 
 -- Drift tune (High Speed)
@@ -1144,7 +998,7 @@ local spoodBeastStats = {
     upShift = 10000,
     downShift = 10000,
     driveBiasFront = 48.9,
-    turningRadius = 22.5, -- quarter of a right angle (for smoother turning at high speeds)
+    turningRadius = 22.5 -- quarter of a right angle (for smoother turning at high speeds)
 }
 
 -- Old stats for reversal
@@ -1157,7 +1011,7 @@ local oldStats = {
     upShift = nil,
     downShift = nil,
     driveBiasFront = nil,
-    turningRadius = nil,
+    turningRadius = nil
 }
 
 -- Vehicle Mover Variables
@@ -1167,15 +1021,15 @@ local vehiclesMoved = 0
 -- Drift Plate Variables
 local driftAngles = {}
 local maxDriftAngleHistory = 5 -- The number of angles to keep in history for averaging
-local updateDelay = 0.25       -- delay between refresh
+local updateDelay = 0.25 -- delay between refresh
 local totalPoints = 0
 local comboStreak = 0
-local angleMultiplier = 1.5         -- Adjust as needed
-local speedBonusThreshold = 10      --* 3.5 -- Adjust as needed (Meters/Second * Miles multiplier is commented out?)
+local angleMultiplier = 1.5 -- Adjust as needed
+local speedBonusThreshold = 10 -- * 3.5 -- Adjust as needed (Meters/Second * Miles multiplier is commented out?)
 local transitionAngleThreshold = 20 -- Adjust as needed, in degrees
-local transitionPoints = 50         -- Adjust as needed
-local angleThreshold = 1            -- minimum angle
-local filteredDriftAngle = 0        -- Holds The Smoothed Angle
+local transitionPoints = 50 -- Adjust as needed
+local angleThreshold = 1 -- minimum angle
+local filteredDriftAngle = 0 -- Holds The Smoothed Angle
 
 -- Smoothing factor for the low-pass filter algorithm
 local smoothingFactor = 0.5 -- (0 to 1)
@@ -1185,72 +1039,6 @@ local smoothingFactor = 0.5 -- (0 to 1)
 -- tricks variables
 local originalHash = 0
 local hashIsOriginal = true
-
--- OP Recovery Variables
-local recovery <const> = 4537212
-local function TriggerTransaction(hash, amount)
-    globals.set_int(recovery + 1, 2147483646)
-    globals.set_int(recovery + 7, 2147483647)
-    globals.set_int(recovery + 6, 0)
-    globals.set_int(recovery + 5, 0)
-    globals.set_int(recovery + 3, hash)
-    globals.set_int(recovery + 2, amount)
-    globals.set_int(recovery, 2)
-end
-
-local transactions = {
-    { name = "15M (Bend Job)",                         hash = 0x176D9D54,  amount = 15000000 },
-    { name = "15M (Bend Bonus)",                       hash = 0xA174F633,  amount = 15000000 },
-    { name = "15M (Criminal Mastermind)",              hash = 0x3EBB7442,  amount = 15000000 },
-    { name = "15M (Gangpos Mastermind)",               hash = 0x23F59C7C,  amount = 15000000 },
-    { name = "7M (Gang)",                              hash = 0xED97AFC1,  amount = 7000000 },
-    { name = "3.6M (Casino Heist)",                    hash = 0xB703ED29,  amount = 3619000 },
-    { name = "3M (Agency Story)",                      hash = 0xBD0D94E3,  amount = 3000000 },
-    { name = "3M (Gangpos Mastermind)",                hash = 0x370A42A5,  amount = 3000000 },
-    { name = "2.5M (Gang)",                            hash = 0x46521174,  amount = 2550000 },
-    { name = "2.5M (Island Heist)",                    hash = 0xDBF39508,  amount = 2550000 },
-    { name = "2M (Gangpos Award Order)",               hash = 0x32537662,  amount = 2000000 },
-    { name = "2M (Heist Awards)",                      hash = 0x8107BB89,  amount = 2000000 },
-    { name = "2M (Tuner Robbery)",                     hash = 0x921FCF3C,  amount = 2000000 },
-    { name = "2M (Business Hub)",                      hash = 0x4B6A869C,  amount = 2000000 },
-    { name = "1.5M (Gangpos Loyal Award)",             hash = 0x33E1D8F6,  amount = 1500000 },
-    { name = "1.2M (Boss Agency)",                     hash = 0xCCFA52D,   amount = 1200000 },
-    { name = "1M (Music Trip)",                        hash = 0xDF314B5A,  amount = 1000000 },
-    { name = "1M (Daily Objective Event)",             hash = 0x314FB8B0,  amount = 1000000 },
-    { name = "1M (Daily Objective)",                   hash = 0xBFCBE6B6,  amount = 1000000 },
-    { name = "1M (Juggalo Story Award)",               hash = 0x615762F1,  amount = 1000000 },
-    { name = "700K (Gangpos Loyal Award)",             hash = 0xED74CC1D,  amount = 700000 },
-    { name = "680K (Betting)",                         hash = 0xACA75AAE,  amount = 680000 },
-    { name = "620K (Vehicle Export)",                  hash = 0xEE884170,  amount = 620000 },
-    { name = "500K (Casino Straight Flush)",           hash = 0x059E889DD, amount = 500000 },
-    { name = "500K (Juggalo Story)",                   hash = 0x05F2B7EE,  amount = 500000 },
-    { name = "400K (Cayo Heist Award Professional)",   hash = 0xAC7144BC,  amount = 400000 },
-    { name = "400K (Cayo Heist Award Cat Burglar)",    hash = 0xB4CA7969,  amount = 400000 },
-    { name = "400K (Cayo Heist Award Elite Thief)",    hash = 0xF5AAD2DE,  amount = 400000 },
-    { name = "400K (Cayo Heist Award Island Thief)",   hash = 0x1868FE18,  amount = 400000 },
-    { name = "350K (Casino Heist Award Elite Thief)",  hash = 0x7954FD0F,  amount = 350000 },
-    { name = "300K (Casino Heist Award All Rounder)",  hash = 0x234B8864,  amount = 300000 },
-    { name = "300K (Casino Heist Award Pro Thief)",    hash = 0x2EC48716,  amount = 300000 },
-    { name = "300K (Ambient Job Blast)",               hash = 0xC94D30CC,  amount = 300000 },
-    { name = "300K (Premium Job)",                     hash = 0xFD2A7DE7,  amount = 300000 },
-    { name = "270K (Smuggler Agency)",                 hash = 0x1B9AFE05,  amount = 270000 },
-    { name = "250K (Casino Heist Award Professional)", hash = 0x5D7FD908,  amount = 250000 },
-    { name = "250K (Fixer Award Agency Story)",        hash = 0x87356274,  amount = 250000 },
-    { name = "200K (DoomsDay Finale Bonus)",           hash = 0x9145F938,  amount = 200000 },
-    { name = "200K (Action Figures)",                  hash = 0xCDCF2380,  amount = 200000 },
-    { name = "190K (Vehicle Sales)",                   hash = 0xFD389995,  amount = 190000 },
-    { name = "180K (Jobs)",                            hash = -0x3D3A1CC7, amount = 180000 }
-}
-
-local STOP = false           -- Stops Either Loop
-local millionLoop = false    -- juggalo hash loop
-local unsafeLoopBool = false -- all hashs loop
-local userIncome = {         -- table to track/hold variables accross sessions
-    MoneyTracking = true,    -- bool for if true then save data
-    currentincome = "$0",    -- income this session from op recovery
-    totalIncome = "$0",      -- total income from op recovery
-    debug = true             -- bool for debugging print statements
-}
 
 -- Utility Functions
 local function getVehicleNameFromHash(hash)
@@ -1266,8 +1054,12 @@ local function carCheck()
 end
 
 -- Race Data Management
+
+-- Load existing file or create a new one
 function loadRaceData()
-    local result, loadedData = pcall(function() return json.loadfile(raceDataFilename) end)
+    local result, loadedData = pcall(function()
+        return json.loadfile(raceDataFilename)
+    end)
 
     if result and loadedData then
         raceData = loadedData
@@ -1278,30 +1070,49 @@ function loadRaceData()
     end
 end
 
--- Load existing file or create a new one
+-- function to check for duplicates in save file
+function areEntriesEqual(entry1, entry2)
+    for k, v in pairs(entry1) do
+        if entry2[k] ~= v then
+            return false
+        else
+            return true
+        end
+    end
+end
+
+-- Save Race Data
 function saveRaceData()
     local existingData = json.loadfile(raceDataFilename) or {}
     local newData = raceData
-
     for key, value in pairs(newData) do
         existingData[key] = existingData[key] or {}
-        for _, entry in ipairs(value) do
-            table.insert(existingData[key], entry)
+        for _, newEntry in ipairs(value) do
+            local isDuplicate = false
+            for _, existingEntry in ipairs(existingData[key]) do
+                if areEntriesEqual(existingEntry, newEntry) then
+                    isDuplicate = true
+                    break
+                end
+            end
+            if not isDuplicate then
+                table.insert(existingData[key], newEntry)
+            end
         end
     end
-
     json.savefile(raceDataFilename, existingData)
-    debugPrint(" Race data Saved.")
 end
 
 -- User Settings Management
 function loadUserSettings()
-    local result, loadedSettings = pcall(function() return json.loadfile(userSettingsFilename) end)
+    local result, loadedSettings = pcall(function()
+        return json.loadfile(userSettingsFilename)
+    end)
 
     if result and loadedSettings then
         if loadedSettings.DebugMode ~= nil then
             userSettings = loadedSettings
-            debugMode = userSettings.DebugMode              -- Set to the setting stored in the file.
+            debugMode = userSettings.DebugMode -- Set to the setting stored in the file.
             if userSettings.selectedSpeedMode == "kph" then -- convert from one mode to another (with/without values)
                 speedmode.current = speedmode.kph
             else
@@ -1341,9 +1152,20 @@ local function toggleDebugMode()
 end
 
 function loadGlobals()
-    gi = globals.get_int
-    g = { pv = { n = 2359980, c = 1586504, s = 2738886, i = 2672804 } }
-    podium = 289178
+    if globalsAreBlocked then
+        print("Globals Have Been Blocked! Permanent Plate Change and Podium Vehicle Are Disabled")
+    else
+        gi = globals.get_int
+        g = {
+            pv = {
+                n = 2359980,
+                c = 1586504,
+                s = 2738886,
+                i = 2672804
+            }
+        }
+        podium = 289178
+    end
 end
 
 local function checkBuild()
@@ -1352,12 +1174,11 @@ local function checkBuild()
     thirtySpaces = "                              "
     tenSpaces = "          "
     outdated = false
-    outdatedMessage = tostring("\n" ..
-        blankSpace(37) .. "WARNING  \n \n " ..
-        blankSpace(18) .. "You are using an outdated menu. \n" ..
-        blankSpace(17) .. "Permanent Plate Changing Disabled \n" ..
-        blankSpace(11) .. "Please Contact Don Reagan On Discord At ronnie.r.1989\n\n" ..
-        blankSpace(20) .. "DO NOT USE OP RECOVERY!!!!")
+    outdatedMessage = tostring("\n" .. blankSpace(37) .. "WARNING  \n \n " .. blankSpace(18) ..
+                                   "You are using an outdated menu. \n" .. blankSpace(17) ..
+                                   "Permanent Plate Changing Disabled \n" .. blankSpace(11) ..
+                                   "Please Contact Don Reagan On Discord At ronnie.r.1989\n\n" .. blankSpace(20) ..
+                                   "DO NOT USE OP RECOVERY!!!!")
     if build == version then
         print("Current Build: " .. tostring(build) .. "\n Script Version: " .. tostring(version))
         loadGlobals()
@@ -1390,41 +1211,39 @@ menu.register_callback("OnScriptsLoaded", function()
         end
     end
     if outdated then
-        print("\n\n" ..
-            b(6) ..
-            "-WARNING - WARNING - WARNING - WARNING - WARNING - WARNING - WARNING - WARNING - WARNING - WARNING-\n\n" ..
-            "  Reagans Menu Is OutDated. Please Contact Don Reagan On Discord At ronnie.r.1989 For Details\n\n" ..
-            b(6) .. "-WARNING - WARNING - WARNING - WARNING - WARNING - WARNING - WARNING - WARNING - WARNING - WARNING-")
-        ReagansMenu:add_action("", function() rip() end)
-        ReagansMenu:add_action("- WARNING - WARNING - WARNING -", function() rip() end)
-        ReagansMenu:add_action("Do Not Use Unless Told To Do So", function() rip() end)
-        ReagansMenu:add_action("Enable Globals (Build - " .. tostring(version) .. ") -->",
-            function()
-                outdated = false
-                addPodiumChanger()
-                loadGlobals()
-            end)
+        print("\n\n" .. b(6) ..
+                  "-WARNING - WARNING - WARNING - WARNING - WARNING - WARNING - WARNING - WARNING - WARNING - WARNING-\n\n" ..
+                  "  Reagans Menu Is OutDated. Please Contact Don Reagan On Discord At ronnie.r.1989 For Details\n\n" ..
+                  b(6) ..
+                  "-WARNING - WARNING - WARNING - WARNING - WARNING - WARNING - WARNING - WARNING - WARNING - WARNING-")
+        ReagansMenu:add_action("", function()
+            rip()
+        end)
+        ReagansMenu:add_action("- WARNING - WARNING - WARNING -", function()
+            rip()
+        end)
+        ReagansMenu:add_action("Do Not Use Unless Told To Do So", function()
+            rip()
+        end)
+        ReagansMenu:add_action("Enable Globals (Build - " .. tostring(version) .. ") -->", function()
+            outdated = false
+            addPodiumChanger()
+            loadGlobals()
+        end)
         Reagans_Menu_Popup(outdatedMessage)
     end
     if userSettings.firstTimeLoading == true then
         userSettings.firstTimeLoading = false
         saveUserSettings()
-        Reagans_Menu_Popup(
-            b(30) .. "Welcome To My Menu\n" ..
-            "\n" ..
-            "\n" ..
-            b(6) .. "Considering This Is Your First Time Using My Script\n" ..
-            "I Strongly Suggest You Use It With The Lua Debug Console\n" ..
-            "\n" ..
-            "   You Can Find The Option To Open It In Modest Menu's\n" ..
-            b(36) .. "Settings Section.\n" ..
-            "\n" ..
-            "If You Ever Have Questions Or Suggestions Please Contact Me\n" ..
-            b(30) .. "Discord:" .. b(11) .. "ronnie.r.1989"
-        )
+        Reagans_Menu_Popup(b(30) .. "Welcome To My Menu\n" .. "\n" .. "\n" .. b(6) ..
+                               "Considering This Is Your First Time Using My Script\n" ..
+                               "I Strongly Suggest You Use It With The Lua Debug Console\n" .. "\n" ..
+                               "   You Can Find The Option To Open It In Modest Menu's\n" .. b(36) ..
+                               "Settings Section.\n" .. "\n" ..
+                               "If You Ever Have Questions Or Suggestions Please Contact Me\n" .. b(30) .. "Discord:" ..
+                               b(11) .. "ronnie.r.1989")
     end
-end
-)
+end)
 
 function Reagans_Menu_Popup(message)
     local string = tostring(message)
@@ -1472,11 +1291,14 @@ function searchForFloatyKey()
     searchingForKey = true
     for keycode, keyname in pairs(javaKeycodeMapping) do
         local k = keycode
-        if k ~= 192 or k ~= 191 or k ~= 190 or k ~= 188 or k ~= 186 or k ~= 32 or k ~= 110 or k ~= 16 or k ~= 17 or k ~= 18 then
+        if k ~= 192 or k ~= 191 or k ~= 190 or k ~= 188 or k ~= 186 or k ~= 32 or k ~= 110 or k ~= 16 or k ~= 17 or k ~=
+            18 then
             goto skipRegistery
         end
         print("Currently Adding " .. tostring(keyname) .. ": " .. tostring(keycode))
-        menu.register_hotkey(keycode, function() selectFloatyKey(keycode, keyname) end)
+        menu.register_hotkey(keycode, function()
+            selectFloatyKey(keycode, keyname)
+        end)
         ::skipRegistery::
     end
     print("Please Press Your Desired HotKey For Floaty Man")
@@ -1495,7 +1317,9 @@ function selectFloatyKey(keycode, keyname)
     floatyKey = keycode
     floatyKeyName = keyname
     menu.remove_hotkey(keycode)
-    menu.register_hotkey(keycode, function() float() end)
+    menu.register_hotkey(keycode, function()
+        float()
+    end)
     print("Key Assigned: " .. javaKeycodeMapping[keycode])
     searchingForKey = false
     floatyKeyAssigned = true
@@ -1508,13 +1332,24 @@ function selectFloatyKey(keycode, keyname)
 end
 
 local floatyMenu = ReagansMenu:add_submenu("Floaty Man")
-floatyMenu:add_action("Press 'Select Key' ", function() rip() end)
-floatyMenu:add_action("Then Press Your Desired Key", function() rip() end)
-floatyMenu:add_action("For FloatyMan", function() rip() end)
-floatyMenu:add_action("", function() rip() end)
-floatyMenu:add_action("", function() rip() end)
-floatyMenu:add_action("Select Key", function() searchForFloatyKey() end)
-
+floatyMenu:add_action("Press 'Select Key' ", function()
+    rip()
+end)
+floatyMenu:add_action("Then Press Your Desired Key", function()
+    rip()
+end)
+floatyMenu:add_action("For FloatyMan", function()
+    rip()
+end)
+floatyMenu:add_action("", function()
+    rip()
+end)
+floatyMenu:add_action("", function()
+    rip()
+end)
+floatyMenu:add_action("Select Key", function()
+    searchForFloatyKey()
+end)
 
 -- Podium Vehicle Changer
 -- Thank You Quad Plex
@@ -1530,28 +1365,45 @@ end
 
 -- Add the menu item for selecting a vehicle
 function addPodiumChanger()
-    if not outdated then
+    if not outdated and not globalsAreBlocked then
         podium = ReagansMenu:add_submenu("Podium Car Changer")
-        podium:add_action("------------ Podium Vehicle ----------", function() rip() end)
-        podium:add_action("-----------------------------------------", function() rip() end)
-        podium:add_action("------------- Select Vehicle -----------", function() rip() end)
-        podium:add_array_item("------------- Vehicle -->", vehicleOptions,
-            function()
-                return selectedVehicleIndex
-            end,
-            function(index)
-                selectedVehicleIndex = index
-                local selectedVehicle = vehicleOptions[index]
-                local selectedVehicleHash = getVehicleHash(selectedVehicle)
-                globals.set_int(podium, selectedVehicleHash)
-            end
-        )
-        podium:add_action(" ", function() rip() end)
-        podium:add_action("-WARNING - WARNING -", function() rip() end)
-        podium:add_action(" ", function() rip() end)
-        podium:add_action("  Black Listed Vehicles!", function() rip() end)
-        podium:add_action(blankSpace(12) .. "WILL", function() rip() end)
-        podium:add_action("  Fuck Your Game Up ", function() rip() end)
+        podium:add_action("------------ Podium Vehicle ----------", function()
+            rip()
+        end)
+        podium:add_action("-----------------------------------------", function()
+            rip()
+        end)
+        podium:add_action("------------- Select Vehicle -----------", function()
+            rip()
+        end)
+        podium:add_array_item("------------- Vehicle -->", vehicleOptions, function()
+            return selectedVehicleIndex
+        end, function(index)
+            selectedVehicleIndex = index
+            local selectedVehicle = vehicleOptions[index]
+            local selectedVehicleHash = getVehicleHash(selectedVehicle)
+            globals.set_int(podium, selectedVehicleHash)
+        end)
+        podium:add_action(" ", function()
+            rip()
+        end)
+        podium:add_action("-WARNING - WARNING -", function()
+            rip()
+        end)
+        podium:add_action(" ", function()
+            rip()
+        end)
+        podium:add_action("  Black Listed Vehicles!", function()
+            rip()
+        end)
+        podium:add_action(blankSpace(12) .. "WILL", function()
+            rip()
+        end)
+        podium:add_action("  Fuck Your Game Up ", function()
+            rip()
+        end)
+    else
+        print("Globals are Blocked!! Podium Disabled")
     end
 end
 
@@ -1752,21 +1604,39 @@ end)
 function registerHotkeys()
     -- Register alphanumeric keys (A-Z and 0-9)
     for keycode = 65, 90 do
-        menu.register_hotkey(keycode, function() onKeyPress(keycode) end)
+        menu.register_hotkey(keycode, function()
+            onKeyPress(keycode)
+        end)
     end
 
     for keycode = 48, 57 do
-        menu.register_hotkey(keycode, function() onKeyPress(keycode) end)
+        menu.register_hotkey(keycode, function()
+            onKeyPress(keycode)
+        end)
     end
 
     -- Register special keys
-    menu.register_hotkey(27, function() onESC() end)           -- Escape key
-    menu.register_hotkey(8, function() onBackspace() end)      -- Backspace
-    menu.register_hotkey(32, function() onSpace() end)         -- Space
-    menu.register_hotkey(13, function() onFinishTyping() end)  -- Enter/Return
-    menu.register_hotkey(37, function() moveCursorLeft() end)  -- Left arrow key
-    menu.register_hotkey(39, function() moveCursorRight() end) -- Right arrow key
-    menu.register_hotkey(46, function() onDel() end)           -- Delete key (right of cursor)
+    menu.register_hotkey(27, function()
+        onESC()
+    end) -- Escape key
+    menu.register_hotkey(8, function()
+        onBackspace()
+    end) -- Backspace
+    menu.register_hotkey(32, function()
+        onSpace()
+    end) -- Space
+    menu.register_hotkey(13, function()
+        onFinishTyping()
+    end) -- Enter/Return
+    menu.register_hotkey(37, function()
+        moveCursorLeft()
+    end) -- Left arrow key
+    menu.register_hotkey(39, function()
+        moveCursorRight()
+    end) -- Right arrow key
+    menu.register_hotkey(46, function()
+        onDel()
+    end) -- Delete key (right of cursor)
 end
 
 -- Function to start recording
@@ -1775,7 +1645,7 @@ function startRecording()
     debugMode = true
     registerHotkeys()
     recordingKeystrokes = true
-    recordedKeys = {}  -- Reset recorded keys
+    recordedKeys = {} -- Reset recorded keys
     cursorPosition = 1 -- Reset cursor position
     debugPrint("\n Recording started\n" .. " Current input: " .. table.concat(recordedKeys, ""))
 end
@@ -1797,9 +1667,8 @@ function onKeyPress(keycode)
         cursorPosition = cursorPosition + 1
 
         -- Debug messages
-        debugPrint("\n Key pressed: " ..
-            (javaKeycodeMapping[keycode] or tostring(keycode)) ..
-            "\n Current input: " .. table.concat(recordedKeys, "") .. "\n Cursor position: " .. cursorPosition)
+        debugPrint("\n Key pressed: " .. (javaKeycodeMapping[keycode] or tostring(keycode)) .. "\n Current input: " ..
+                       table.concat(recordedKeys, "") .. "\n Cursor position: " .. cursorPosition)
 
         -- Check for plate length limit
         if not allowMoreThan8Characters and #recordedKeys == 8 then
@@ -1814,9 +1683,8 @@ end
 function moveCursorLeft()
     if recordingKeystrokes and cursorPosition > 0 then
         cursorPosition = cursorPosition - 1
-        debugPrint("\n\n Cursor moved left. Current cursor position: " .. cursorPosition ..
-            "\n Current input: " .. table.concat(recordedKeys, "") ..
-            "\n Cursor position: " .. cursorPosition)
+        debugPrint("\n\n Cursor moved left. Current cursor position: " .. cursorPosition .. "\n Current input: " ..
+                       table.concat(recordedKeys, "") .. "\n Cursor position: " .. cursorPosition)
     end
 end
 
@@ -1824,9 +1692,8 @@ end
 function moveCursorRight()
     if recordingKeystrokes and cursorPosition < #recordedKeys + 1 then
         cursorPosition = cursorPosition + 1
-        debugPrint("\n\n Cursor moved right. Current cursor position: " .. cursorPosition ..
-            "\n Current input: " .. table.concat(recordedKeys, "") ..
-            "\n Cursor position: " .. cursorPosition) -- Print the cursor position
+        debugPrint("\n\n Cursor moved right. Current cursor position: " .. cursorPosition .. "\n Current input: " ..
+                       table.concat(recordedKeys, "") .. "\n Cursor position: " .. cursorPosition) -- Print the cursor position
     end
 end
 
@@ -1838,9 +1705,8 @@ function onBackspace()
             table.remove(recordedKeys, cursorPosition)
             newPlateText = table.concat(recordedKeys, "")
         end
-        debugPrint("\n\n Key pressed: Backspace" ..
-            "\n Current input: " .. table.concat(recordedKeys, "") ..
-            "\n Cursor position: " .. cursorPosition) -- Print the cursor position
+        debugPrint("\n\n Key pressed: Backspace" .. "\n Current input: " .. table.concat(recordedKeys, "") ..
+                       "\n Cursor position: " .. cursorPosition) -- Print the cursor position
     end
 end
 
@@ -1850,9 +1716,8 @@ function onDel()
         if cursorPosition < #recordedKeys then
             table.remove(recordedKeys, cursorPosition + 1)
             newPlateText = table.concat(recordedKeys, "")
-            debugPrint("\n\n Key pressed: Delete" ..
-                "\n Current input: " .. table.concat(recordedKeys, "") ..
-                "\n Cursor position: " .. cursorPosition) -- Print the cursor position
+            debugPrint("\n\n Key pressed: Delete" .. "\n Current input: " .. table.concat(recordedKeys, "") ..
+                           "\n Cursor position: " .. cursorPosition) -- Print the cursor position
         end
     end
 end
@@ -1864,9 +1729,8 @@ function onSpace()
             table.insert(recordedKeys, cursorPosition, ' ')
             newPlateText = table.concat(recordedKeys, "")
             cursorPosition = cursorPosition + 1
-            debugPrint("\n\n Key pressed: Spacebar" ..
-                "\n Current input: " .. table.concat(recordedKeys, "") ..
-                "\n Cursor position: " .. cursorPosition) -- Print the cursor position
+            debugPrint("\n\n Key pressed: Spacebar" .. "\n Current input: " .. table.concat(recordedKeys, "") ..
+                           "\n Cursor position: " .. cursorPosition) -- Print the cursor position
             if not allowMoreThan8Characters and #recordedKeys == 8 then
                 stopRecording()
             end
@@ -1878,8 +1742,8 @@ end
 function onESC()
     if recordingKeystrokes then
         debugPrint("\n\n Key Pressed: Escape" ..
-            "\n Recording of keystrokes has been cancelled abruptly. Please toggle recording to begin again" ..
-            "\n")
+                       "\n Recording of keystrokes has been cancelled abruptly. Please toggle recording to begin again" ..
+                       "\n")
         cancelRecording()
     end
 end
@@ -1898,8 +1762,7 @@ end
 -- Function to handle Enter/Return key
 function onFinishTyping()
     if recordingKeystrokes then
-        debugPrint("\n\n Key pressed: Enter" ..
-            "\n Prompting Confirmation next...")
+        debugPrint("\n\n Key pressed: Enter" .. "\n Prompting Confirmation next...")
         stopRecording()
     end
 end
@@ -1917,26 +1780,28 @@ end
 
 -- Function to confirm inputted text and check if it's over 8 characters
 function promptForConfirmation()
-    debugPrint("\n\n Are you sure you want to set your plate to: \n" ..
-        newPlateText ..
-        "\n Please Confirm (HOLD): Y = Yes, N = No\n")
+    debugPrint("\n\n Are you sure you want to set your plate to: \n" .. newPlateText ..
+                   "\n Please Confirm (HOLD): Y = Yes, N = No\n")
 
     local keypressY = false
     local keypressN = false
     keypressY2 = false
     keypressN2 = false
     -- Register hotkeys for 'Y', 'Y2', 'N' and 'N2'
-    menu.register_hotkey(89, function() keypressY = true end) -- 'Y'
-    menu.register_hotkey(78, function() keypressN = true end) -- 'N'
+    menu.register_hotkey(89, function()
+        keypressY = true
+    end) -- 'Y'
+    menu.register_hotkey(78, function()
+        keypressN = true
+    end) -- 'N'
     local confirmingText = true
     repeat
         if keypressY then
-            debugPrint("\n\n Key pressed: Y\n" ..
-                "\n Confirming number of characters is 8 or less.\n" ..
-                "\n New plate showing up as: " .. newPlateText)
+            debugPrint("\n\n Key pressed: Y\n" .. "\n Confirming number of characters is 8 or less.\n" ..
+                           "\n New plate showing up as: " .. newPlateText)
             if #recordedKeys <= 8 then
-                debugPrint("\n New plate confirmed to be 8 characters or less.\n" ..
-                    "\n Setting Plate to: " .. savedPlateText)
+                debugPrint("\n New plate confirmed to be 8 characters or less.\n" .. "\n Setting Plate to: " ..
+                               savedPlateText)
                 savedPlateText = newPlateText
                 savedPlateVehicle = localplayer:get_current_vehicle()
                 confirmingText = false
@@ -1952,9 +1817,7 @@ function promptForConfirmation()
                 break
             end
         elseif keypressN then
-            debugPrint("\n\n Key pressed: N\n" ..
-                "\n Text Confirmation Cancelled..\n" ..
-                "\n Resetting Process now.\n")
+            debugPrint("\n\n Key pressed: N\n" .. "\n Text Confirmation Cancelled..\n" .. "\n Resetting Process now.\n")
             newPlateText = nil
             recordedKeys = {}
             confirmingText = false
@@ -1968,12 +1831,16 @@ end
 
 -- Function to Confirm if the user is sure they want to scroll text.
 function confirmScrollText()
-    menu.register_hotkey(89, function() keypressY2 = true end) -- 'Y2'
-    menu.register_hotkey(78, function() keypressN2 = true end) -- 'N2'
+    menu.register_hotkey(89, function()
+        keypressY2 = true
+    end) -- 'Y2'
+    menu.register_hotkey(78, function()
+        keypressN2 = true
+    end) -- 'N2'
     debugPrint("\n\n Plate length exceeded! Are you sure you want to scroll text?" ..
-        "\n You will need to make sure to disable scrolling before exiting the vehicle" ..
-        "\n to revert the plate to the last valid plate recorded by the script (8 characters or less)" ..
-        "\n\n Please Confirm (HOLD): Y = Yes, N = No\n")
+                   "\n You will need to make sure to disable scrolling before exiting the vehicle" ..
+                   "\n to revert the plate to the last valid plate recorded by the script (8 characters or less)" ..
+                   "\n\n Please Confirm (HOLD): Y = Yes, N = No\n")
     confirmingScrollText = true
     repeat
         if keypressY2 then
@@ -1983,7 +1850,7 @@ function confirmScrollText()
             end
             confirmingScrollText = false
             debugPrint("\n New plate text is confirmed to be over 8 characters" ..
-                "\n Scrolling the text across the plate instead\n")
+                           "\n Scrolling the text across the plate instead\n")
             if userSettings.DebugMode == false then
                 debugMode = false
             end
@@ -1992,9 +1859,7 @@ function confirmScrollText()
             cursorPosition = 1
             break
         elseif keypressN2 then
-            debugPrint("\n\n Key pressed: N" ..
-                "\n Text Confirmation FAILED.." ..
-                "\n Resetting Process now...\n")
+            debugPrint("\n\n Key pressed: N" .. "\n Text Confirmation FAILED.." .. "\n Resetting Process now...\n")
             newPlateText = nil
             recordedKeys = {}
             confirmingScrollText = false
@@ -2037,8 +1902,7 @@ local function displaySpeed()
     local vehicle = localplayer:get_current_vehicle()
     local currentSpeed = getCurrentSpeed(vehicle)
     table.insert(speeds, currentSpeed)
-    if #speeds > 5
-    then
+    if #speeds > 5 then
         table.remove(speeds, 1)
     end
     local predictedSpeed = getWeightedAverage(speeds)
@@ -2099,8 +1963,8 @@ function runSpeedometer()
                 displaySpeed()
                 speedCounter = speedCounter + 1
                 if speedCounter > 1000 then
-                    debugPrint("\n Garbage Cleanup Started\n Memory Usage: " ..
-                        collectgarbage("count") .. " KB\n Garbage Cleaning in Progress.")
+                    debugPrint("\n Garbage Cleanup Started\n Memory Usage: " .. collectgarbage("count") ..
+                                   " KB\n Garbage Cleaning in Progress.")
                     collectgarbage("collect")
                     speedCounter = 0
                     debugPrint(" Garbage Cleanup finished\n Memory Usage: " .. collectgarbage("count") .. " KB")
@@ -2281,7 +2145,8 @@ function removeVehicles()
                         debugPrint(" Garbage Collection Finished")
                         cumulativeCount = 0
                     end
-                    if distanceToMainPlayer <= Config.OuterRadius and distanceToMainPlayer > Config.Safety and not closeToAnyPlayer then
+                    if distanceToMainPlayer <= Config.OuterRadius and distanceToMainPlayer > Config.Safety and
+                        not closeToAnyPlayer then
                         veh:set_position(vector3(0, 0, Config.OuterRadius) + vehiclePosition)
                         vehiclesMoved = vehiclesMoved + 1
                         debugPrint(" vehicles moved so far: " .. vehiclesMoved)
@@ -2303,7 +2168,7 @@ function DoDragRace()
     if scriptFree then
         if carCheck() then
             checkPlate()
-            --menu.emit_event(" raceBeginning")
+            -- menu.emit_event(" raceBeginning")
             local player = localplayer
             local vehicle = player:get_current_vehicle()
             raceRunning = true
@@ -2349,7 +2214,7 @@ function DoDragRace()
                         sixtyFootSpeed = getCurrentSpeed(vehicle)
                     end
                     if hasReachedFinishLine() then
-                        --menu.emit_event(" raceEnded") -- TO BE USED FOR MULTI THREADING
+                        -- menu.emit_event(" raceEnded") -- TO BE USED FOR MULTI THREADING
                         raceRunning = false
                         raceFinished = true
                         local finalTime = Timer.elapsedTime()
@@ -2381,14 +2246,11 @@ function DoDragRace()
                         saveRaceData()
 
                         -- Print the data
-                        debugPrint("\n\n Race Data Saved for " .. vehicleName ..
-                            "\n Race Distance: " .. selectedDistance ..
-                            "\n Reaction Time: " .. reactionTime ..
-                            "\n 60 Foot Time: " .. sixtyFootTime ..
-                            "\n Race finished! Time: " .. formatTime(finalTime) ..
-                            "\n 60 Foot SpeedTrap: " .. sixtyFootSpeed .. " " .. selectedMode ..
-                            "\n Final Speed: " .. finalSpeed * speedmode.current .. " " .. selectedMode
-                        )
+                        debugPrint("\n\n Race Data Saved for " .. vehicleName .. "\n Race Distance: " ..
+                                       selectedDistance .. "\n Reaction Time: " .. reactionTime .. "\n 60 Foot Time: " ..
+                                       sixtyFootTime .. "\n Race finished! Time: " .. formatTime(finalTime) ..
+                                       "\n 60 Foot SpeedTrap: " .. sixtyFootSpeed .. " " .. selectedMode ..
+                                       "\n Final Speed: " .. finalSpeed * speedmode.current .. " " .. selectedMode)
 
                         setPlate(formatTime(finalTime)) -- Display race time on the plate
                         pause(5)
@@ -2422,7 +2284,6 @@ local function abortrace()
     checkPlate()
 end
 
-
 -----------------------------------------------------------------------------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------------------------------------------------------------------------
 ---------------------------------------------------------------- Plate Changing Function ------------------------------------------------------------
@@ -2444,8 +2305,8 @@ function checkPlate()
             local veh = player:get_current_vehicle()
             local currentPlate = veh:get_number_plate_text()
             if savedPlateText ~= currentPlate then
-                debugPrint("\n The plate is showing up as: " ..
-                    tostring(currentPlate) .. "\n The saved plate is showing up as: " .. tostring(savedPlateText))
+                debugPrint("\n The plate is showing up as: " .. tostring(currentPlate) ..
+                               "\n The saved plate is showing up as: " .. tostring(savedPlateText))
                 if savedPlateText == " MPH" or savedPlateText == " KPH" or savedPlateText == "0" then
                     setPlate(defaultPlate)
                 else
@@ -2459,18 +2320,28 @@ function checkPlate()
     scriptFree = true
 end
 
+local warned = false
 function setPlate(xx) -- Permanent Plate Changer (affects personal vehicles)
     if xx then
-        c = localplayer
-        if localplayer:is_in_vehicle() then
-            local veh = localplayer:get_current_vehicle()
-            if outdated == false then
-                if gi(g.pv.s) ~= -1 and gi(g.pv.i) == 0 then
-                    local x = gi(g.pv.n)
-                    globals.set_string(g.pv.c + 2 + (x == -1 and 0 or x) * 142, xx, 32)
+        if string.len(xx) > 8 then
+            ScrollText(xx, 1)
+        else
+            c = localplayer
+            if localplayer:is_in_vehicle() then
+                local veh = localplayer:get_current_vehicle()
+                if outdated == false and not globalsAreBlocked then
+                    if gi(g.pv.s) ~= -1 and gi(g.pv.i) == 0 then
+                        local x = gi(g.pv.n)
+                        globals.set_string(g.pv.c + 2 + (x == -1 and 0 or x) * 142, xx, 32)
+                    end
+                else
+                    if not warned then
+                        print("Globals Are Blocked! Permanent Changing Disabled.")
+                        warned = true
+                    end
                 end
+                veh:set_number_plate_text(xx)
             end
-            veh:set_number_plate_text(xx)
         end
     end
 end
@@ -2502,21 +2373,27 @@ function Christmasplate(XMASSPEED)
             pause(basepause)
             setPlate("      HO")
             pause(basepause)
-            if XMASPLATE == false then break end -- break out of the loop if false
+            if XMASPLATE == false then
+                break
+            end -- break out of the loop if false
             setPlate("   HO   ")
             pause(basepause)
             setPlate("HO      ")
             pause(basepause)
             setPlate("")
-            pause(basepause * 1.25)              -- Slightly shorter pause for this step
-            if XMASPLATE == false then break end -- break out of the loop if false
+            pause(basepause * 1.25) -- Slightly shorter pause for this step
+            if XMASPLATE == false then
+                break
+            end -- break out of the loop if false
             setPlate("HO HO HO")
             pause(basepause)
             setPlate("")
             pause(basepause)
             setPlate("HO HO HO")
             pause(basepause)
-            if XMASPLATE == false then break end -- break out of the loop if false
+            if XMASPLATE == false then
+                break
+            end -- break out of the loop if false
             setPlate("")
             pause(basepause)
             setPlate("HO HO HO")
@@ -2649,20 +2526,14 @@ function toggleRGBLoop()
             restorePaint(vehicle)
         else
             -- Retrieve current primary and secondary colors
-            originalPaint.primary.R, originalPaint.primary.G, originalPaint.primary.B = vehicle
-                :get_custom_primary_colour()
-            originalPaint.secondary.R, originalPaint.secondary.G, originalPaint.secondary.B = vehicle
-                :get_custom_secondary_colour()
-            debugPrint("\n" ..
-                "\n Original Primary: " ..
-                "\n    Red: " .. originalPaint.primary.R ..
-                "\n    Green: " .. originalPaint.primary.G ..
-                "\n    Blue: " .. originalPaint.primary.B ..
-                "\n Original Secondary: " ..
-                "\n    Red: " .. originalPaint.secondary.R ..
-                "\n    Green: " .. originalPaint.secondary.G ..
-                "\n    Blue: " .. originalPaint.secondary.B
-            )
+            originalPaint.primary.R, originalPaint.primary.G, originalPaint.primary.B =
+                vehicle:get_custom_primary_colour()
+            originalPaint.secondary.R, originalPaint.secondary.G, originalPaint.secondary.B =
+                vehicle:get_custom_secondary_colour()
+            debugPrint("\n" .. "\n Original Primary: " .. "\n    Red: " .. originalPaint.primary.R .. "\n    Green: " ..
+                           originalPaint.primary.G .. "\n    Blue: " .. originalPaint.primary.B ..
+                           "\n Original Secondary: " .. "\n    Red: " .. originalPaint.secondary.R .. "\n    Green: " ..
+                           originalPaint.secondary.G .. "\n    Blue: " .. originalPaint.secondary.B)
             colourChangeLoop(vehicle)
         end
     end
@@ -2757,7 +2628,11 @@ local function vectorMagnitude(v)
 end
 
 local function vectorSubtract(v1, v2)
-    return { x = v1.x - v2.x, y = v1.y - v2.y, z = v1.z - v2.z }
+    return {
+        x = v1.x - v2.x,
+        y = v1.y - v2.y,
+        z = v1.z - v2.z
+    }
 end
 
 -- Function to calculate the weighted moving average
@@ -2825,8 +2700,7 @@ end
 
 function isPlayerValid()
     if stats.get_int("MPPLY_LAST_MP_CHAR") == 0 then
-        return tostring("Current Multiplayer Character Is: " ..
-            stats.get_int("MPPLY_LAST_MP_CHAR"))
+        return tostring("Current Multiplayer Character Is: " .. stats.get_int("MPPLY_LAST_MP_CHAR"))
     end
 end
 
@@ -2839,7 +2713,7 @@ function startDriftPlate()
         debugPrint(" drift plate starting...")
 
         local driftPoints = 0
-        local prevDriftAngle = 0              -- To track the previous drift angle for transition detection
+        local prevDriftAngle = 0 -- To track the previous drift angle for transition detection
         local driftStartTime = getTimeInCar() -- To track the start time of the drift
 
         print("Current Start Time: " .. formatTime(driftStartTime))
@@ -2876,8 +2750,7 @@ function startDriftPlate()
                     local transitionBonus = isTransition and transitionPoints or 0
 
                     -- Apply combo multiplier
-                    local comboMultiplier = 1 +
-                        math.floor(comboStreak / 3) -- Increase multiplier every 3 consecutive successful drifts
+                    local comboMultiplier = 1 + math.floor(comboStreak / 3) -- Increase multiplier every 3 consecutive successful drifts
 
                     -- Calculate drift points
                     driftPoints = (anglePoints + speedPoints + transitionBonus) * comboMultiplier
@@ -2886,17 +2759,11 @@ function startDriftPlate()
                     totalPoints = totalPoints + driftPoints
 
                     -- Print the current drift points and stats
-                    debugPrint(
-                        "\n Move and resize the window so you dont see this text (controller player only)" ..
-                        "\n\n\n\n" ..
-                        "\n Total Points: " .. totalPoints ..
-                        "\n Angle Points: " .. anglePoints ..
-                        "\n Speed Points: " .. speedPoints ..
-                        "\n Transition Bonus: " .. transitionBonus ..
-                        "\n Combo Streak: " .. comboStreak ..
-                        "\n Transition: " .. (isTransition and "Yes" or "No") ..
-                        "\n Current Points: " .. driftPoints
-                    )
+                    debugPrint("\n Move and resize the window so you dont see this text (controller player only)" ..
+                                   "\n\n\n\n" .. "\n Total Points: " .. totalPoints .. "\n Angle Points: " ..
+                                   anglePoints .. "\n Speed Points: " .. speedPoints .. "\n Transition Bonus: " ..
+                                   transitionBonus .. "\n Combo Streak: " .. comboStreak .. "\n Transition: " ..
+                                   (isTransition and "Yes" or "No") .. "\n Current Points: " .. driftPoints)
 
                     -- Print the angle to the plate
                     local angleStr = string.format(" %3.0f°", filteredDriftAngle)
@@ -2918,219 +2785,24 @@ function startDriftPlate()
     end
 end
 
--- takes two strings of numbers, adds them and returns the new value
-function addFormattedNumbers(str1, str2)
-    local convertedStr1 = string.gsub(str1, "[%$, ]", "")
-    local convertedStr2 = string.gsub(str2, "[%$, ]", "")
-    debugPrint("Adding Numbers:" .. "\n   Number One: " .. convertedStr1 .. "\n   Number Two: " .. convertedStr2)
-    local num1 = tonumber(convertedStr1)
-    local num2 = tonumber(convertedStr2)
-    if num1 ~= nil and num2 ~= nil then
-        local sum = num1 + num2
-        local formattedSum = formatNumberWithCommas(sum)
-        return formattedSum
-    else
-        Reagans_Menu_Popup("#1 Came Up")
-    end
-end
-
--- OP Recovery
--- Thank You Gaymer
-
-function loadUserIncome()
-    local result, loadedIncome = pcall(function() return json.loadfile("user_income.json") end)
-    if result and loadedIncome then
-        if loadedIncome.MoneyTracking ~= nil then
-            userIncome = loadedIncome
-            userIncome.currentincome = "$0" -- reset current incom for the session
-        else
-            debugPrint("MoneyTracking not found in loaded settings. Using default settings.")
-        end
-    else
-        debugPrint("User Income file not found or unreadable. Creating a new one with default values")
-        json.savefile("user_income.json", userIncome)
-    end
-end
-
-function formatNumberWithCommas(number)
-    return "$" .. string.format("%d", number):reverse():gsub("(%d%d%d)", "%1,"):reverse():gsub("^,", "")
-end
-
-function compareFormattedNumbers(str1, str2)
-    local convertedStr1 = string.gsub(str1, "[%$, ]", "")
-    local convertedStr2 = string.gsub(str2, "[%$, ]", "")
-    debugPrint("Comparing Numbers:" .. "\n   Number One: " .. convertedStr1 .. "\n   Number Two: " .. convertedStr2)
-    local num1 = tonumber(convertedStr1)
-    local num2 = tonumber(convertedStr2)
-    if num1 and num2 then
-        local difference = math.abs(num1 - num2)
-        return difference > 10000000
-    else
-        Reagans_Menu_Popup("Invalid input: unable to convert string-formatted numbers to numeric values.")
-    end
-end
-
-function saveUserIncome()
-    debugPrint("Saving Current Income: \n Saved: " ..
-        tostring(userIncome.totalIncome) .. "\n Current: " .. tostring(userIncome.currentincome))
-    userIncome.totalIncome = userIncome.currentincome
-    userIncome.currentincome = "$0"
-    json.savefile("user_income.json", userIncome)
-    debugPrint("Save Complete.")
-end
-
-function unsafeloop()
-    if unsafeLoopBool then
-        unsafeLoopBool = false
-        stopLoop()
-    else
-        unsafeLoopBool = true
-    end
-    repeat
-        for i, key in ipairs(transactions) do
-            if STOP or unsafeLoopBool == false then
-                goto STOP
-            end
-            TriggerTransaction(key.hash, key.amount)
-            userIncome.currentincome = addFormattedNumbers(userIncome.currentincome, key.amount)
-            if compareFormattedNumbers(userIncome.currentincome, userIncome.totalIncome) then
-                saveUserIncome()
-            end
-            debugPrint("About To pause!")
-            pause(1)
-            debugPrint("pauseing Done")
-            ::STOP::
-        end
-    until STOP or unsafeLoopBool == false
-end
-
-function oneM()
-    if millionLoop then
-        millionLoop = false
-        stopLoop()
-    else
-        millionLoop = true
-    end
-    repeat
-        TriggerTransaction(0x615762F1, 1000000)
-        userIncome.currentincome = addFormattedNumbers(userIncome.currentincome, 1000000)
-        if compareFormattedNumbers(userIncome.currentincome, userIncome.totalIncome) then
-            saveUserIncome()
-        end
-        debugPrint("About To pause!")
-        for i = 1, 10, 1 do
-            pause(0.1)
-        end
-        debugPrint("pauseing Done")
-    until STOP or not millionLoop
-end
-
-function stopLoop()
-    local stopping = 10
-    repeat
-        debugPrint("Attempting Stop #" .. tostring(stopping))
-        pause(0.01)
-        millionLoop = false
-        pause(0.01)
-        STOP = true
-        pause(0.01)
-        unsafeLoopBool = false
-        pause(0.01)
-        STOP = true
-        stopping = stopping - 1
-    until stopping < 1
-    debugPrint("Attempt to Stop Concluded")
-end
-
-function opBuildCheck()
-    if build == version then
-        opMenu = ReagansMenu:add_submenu("Don's OP Recovery (unsafe)")
-        loopMenu = opMenu:add_submenu("Loops")
-        loopMenu:add_action("1M/S (unsafe)", function() oneM() end)
-        loopMenu:add_action("unsafe loop", function() unsafeloop() end)
-        loopMenu:add_action("STOP LOOP", function() stopLoop() end)
-        manualTransactionMenu = opMenu:add_submenu("Manual Transactions")
-        for i, key in ipairs(transactions) do
-            manualTransactionMenu:add_action(key.name .. "(unsafe)",
-                function()
-                    TriggerTransaction(key.hash, key.amount)
-                    if userIncome.MoneyTracking then
-                        userIncome.currentincome = addFormattedNumbers(userIncome.currentincome, key.amount)
-                        userIncome.totalIncome = addFormattedNumbers(userIncome.totalIncome, key.amount)
-                        if compareFormattedNumbers(userIncome.currentincome, userIncome.totalIncome) then
-                            saveUserIncome()
-                            print("Your Total Income So Far Is: " .. userIncome.totalIncome)
-                        else
-                            print("Your Current Income This Session: " .. userIncome.currentincome)
-                        end
-                    else
-                        debugPrint("User Income Not Saved: Money Tracking Disabled")
-                    end
-                end)
-        end
-        opSettingsMenu = opMenu:add_submenu("Settings")
-        opSettingsMenu:add_action("Debug On", function()
-            userIncome.debug = true
-            saveUserIncome()
-        end)
-        opSettingsMenu:add_action("Debug Off", function()
-            userIncome.debug = false
-            saveUserIncome()
-        end)
-        opSettingsMenu:add_action("Money Tracking On", function()
-            userIncome.MoneyTracking = true
-            saveUserIncome()
-        end)
-        opSettingsMenu:add_action("Money Tracking Off", function()
-            userIncome.MoneyTracking = false
-            saveUserIncome()
-        end)
-        opResetMenu = opSettingsMenu:add_submenu("Reset Data (resets income)")
-        opResetMenu:add_action("Reset Income Data",
-            function()
-                userIncome.currentincome = "$0"
-                userIncome.totalIncome = "$0"
-                saveUserIncome()
-                print("reset completed")
-            end)
-    else
-        unsafeModeMenu = ReagansMenu:add_submenu("Enable " .. tostring(version) .. " Globals",
-            function()
-                version = build
-                opBuildCheck()
-            end)
-        unsafeModeMenu:add_action("THIS SCRIPT IS", function()
-            c = c + 1
-            if c == 10 then print("goodjob") end
-        end)
-        unsafeModeMenu:add_action("   OUTDATED",
-            function()
-                c = c / 2
-                if c < 1 then print("dummy") elseif c > 1 then print("almost") end
-            end)
-        Reagans_Menu_Popup("    This Script Is Out OF Date \n\n Do Not Use Unless Told It's Safe\n By Don Reagan.")
-    end
-end
-
-opBuildCheck()
-
-loadUserIncome()
-
-
 -----------------------------------------------------------------------------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------- Menu Building -------------------------------------------------------------------
 -----------------------------------------------------------------------------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------------------------------------------------------------------------
 
-
 -- Main Menu Layout (order)
 
-
 if outdated then
-    ReagansMenu:add_action(blankSpace(10) .. "WARNING", function() print(outdatedMessage) end)
-    ReagansMenu:add_action(blankSpace(5) .. "SCRIPT OUTDATED", function() print(outdatedMessage) end)
-    ReagansMenu:add_action("PERMANENT CHANGING DISABLED", function() print(outdatedMessage) end)
+    ReagansMenu:add_action(blankSpace(10) .. "WARNING", function()
+        print(outdatedMessage)
+    end)
+    ReagansMenu:add_action(blankSpace(5) .. "SCRIPT OUTDATED", function()
+        print(outdatedMessage)
+    end)
+    ReagansMenu:add_action("PERMANENT CHANGING DISABLED", function()
+        print(outdatedMessage)
+    end)
 end
 
 -- SubMenus
@@ -3142,12 +2814,36 @@ local ReagansCustomPlates = ReagansMenu:add_submenu("Custom Plates")
 local ReagansRims = ReagansMenu:add_submenu("Tire Mods (Use in CEO Office)")
 local textcolormenu = ReagansMenu:add_submenu("Plate Text Colors")
 local paintMenu = ReagansMenu:add_submenu("RGB Paint")
-local trickMenu = ReagansMenu:add_submenu("Tricks", function() print("Hello From Don Reagan") end)
+local trickMenu = ReagansMenu:add_submenu("Tricks", function()
+    print("Hello From Don Reagan")
+end)
 local userSettingsMenu = ReagansMenu:add_submenu("Settings")
 
-
 -- Static Plate SubMenus
-local newPlateMenu = ReagansCustomPlates:add_submenu("New Custom Plates!!!")
+local linesOpened = false
+local lineMessagesMenu = ReagansCustomPlates:add_submenu("Barcode", function()
+    if not linesOpened then
+        linesOpened = true
+        error("Please Let Me Know If You Encounter Any Bugs", 0)
+    end
+end)
+local positiveMessagesOpened = false
+local positiveMessagesMenu = ReagansCustomPlates:add_submenu("Positve Messages", function()
+    if not positiveMessagesOpened then
+        positiveMessagesOpened = true
+        error("Please Let Me Know If You Encounter Any Bugs", 0)
+    end
+end)
+local staticGanjaMessages = ReagansCustomPlates:add_submenu("Static Ganja Plates")
+local scrollingGanjaMessages = ReagansCustomPlates:add_submenu("Scrolling Ganja Plates")
+local rickMortyOpened = false
+local rickMortyMenu = ReagansCustomPlates:add_submenu("Rick N Morty Plates", function()
+    if not rickMortyOpened then
+        rickMortyOpened = true
+        error("Please Let Me Know If You Encounter Any Bugs\n This is a work in progress!", 0)
+    end
+end)
+local newPlateMenu = ReagansCustomPlates:add_submenu("Previously Added Plates")
 local PermanentPlateChangeMenu = ReagansCustomPlates:add_submenu("Pre-Made Custom Plates")
 local KeefsPlateInputMenu = ReagansCustomPlates:add_submenu("User Input Plate Changer(user typed)")
 local userPlateMenu = PermanentPlateChangeMenu:add_submenu("Random User Plates")
@@ -3167,18 +2863,15 @@ local scrollingtextmenu = DynamicPlateMenu:add_submenu("Scrolling Message Plates
 -- MERRY CHRISTMAS SCROLL
 local MerryChristmasScrollMenu = scrollingtextmenu:add_submenu("EAT SHIT AND DIE Loop")
 
-
 -- User Input Menu
 local userInputMenu = KeefsPlateInputMenu:add_submenu("Keyboard Input (experimental)", function()
     debugMode = true
     debugPrint("\n\n Stopping Everything Before Recording Keystrokes" ..
-        "\n\n Welcome to Don Reagan's Experimental User Input Method" ..
-        "\n Please give an honest review and report any bugs you find.\n")
+                   "\n\n Welcome to Don Reagan's Experimental User Input Method" ..
+                   "\n Please give an honest review and report any bugs you find.\n")
     stopEverything()
     startRecording()
 end)
-
-
 
 ReagansDriftPlate:add_int_range("Update Delay (ms)", 20, 20, 1000, function()
     return updateDelay / 1000 -- Convert seconds back to milliseconds for display
@@ -3186,152 +2879,211 @@ end, function(value)
     setUpdateDelay(value)
     debugPrint(" update set to " .. value)
 end)
-ReagansDriftPlate:add_toggle("Drift Plate Toggle", function() return driftPlate end,
-    function()
-        debugPrint(" drift plate pressed")
-        toggleDriftPlate()
-    end)
-ReagansSpeedoMenu:add_toggle("Speedo ON/OFF", function() return speedoRunning end,
-    function()
-        if speedoRunning then
-            speedoToggle()
-            checkPlate()
-        else
-            speedoToggle()
-        end
-    end)
+ReagansDriftPlate:add_toggle("Drift Plate Toggle", function()
+    return driftPlate
+end, function()
+    debugPrint(" drift plate pressed")
+    toggleDriftPlate()
+end)
+ReagansSpeedoMenu:add_toggle("Speedo ON/OFF", function()
+    return speedoRunning
+end, function()
+    if speedoRunning then
+        speedoToggle()
+        checkPlate()
+    else
+        speedoToggle()
+    end
+end)
 ReagansSpeedoMenu:add_action("KPH / MPH", function()
     toggleSpeedmode()
-end
-)
+end)
 ReagansDragMenu:add_action("---------------------------------------------", rip)
 ReagansDragMenu:add_action("------- Reagan's Drag Racing -------", rip)
-ReagansDragMenu:add_array_item("Distance", raceDistanceOptions,
-    function()
-        return selectedDistanceIndex
-    end,
-    function(index)
-        selectedDistanceIndex = index
-        selectedDistance = raceDistanceOptions[index]
-        raceDistance = raceDistances[selectedDistance]
-        if savedPlateText == nil then
-            debugPrint(" saving the plate")
-            local p = localplayer
-            local v = p:get_current_vehicle()
-            savedPlateText = v:get_number_plate_text()
-            savedPlateVehicle = v
-        end
+ReagansDragMenu:add_array_item("Distance", raceDistanceOptions, function()
+    return selectedDistanceIndex
+end, function(index)
+    selectedDistanceIndex = index
+    selectedDistance = raceDistanceOptions[index]
+    raceDistance = raceDistances[selectedDistance]
+    if savedPlateText == nil then
+        debugPrint(" saving the plate")
+        local p = localplayer
+        local v = p:get_current_vehicle()
+        savedPlateText = v:get_number_plate_text()
+        savedPlateVehicle = v
+    end
+    checkPlate()
+    setPlate(selectedDistance)
+    debugPrint(" selected distance: " .. selectedDistance)
+end)
+ReagansDragMenu:add_action("Start Drag Race", function()
+    local distanceName = raceDistanceOptions[selectedDistanceIndex]
+    local distance = raceDistances[distanceName]
+    local vehicle = localplayer:get_current_vehicle()
+    if vehicle then
+        raceDistance = distance
         checkPlate()
-        setPlate(selectedDistance)
-        debugPrint(" selected distance: " .. selectedDistance)
-    end)
-ReagansDragMenu:add_action("Start Drag Race",
-    function()
-        local distanceName = raceDistanceOptions[selectedDistanceIndex]
-        local distance = raceDistances[distanceName]
-        local vehicle = localplayer:get_current_vehicle()
-        if vehicle then
-            raceDistance = distance
-            checkPlate()
-            debugPrint(" starting the DoDragRace function now")
-            DoDragRace()
-        else
-            rip()
-        end
-    end)
-ReagansDragMenu:add_action("", function() rip() end)
-ReagansDragMenu:add_action("Quit Race (Do NOT Hold)", function() abortrace() end)
-ReagansDragMenu:add_action("", function() rip() end)
-ReagansDragMenu:add_action("Print Hash (to add to the list)", function() printHash() end)
-ReagansDragMenu:add_action("", function() rip() end)
+        debugPrint(" starting the DoDragRace function now")
+        DoDragRace()
+    else
+        rip()
+    end
+end)
+ReagansDragMenu:add_action("", function()
+    rip()
+end)
+ReagansDragMenu:add_action("Quit Race (Do NOT Hold)", function()
+    abortrace()
+end)
+ReagansDragMenu:add_action("", function()
+    rip()
+end)
+ReagansDragMenu:add_action("Print Hash (to add to the list)", function()
+    printHash()
+end)
+ReagansDragMenu:add_action("", function()
+    rip()
+end)
 ReagansDragMenu:add_action("---------------------------------------------", rip)
 ReagansDragMenu:add_action("Enable LUA Debug in Menu Settings,", rip)
 ReagansDragMenu:add_action("to view your recent race times.", rip)
 ReagansDragMenu:add_action("Please Read The Instruction Set.", rip)
 ReagansDragMenu:add_action("---------------------------------------------", rip)
-ReagansTuning:add_action("Fast Drift Tune", function() fastDrift() end)
-ReagansTuning:add_action("Slow Drifting Tune", function() slowDrift() end)
-ReagansTuning:add_action("Spood Beast", function() spoodBeast() end)
-ReagansRims:add_action(" ", function() rip() end) -- Original thanks to Silent
-ReagansRims:add_action("Select in ceo office modshop.", function() rip() end)
-ReagansRims:add_action("After buying the tire, turn off the toggle,", function() rip() end)
-ReagansRims:add_action("then leave the ceo modshop.", function() rip() end)
-ReagansRims:add_action("your tires are now permanently set.", function() rip() end)
-ReagansRims:add_action(" ", function() rip() end)
-ReagansRims:add_toggle("F1 Wheels", function() return f1Mode end,
-    function()
-        if bennysMode == false then
-            f1ModeToggle()
-        else
-            bennysModeToggle()
-            f1ModeToggle()
-        end
-    end)
-ReagansRims:add_toggle("Benny's Wheels", function() return bennysMode end,
-    function()
-        if f1Mode then
-            f1ModeToggle()
-            bennysModeToggle()
-        else
-            bennysModeToggle()
-        end
+ReagansTuning:add_action("Fast Drift Tune", function()
+    fastDrift()
+end)
+ReagansTuning:add_action("Slow Drifting Tune", function()
+    slowDrift()
+end)
+ReagansTuning:add_action("Spood Beast", function()
+    spoodBeast()
+end)
+ReagansRims:add_action(" ", function()
+    rip()
+end) -- Original thanks to Silent
+ReagansRims:add_action("Select in ceo office modshop.", function()
+    rip()
+end)
+ReagansRims:add_action("After buying the tire, turn off the toggle,", function()
+    rip()
+end)
+ReagansRims:add_action("then leave the ceo modshop.", function()
+    rip()
+end)
+ReagansRims:add_action("your tires are now permanently set.", function()
+    rip()
+end)
+ReagansRims:add_action(" ", function()
+    rip()
+end)
+ReagansRims:add_toggle("F1 Wheels", function()
+    return f1Mode
+end, function()
+    if bennysMode == false then
+        f1ModeToggle()
+    else
+        bennysModeToggle()
+        f1ModeToggle()
     end
-)
-DynamicPlateMenu:add_action("STOP EVERYTHING (HOLD)", function() checkPlate() end)
+end)
+ReagansRims:add_toggle("Benny's Wheels", function()
+    return bennysMode
+end, function()
+    if f1Mode then
+        f1ModeToggle()
+        bennysModeToggle()
+    else
+        bennysModeToggle()
+    end
+end)
+DynamicPlateMenu:add_action("STOP EVERYTHING (HOLD)", function()
+    checkPlate()
+end)
 
-ReagansScrollMenu:add_action("Stop Scrolling!!", function() stopEverything() end)
+ReagansScrollMenu:add_action("Stop Scrolling!!", function()
+    stopEverything()
+end)
 
-scrollingtextmenu:add_toggle("Infinite Loop", function() return infiniteScroll end,
-    function() ToggleInfiniteScroll() end)
-MerryChristmasScrollMenu:add_action("EAT SHIT AND DIE TOO FAST", function() ScrollText(" EAT SHIT AND DIE", 0.75) end)
-MerryChristmasScrollMenu:add_action("EAT SHIT AND DIE FAST", function() ScrollText(" EAT SHIT AND DIE", 1) end)
-MerryChristmasScrollMenu:add_action("EAT SHIT AND DIE NORMAL", function() ScrollText(" EAT SHIT AND DIE", 2) end)
-MerryChristmasScrollMenu:add_action("EAT SHIT AND DIE SLOW", function() ScrollText(" EAT SHIT AND DIE", 3) end)
-MerryChristmasScrollMenu:add_action("EAT SHIT AND DIE TOO SLOW", function() ScrollText(" EAT SHIT AND DIE", 4) end)
---Reagan's Dynamic Plates
-ReagansScrollMenu:add_action("Move bitch, get out the way hoe",
-    function() ScrollText(" move bitch  get out the way hoe", 1) end)
-ReagansScrollMenu:add_action("Swearing", function() ScrollText(" Fuck DICK SHIT BITCH CUNT PUSSY ass COCKSUCKER ", 1) end)
-ReagansScrollMenu:add_action("FASTER THAN YOU", function() ScrollText(" IM FASTER THAN YOU", 1) end)
-ReagansScrollMenu:add_action("BOATS N HOES", function() ScrollText(" BOATS N HOES", 2) end)
-ReagansScrollMenu:add_action("SKRT", function() ScrollText(" SKKRRRRRRRRRT", 2) end)
+scrollingtextmenu:add_toggle("Infinite Loop", function()
+    return infiniteScroll
+end, function()
+    ToggleInfiniteScroll()
+end)
+MerryChristmasScrollMenu:add_action("EAT SHIT AND DIE TOO FAST", function()
+    ScrollText(" EAT SHIT AND DIE", 0.75)
+end)
+MerryChristmasScrollMenu:add_action("EAT SHIT AND DIE FAST", function()
+    ScrollText(" EAT SHIT AND DIE", 1)
+end)
+MerryChristmasScrollMenu:add_action("EAT SHIT AND DIE NORMAL", function()
+    ScrollText(" EAT SHIT AND DIE", 2)
+end)
+MerryChristmasScrollMenu:add_action("EAT SHIT AND DIE SLOW", function()
+    ScrollText(" EAT SHIT AND DIE", 3)
+end)
+MerryChristmasScrollMenu:add_action("EAT SHIT AND DIE TOO SLOW", function()
+    ScrollText(" EAT SHIT AND DIE", 4)
+end)
+-- Reagan's Dynamic Plates
+ReagansScrollMenu:add_action("Move bitch, get out the way hoe", function()
+    ScrollText(" move bitch  get out the way hoe", 1)
+end)
+ReagansScrollMenu:add_action("Swearing", function()
+    ScrollText(" Fuck DICK SHIT BITCH CUNT PUSSY ass COCKSUCKER ", 1)
+end)
+ReagansScrollMenu:add_action("FASTER THAN YOU", function()
+    ScrollText(" IM FASTER THAN YOU", 1)
+end)
+ReagansScrollMenu:add_action("BOATS N HOES", function()
+    ScrollText(" BOATS N HOES", 2)
+end)
+ReagansScrollMenu:add_action("SKRT", function()
+    ScrollText(" SKKRRRRRRRRRT", 2)
+end)
 -- HO HO HO PLATES
-xmasDynamicPlateMenu:add_action("Very Fast", function() Christmasplate(0.5) end)
-xmasDynamicPlateMenu:add_action("Fast", function() Christmasplate(0.75) end)
-xmasDynamicPlateMenu:add_action("Normal", function() Christmasplate(1) end)
-xmasDynamicPlateMenu:add_action("Slower", function() Christmasplate(2) end)
-xmasDynamicPlateMenu:add_action("Slowest", function() Christmasplate(4) end)
-xmasDynamicPlateMenu:add_action("STOP EVERYTHING (HOLD)", function() stopEverything() end)
-textcolormenu:add_action("Orange",
-    function()
-        local veh = localplayer:get_current_vehicle()
-        veh:set_number_plate_index(2)
-    end)
-textcolormenu:add_action("Blue",
-    function()
-        local veh = localplayer:get_current_vehicle()
-        veh:set_number_plate_index(3)
-    end)
-textcolormenu:add_action("Black",
-    function()
-        local veh = localplayer:get_current_vehicle()
-        veh:set_number_plate_index(5)
-    end)
-textcolormenu:add_action("White",
-    function()
-        local veh = localplayer:get_current_vehicle()
-        veh:set_number_plate_index(6)
-    end)
-textcolormenu:add_action("Bright Yellow",
-    function()
-        local veh = localplayer:get_current_vehicle()
-        veh:set_number_plate_index(10)
-    end)
-textcolormenu:add_action("Dull Yellow",
-    function()
-        local veh = localplayer:get_current_vehicle()
-        veh:set_number_plate_index(1)
-    end)
+xmasDynamicPlateMenu:add_action("Very Fast", function()
+    Christmasplate(0.5)
+end)
+xmasDynamicPlateMenu:add_action("Fast", function()
+    Christmasplate(0.75)
+end)
+xmasDynamicPlateMenu:add_action("Normal", function()
+    Christmasplate(1)
+end)
+xmasDynamicPlateMenu:add_action("Slower", function()
+    Christmasplate(2)
+end)
+xmasDynamicPlateMenu:add_action("Slowest", function()
+    Christmasplate(4)
+end)
+xmasDynamicPlateMenu:add_action("STOP EVERYTHING (HOLD)", function()
+    stopEverything()
+end)
+textcolormenu:add_action("Orange", function()
+    local veh = localplayer:get_current_vehicle()
+    veh:set_number_plate_index(2)
+end)
+textcolormenu:add_action("Blue", function()
+    local veh = localplayer:get_current_vehicle()
+    veh:set_number_plate_index(3)
+end)
+textcolormenu:add_action("Black", function()
+    local veh = localplayer:get_current_vehicle()
+    veh:set_number_plate_index(5)
+end)
+textcolormenu:add_action("White", function()
+    local veh = localplayer:get_current_vehicle()
+    veh:set_number_plate_index(6)
+end)
+textcolormenu:add_action("Bright Yellow", function()
+    local veh = localplayer:get_current_vehicle()
+    veh:set_number_plate_index(10)
+end)
+textcolormenu:add_action("Dull Yellow", function()
+    local veh = localplayer:get_current_vehicle()
+    veh:set_number_plate_index(1)
+end)
 -- User Plate Category
 KeefsPlateInputMenu:add_action("Write your own plates by opening", rip)
 KeefsPlateInputMenu:add_action("the debug log", rip)
@@ -3351,196 +3103,250 @@ KeefsPlateInputMenu:add_action("STOP SCROLLING TEXT", function()
     checkPlate()
 end)
 -- Add toggle for allowing more than 8 characters
-userInputMenu:add_toggle("Toggle Keystroke Recording", function() return recordingKeystrokes end,
-    function() toggleKeystrokeRecording() end)
+userInputMenu:add_toggle("Toggle Keystroke Recording", function()
+    return recordingKeystrokes
+end, function()
+    toggleKeystrokeRecording()
+end)
 -- Add toggle for allowing more than 8 characters
-userInputMenu:add_toggle("Allow More Than 8 Characters", function() return allowMoreThan8Characters end,
-    function()
-        allowMoreThan8Characters = not allowMoreThan8Characters
-        debugPrint(" Allowing more than 8 characters: " .. tostring(allowMoreThan8Characters))
-    end)
-userInputMenu:add_action("Stop Scrolling Text",
-    function()
-        pause(0.001)
-        infiniteScroll = false
-        pause(0.001)
+userInputMenu:add_toggle("Allow More Than 8 Characters", function()
+    return allowMoreThan8Characters
+end, function()
+    allowMoreThan8Characters = not allowMoreThan8Characters
+    debugPrint(" Allowing more than 8 characters: " .. tostring(allowMoreThan8Characters))
+end)
+userInputMenu:add_action("Stop Scrolling Text", function()
+    pause(0.001)
+    infiniteScroll = false
+    pause(0.001)
+    checkPlate()
+end)
+userPlateMenu:add_array_item("Custom Plates", customPlates["USERPLATES"], function()
+end, function(value)
+    if carCheck() then
+        stopEverything()
+        setPlate(customPlates["USERPLATES"][value])
+        savedPlateText = customPlates["USERPLATES"][value]
+        savedPlateVehicle = localplayer:get_current_vehicle()
         checkPlate()
-    end)
-userPlateMenu:add_array_item("Custom Plates", customPlates["USERPLATES"], function() end,
-    function(value)
-        if carCheck() then
-            stopEverything()
-            setPlate(customPlates["USERPLATES"][value])
-            savedPlateText = customPlates["USERPLATES"][value]
-            savedPlateVehicle = localplayer:get_current_vehicle()
-            checkPlate()
-        end
-    end)
--- STAR WARS Categories
-starWarsMenu:add_array_item("Characters", customPlates["starWarsCharacterPlates"], function() end,
-    function(value)
-        if carCheck() then
-            stopEverything()
-            setPlate(customPlates["starWarsCharacterPlates"][value])
-            savedPlateText = customPlates["starWarsCharacterPlates"][value]
-            savedPlateVehicle = localplayer:get_current_vehicle()
-            checkPlate()
-        end
-    end)
-starWarsMenu:add_array_item("Ships", customPlates["starWarsShipPlates"], function() end,
-    function(value)
-        if carCheck() then
-            stopEverything()
-            setPlate(customPlates["starWarsShipPlates"][value])
-            savedPlateText = customPlates["starWarsShipPlates"][value]
-            savedPlateVehicle = localplayer:get_current_vehicle()
-            checkPlate()
-        end
-    end)
--- GTA Categories
-gtaMenu:add_array_item("Vice City", customPlates["gtaViceCityPlates"], function() end,
-    function(value)
-        if carCheck() then
-            stopEverything()
-            setPlate(customPlates["gtaViceCityPlates"][value])
-            savedPlateText = customPlates["gtaViceCityPlates"][value]
-            savedPlateVehicle = localplayer:get_current_vehicle()
-            checkPlate()
-        end
-    end)
-gtaMenu:add_array_item("San Andreas", customPlates["gtaSanAndreasPlates"], function() end,
-    function(value)
-        if carCheck() then
-            stopEverything()
-            setPlate(customPlates["gtaSanAndreasPlates"][value])
-            savedPlateText = customPlates["gtaSanAndreasPlates"][value]
-            savedPlateVehicle = localplayer:get_current_vehicle()
-            checkPlate()
-        end
-    end)
-gtaMenu:add_array_item("IV", customPlates["gtaIVPlates"], function() end,
-    function(value)
-        if carCheck() then
-            stopEverything()
-            setPlate(customPlates["gtaIVPlates"][value])
-            savedPlateText = customPlates["gtaIVPlates"][value]
-            savedPlateVehicle = localplayer:get_current_vehicle()
-            checkPlate()
-        end
-    end)
-gtaMenu:add_array_item("V", customPlates["gtaVPlates"], function() end,
-    function(value)
-        if carCheck() then
-            stopEverything()
-            setPlate(customPlates["gtaVPlates"][value])
-            savedPlateText = customPlates["gtaVPlates"][value]
-            savedPlateVehicle = localplayer:get_current_vehicle()
-            checkPlate()
-        end
-    end)
-gtaMenu:add_array_item("VI", customPlates["gta6CharactersLocationsPlates"], function() end,
-    function(value)
-        if carCheck() then
-            stopEverything()
-            setPlate(customPlates["gta6CharactersLocationsPlates"][value])
-            savedPlateText = customPlates["gta6CharactersLocationsPlates"][value]
-            savedPlateVehicle = localplayer:get_current_vehicle()
-            checkPlate()
-        end
-    end)
--- Racers & Gearheads Categories
-racersGearheadsMenu:add_array_item("Off-Roaders", customPlates["offRoadPlates"], function() end,
-    function(value)
-        if carCheck() then
-            stopEverything()
-            setPlate(customPlates["offRoadPlates"][value])
-            savedPlateText = customPlates["offRoadPlates"][value]
-            savedPlateVehicle = localplayer:get_current_vehicle()
-            checkPlate()
-        end
-    end)
-racersGearheadsMenu:add_array_item("Supercars", customPlates["supercarPlates"], function() end,
-    function(value)
-        if carCheck() then
-            stopEverything()
-            setPlate(customPlates["supercarPlates"][value])
-            savedPlateText = customPlates["supercarPlates"][value]
-            savedPlateVehicle = localplayer:get_current_vehicle()
-            checkPlate()
-        end
-    end)
-racersGearheadsMenu:add_array_item("Street Tuners", customPlates["streetTunerPlates"], function() end,
-    function(value)
-        if carCheck() then
-            stopEverything()
-            setPlate(customPlates["streetTunerPlates"][value])
-            savedPlateText = customPlates["streetTunerPlates"][value]
-            savedPlateVehicle = localplayer:get_current_vehicle()
-            checkPlate()
-        end
-    end)
-racersGearheadsMenu:add_array_item("Muscle Cars", customPlates["muscleCarPlates"], function() end,
-    function(value)
-        if carCheck() then
-            stopEverything()
-            setPlate(customPlates["muscleCarPlates"][value])
-            savedPlateText = customPlates["muscleCarPlates"][value]
-            savedPlateVehicle = localplayer:get_current_vehicle()
-            checkPlate()
-        end
-    end)
-racersGearheadsMenu:add_array_item("Vintage Classics", customPlates["vintageClassicPlates"], function() end,
-    function(value)
-        if carCheck() then
-            stopEverything()
-            setPlate(customPlates["vintageClassicPlates"][value])
-            savedPlateText = customPlates["vintageClassicPlates"][value]
-            savedPlateVehicle = localplayer:get_current_vehicle()
-            checkPlate()
-        end
-    end)
--- Pop Culture Categories
-popCultureMenu:add_array_item("Game Characters", customPlates["gameCharacterPlates"], function() end,
-    function(value)
-        if carCheck() then
-            stopEverything()
-            setPlate(customPlates["gameCharacterPlates"][value])
-            savedPlateText = customPlates["gameCharacterPlates"][value]
-            savedPlateVehicle = localplayer:get_current_vehicle()
-            checkPlate()
-        end
     end
-)
-popCultureMenu:add_array_item("Game Vehicles", customPlates["gameVehiclePlates"], function() end,
-    function(value)
-        if carCheck() then
-            stopEverything()
-            setPlate(customPlates["gameVehiclePlates"][value])
-            savedPlateText = customPlates["gameVehiclePlates"][value]
-            savedPlateVehicle = localplayer:get_current_vehicle()
-            checkPlate()
-        end
-    end)
-ReagansCustomPlates:add_action("Stop Scrolling!!", function() stopEverything() end)
+end)
+-- Rick And Morty Messages
+rickMortyMenu:add_array_item("Scrolling Text", rickMortyMessages, function()
+end, function(value)
+    if carCheck() then
+        stopEverything()
+        setPlate(rickMortyMessages[value])
+        savedPlateText = rickMortyMessages[value]
+        savedPlateVehicle = localplayer:get_current_vehicle()
+    end
+end)
+-- Positive Messages
+positiveMessagesMenu:add_array_item("Positive Scrolling Messages", positiveMessages, function()
+end, function(value)
+    if carCheck() then
+        stopEverything()
+        setPlate(positiveMessages[value])
+        savedPlateText = positiveMessages[value]
+        savedPlateVehicle = localplayer:get_current_vehicle()
+    end
+end)
+-- Ganja Messages(mix of scrolling and of static/permanent plates, must use iterator to build the menu)
+for i, phrase in ipairs(ganjaMessages) do
+    if string.len(phrase) > 8 then
+        scrollingGanjaMessages:add_action(phrase, function()
+            if carCheck() then
+                stopEverything()
+                setPlate(phrase)
+                savedPlateText = phrase
+                savedPlateVehicle = localplayer:get_current_vehicle()
+                debugPrint("You Have Set The Plate as " .. phrase .. "\nPlease Confirm It Is Set Correctly")
+            end
+        end)
+    else
+        staticGanjaMessages:add_action(phrase, function()
+            if carCheck() then
+                stopEverything()
+                setPlate(phrase)
+                savedPlateText = phrase
+                savedPlateVehicle = localplayer:get_current_vehicle()
+            end
+        end)
+    end
+end
+lineMessagesMenu:add_array_item("lines", LINEMESSAGES, function()
+end, function(value)
+    if carCheck() then
+        stopEverything()
+        setPlate(value)
+        print("Be Aware That You Look Funny Mr. Lines")
+    end
+end)
+-- STAR WARS Categories
+starWarsMenu:add_array_item("Characters", customPlates["starWarsCharacterPlates"], function()
+end, function(value)
+    if carCheck() then
+        stopEverything()
+        setPlate(customPlates["starWarsCharacterPlates"][value])
+        savedPlateText = customPlates["starWarsCharacterPlates"][value]
+        savedPlateVehicle = localplayer:get_current_vehicle()
+        checkPlate()
+    end
+end)
+starWarsMenu:add_array_item("Ships", customPlates["starWarsShipPlates"], function()
+end, function(value)
+    if carCheck() then
+        stopEverything()
+        setPlate(customPlates["starWarsShipPlates"][value])
+        savedPlateText = customPlates["starWarsShipPlates"][value]
+        savedPlateVehicle = localplayer:get_current_vehicle()
+        checkPlate()
+    end
+end)
+-- GTA Categories
+gtaMenu:add_array_item("Vice City", customPlates["gtaViceCityPlates"], function()
+end, function(value)
+    if carCheck() then
+        stopEverything()
+        setPlate(customPlates["gtaViceCityPlates"][value])
+        savedPlateText = customPlates["gtaViceCityPlates"][value]
+        savedPlateVehicle = localplayer:get_current_vehicle()
+        checkPlate()
+    end
+end)
+gtaMenu:add_array_item("San Andreas", customPlates["gtaSanAndreasPlates"], function()
+end, function(value)
+    if carCheck() then
+        stopEverything()
+        setPlate(customPlates["gtaSanAndreasPlates"][value])
+        savedPlateText = customPlates["gtaSanAndreasPlates"][value]
+        savedPlateVehicle = localplayer:get_current_vehicle()
+        checkPlate()
+    end
+end)
+gtaMenu:add_array_item("IV", customPlates["gtaIVPlates"], function()
+end, function(value)
+    if carCheck() then
+        stopEverything()
+        setPlate(customPlates["gtaIVPlates"][value])
+        savedPlateText = customPlates["gtaIVPlates"][value]
+        savedPlateVehicle = localplayer:get_current_vehicle()
+        checkPlate()
+    end
+end)
+gtaMenu:add_array_item("V", customPlates["gtaVPlates"], function()
+end, function(value)
+    if carCheck() then
+        stopEverything()
+        setPlate(customPlates["gtaVPlates"][value])
+        savedPlateText = customPlates["gtaVPlates"][value]
+        savedPlateVehicle = localplayer:get_current_vehicle()
+        checkPlate()
+    end
+end)
+gtaMenu:add_array_item("VI", customPlates["gta6CharactersLocationsPlates"], function()
+end, function(value)
+    if carCheck() then
+        stopEverything()
+        setPlate(customPlates["gta6CharactersLocationsPlates"][value])
+        savedPlateText = customPlates["gta6CharactersLocationsPlates"][value]
+        savedPlateVehicle = localplayer:get_current_vehicle()
+        checkPlate()
+    end
+end)
+-- Racers & Gearheads Categories
+racersGearheadsMenu:add_array_item("Off-Roaders", customPlates["offRoadPlates"], function()
+end, function(value)
+    if carCheck() then
+        stopEverything()
+        setPlate(customPlates["offRoadPlates"][value])
+        savedPlateText = customPlates["offRoadPlates"][value]
+        savedPlateVehicle = localplayer:get_current_vehicle()
+        checkPlate()
+    end
+end)
+racersGearheadsMenu:add_array_item("Supercars", customPlates["supercarPlates"], function()
+end, function(value)
+    if carCheck() then
+        stopEverything()
+        setPlate(customPlates["supercarPlates"][value])
+        savedPlateText = customPlates["supercarPlates"][value]
+        savedPlateVehicle = localplayer:get_current_vehicle()
+        checkPlate()
+    end
+end)
+racersGearheadsMenu:add_array_item("Street Tuners", customPlates["streetTunerPlates"], function()
+end, function(value)
+    if carCheck() then
+        stopEverything()
+        setPlate(customPlates["streetTunerPlates"][value])
+        savedPlateText = customPlates["streetTunerPlates"][value]
+        savedPlateVehicle = localplayer:get_current_vehicle()
+        checkPlate()
+    end
+end)
+racersGearheadsMenu:add_array_item("Muscle Cars", customPlates["muscleCarPlates"], function()
+end, function(value)
+    if carCheck() then
+        stopEverything()
+        setPlate(customPlates["muscleCarPlates"][value])
+        savedPlateText = customPlates["muscleCarPlates"][value]
+        savedPlateVehicle = localplayer:get_current_vehicle()
+        checkPlate()
+    end
+end)
+racersGearheadsMenu:add_array_item("Vintage Classics", customPlates["vintageClassicPlates"], function()
+end, function(value)
+    if carCheck() then
+        stopEverything()
+        setPlate(customPlates["vintageClassicPlates"][value])
+        savedPlateText = customPlates["vintageClassicPlates"][value]
+        savedPlateVehicle = localplayer:get_current_vehicle()
+        checkPlate()
+    end
+end)
+-- Pop Culture Categories
+popCultureMenu:add_array_item("Game Characters", customPlates["gameCharacterPlates"], function()
+end, function(value)
+    if carCheck() then
+        stopEverything()
+        setPlate(customPlates["gameCharacterPlates"][value])
+        savedPlateText = customPlates["gameCharacterPlates"][value]
+        savedPlateVehicle = localplayer:get_current_vehicle()
+        checkPlate()
+    end
+end)
+popCultureMenu:add_array_item("Game Vehicles", customPlates["gameVehiclePlates"], function()
+end, function(value)
+    if carCheck() then
+        stopEverything()
+        setPlate(customPlates["gameVehiclePlates"][value])
+        savedPlateText = customPlates["gameVehiclePlates"][value]
+        savedPlateVehicle = localplayer:get_current_vehicle()
+        checkPlate()
+    end
+end)
+ReagansCustomPlates:add_action("Stop Scrolling!!", function()
+    stopEverything()
+end)
 
 function newArray(menuVar, name, platesTable)
-    menuVar:add_array_item(name, platesTable, function() end,
-        function(value)
-            if localplayer and localplayer:is_in_vehicle() then
-                stopEverything()
-                if string.len(platesTable[value]) > 8 then
-                    savedPlateVehicle = localplayer:get_current_vehicle()
-                    savedPlateText = savedPlateVehicle:get_number_plate_text()
-                    ScrollText(platesTable[value], .90)
-                else
-                    setPlate(platesTable[value])
-                    savedPlateText = platesTable[value]
-                    savedPlateVehicle = localplayer:get_current_vehicle()
-                    checkPlate()
-                end
+    menuVar:add_array_item(name, platesTable, function()
+    end, function(value)
+        if localplayer and localplayer:is_in_vehicle() then
+            stopEverything()
+            if string.len(platesTable[value]) > 8 then
+                savedPlateVehicle = localplayer:get_current_vehicle()
+                savedPlateText = savedPlateVehicle:get_number_plate_text()
+                ScrollText(platesTable[value], .90)
+            else
+                setPlate(platesTable[value])
+                savedPlateText = platesTable[value]
+                savedPlateVehicle = localplayer:get_current_vehicle()
+                checkPlate()
             end
         end
-    )
+    end)
 end
 
 newArray(newPlateMenu, "Positive Messages", positiveMessages)
@@ -3548,22 +3354,40 @@ newArray(newPlateMenu, "Rick and Morty Messages", rickMortyMessages)
 newArray(newPlateMenu, "Barcode Shit", LINEMESSAGES)
 newArray(newPlateMenu, "Ganja 420 Messages", ganjaMessages)
 
-userSettingsMenu:add_toggle("Debug Mode", function() return debugMode end, function() toggleDebugMode() end)
-userSettingsMenu:add_toggle("MPH Speedometer",
-    function() if speedmode.current == speedmode.kph then return false else return true end end,
-    function() toggleSpeedmode() end
-)
+userSettingsMenu:add_toggle("Debug Mode", function()
+    return debugMode
+end, function()
+    toggleDebugMode()
+end)
+userSettingsMenu:add_toggle("MPH Speedometer", function()
+    if speedmode.current == speedmode.kph then
+        return false
+    else
+        return true
+    end
+end, function()
+    toggleSpeedmode()
+end)
 
 -------------------------------------------------------------------------------
 --------------------------------   RGB PAINT   --------------------------------
 -------------------------------------------------------------------------------
 
+paintMenu:add_action("Work In Progress!!", function()
+    rip()
+end)
+paintMenu:add_action(" ", function()
+    rip()
+end)
+paintMenu:add_toggle("RGB Paint", function()
+    return colourChanging
+end, function()
+    toggleRGBLoop()
+end)
 
-paintMenu:add_action("Work In Progress!!", function() rip() end)
-paintMenu:add_action(" ", function() rip() end)
-paintMenu:add_toggle("RGB Paint", function() return colourChanging end, function() toggleRGBLoop() end)
-
-paintMenu:add_action("Change RGB Speed", function() RGBSpeedChange() end)
+paintMenu:add_action("Change RGB Speed", function()
+    RGBSpeedChange()
+end)
 
 -------------------------------------------------------------------------------
 --------------------------------  DEBUG ITEMS  --------------------------------
@@ -3610,7 +3434,7 @@ function returnToPOS()
 end
 
 function changeCarHash(hash)
-    if localplayer and localplayer:is_in_vehicle() then
+    if carCheck() then
         local v = localplayer:get_current_vehicle()
         if hashIsOriginal then
             originalHash = v:get_model_hash()
@@ -3630,75 +3454,218 @@ function revertHash()
     hashIsOriginal = true
     originalHash = 0
     ::noHash::
+    print("No Saved HASH Found!")
 end
 
 -- Experimental Vehicle Changer
 local vehicleChangerMenu = trickMenu:add_submenu("Vehicle Changer(CAUTION)")
 
-vehicleChangerMenu:add_action("Not Fully Funtional, If At All", function() rip() end)
-vehicleChangerMenu:add_action("Use At Your Own Risk!", function() rip() end)
-vehicleChangerMenu:add_action("", function() rip() end)
-vehicleChangerMenu:add_action("Select Your Car Then Enter", function() rip() end)
-vehicleChangerMenu:add_action("Any Building(Think 'Garage')", function() rip() end)
-vehicleChangerMenu:add_action("  Possibly Even A ModShop", function() rip() end)
-vehicleChangerMenu:add_action("Try The F1/Bennys Method!", function() rip() end)
-vehicleChangerMenu:add_action("", function() rip() end)
-vehicleChangerMenu:add_action("", function() rip() end)
-vehicleChangerMenu:add_array_item("Vehicle Selector ->", vehicleOptions,
-    function()
-        return selectedVehicleIndex
-    end,
-    function(index)
-        selectedVehicleIndex = index
-        local selectedVehicle = vehicleOptions[index]
-        local selectedVehicleHash = getVehicleHash(selectedVehicle)
-        changeCarHash(selectedVehicleHash)
-        print("Current Vehicle Hash: " .. tostring(selectedVehicleHash) " : " .. tostring(selectedVehicle))
-    end
-)
-vehicleChangerMenu:add_action("", function() rip() end)
-vehicleChangerMenu:add_action("(Try To) Revert Hash", function() revertHash() end)
+vehicleChangerMenu:add_action("Not Fully Funtional, If At All", function()
+    rip()
+end)
+vehicleChangerMenu:add_action("Use At Your Own Risk!", function()
+    rip()
+end)
+vehicleChangerMenu:add_action("", function()
+    rip()
+end)
+vehicleChangerMenu:add_action("Select Your Car Then Enter", function()
+    rip()
+end)
+vehicleChangerMenu:add_action("Any Building(Think 'Garage')", function()
+    rip()
+end)
+vehicleChangerMenu:add_action("  Possibly Even A ModShop", function()
+    rip()
+end)
+vehicleChangerMenu:add_action("Try The F1/Bennys Method!", function()
+    rip()
+end)
+vehicleChangerMenu:add_action("", function()
+    rip()
+end)
+vehicleChangerMenu:add_action("", function()
+    rip()
+end)
+vehicleChangerMenu:add_array_item("Vehicle Selector ->", vehicleOptions, function()
+    return selectedVehicleIndex
+end, function(index)
+    selectedVehicleIndex = index
+    local selectedVehicle = vehicleOptions[index]
+    local selectedVehicleHash = getVehicleHash(selectedVehicle)
+    changeCarHash(selectedVehicleHash)
+    print("Current Vehicle Hash: " .. tostring(selectedVehicleHash) " : " .. tostring(selectedVehicle))
+end)
+vehicleChangerMenu:add_action("", function()
+    rip()
+end)
+vehicleChangerMenu:add_action("(Try To) Revert Hash", function()
+    revertHash()
+end)
 
-trickMenu:add_action("Get In Car Button",
-    function()
-        print("Dealing With Insurance Brokers")
-        menu.remove_insurance_claims()
-        pause(0.25)
-        print("Phoning Mechanic")
-        menu.retrieve_personal_vehicle()
-        pause(0.25)
-        print("Teleporting To Drivers Seat Now")
-        menu.enter_personal_vehicle()
-        print("Now In Personal Vehicle\nEnjoy :)")
-    end)
+trickMenu:add_action("Get In Car Button", function()
+    print("Dealing With Insurance Brokers")
+    menu.remove_insurance_claims()
+    pause(0.25)
+    print("Phoning Mechanic")
+    menu.retrieve_personal_vehicle()
+    pause(0.25)
+    print("Teleporting To Drivers Seat Now")
+    menu.enter_personal_vehicle()
+    print("Now In Personal Vehicle\nEnjoy :)")
+end)
 
 function loadDebugMenu()
     local DEBUGMENU = ReagansMenu:add_submenu("DEBUG MENU")
 
-    DEBUGMENU:add_action("Teleport to freeway",
-        function()
-            if carCheck() then
-                local veh = localplayer:get_current_vehicle()
-                veh:set_position(raceLocations.mainFreewaySouthX, raceLocations.mainFreewaySouthY,
-                    raceLocations.mainFreewaySouthZ)
-                debugPrint(" teleported")
-            else
-                localplayer:set_position(raceLocations.mainFreewaySouthX, raceLocations.mainFreewaySouthY,
-                    raceLocations.mainFreewaySouthZ)
-            end
-        end)
+    DEBUGMENU:add_action("Teleport to freeway", function()
+        if carCheck() then
+            local veh = localplayer:get_current_vehicle()
+            veh:set_position(raceLocations.mainFreewaySouthX, raceLocations.mainFreewaySouthY,
+                raceLocations.mainFreewaySouthZ)
+            debugPrint(" teleported")
+        else
+            localplayer:set_position(raceLocations.mainFreewaySouthX, raceLocations.mainFreewaySouthY,
+                raceLocations.mainFreewaySouthZ)
+        end
+    end)
 
-    DEBUGMENU:add_action("Print Location and Rotation", function() printPOS() end)
+    DEBUGMENU:add_action("Print Location and Rotation", function()
+        printPOS()
+    end)
 
-    DEBUGMENU:add_action("Save POS for Teleport", function() savePOS() end)
+    DEBUGMENU:add_action("Save POS for Teleport", function()
+        savePOS()
+    end)
 
-    DEBUGMENU:add_action("Teleport to Saved POS", function() returnToPOS() end)
+    DEBUGMENU:add_action("Teleport to Saved POS", function()
+        returnToPOS()
+    end)
 
-    DEBUGMENU:add_action("rgb manual off", function() colourChanging = false end)
+    DEBUGMENU:add_action("rgb manual off", function()
+        colourChanging = false
+    end)
     DEBUGMENU:add_submenu("Tricks")
-    DEBUGMENU:add_action("enter pv", function() menu.enter_personal_vehicle() end)
-    DEBUGMENU:add_action("Print Memory Usage",
-        function() print(" Current Usage: " .. collectgarbage("count") .. " KB") end)
-    DEBUGMENU:add_action("Clean Memory", function() collectgarbage("collect") end)
+    DEBUGMENU:add_action("enter pv", function()
+        menu.enter_personal_vehicle()
+    end)
+    DEBUGMENU:add_action("Print Memory Usage", function()
+        print(" Current Usage: " .. collectgarbage("count") .. " KB")
+    end)
+    DEBUGMENU:add_action("Clean Memory", function()
+        collectgarbage("collect")
+    end)
     debugMenuLoaded = true
 end
+
+--[[
+    Memory Manegment:
+    Runs Every Second to check if sixty seconds has passed, if true, clean memory.
+    ]]
+local clock = -1
+while true do
+    if clock > 60 then
+        debugPrint("\n Garbage Cleanup Started\n Memory Usage: " .. collectgarbage("count") ..
+                       " KB\n Garbage Cleaning in Progress.")
+        collectgarbage("collect")
+        clock = 1
+        debugPrint(" Garbage Cleanup finished\n Memory Usage: " .. collectgarbage("count") .. " KB")
+    else
+        clock = clock + 1
+        pause(1)
+    end
+end
+
+-- Makes Random Cars Fly North
+local cars = {}
+local birdsAreFlying = false
+
+function getCars()
+    for veh in replay.interface.get_vehicles() do
+        if veh ~= localplayer:get_current_vehicle() then
+            table.insert(cars, veh)
+        else
+            print("Skipped Player Car!")
+        end
+    end
+end
+
+function moveCar(veh, x, y, z)
+    veh:set_position(vector3(x, y, z))
+end
+
+function setCarRotation(veh, rotation)
+    veh:set_rotation(rotation)
+end
+function moveCarsToSky()
+    local myX, myY, myZ = localplayer:get_position()
+    local height = 50 -- height above the player
+    local offsetX = 10 -- distance between vehicles (Horizontal)
+    local offsetY = 10 -- distance between vehicles (vertically)
+
+    -- Form Triangle Pattern
+    local trianglePositions = {{
+        x = myX,
+        y = myY,
+        z = myZ + height
+    }, {
+        x = myX - offsetX,
+        y = myY + offsetY,
+        z = myZ + height
+    }, {
+        x = myX + offsetX,
+        y = myY + offsetY,
+        z = myZ + height
+    }, {
+        x = myX - 2 * offsetX,
+        y = myY + 2 * offsetY,
+        z = myZ + height
+    }, {
+        x = myX,
+        y = myY + 2 * offsetY,
+        z = myZ + height
+    }, {
+        x = myX + 2 * offsetX,
+        y = myY + 2 * offsetY,
+        z = myZ + height
+    }}
+    local t = trianglePositions
+    for i, veh in ipairs(cars) do
+        if t[i] then
+            moveCar(veh, t[i].x, t[i].y, t[i].z)
+            setCarRotation(veh, vector3(0, 0, 0)) -- hopfully thats north lol
+        end
+    end
+end
+
+function moveCarsNorth()
+    local step = 1
+    for i, veh in ipairs(cars) do
+        local pos = veh:get_position()
+        moveCar(veh, pos.x + step, pos.y, pos.z)
+    end
+end
+
+function birdsFlyNorth()
+    if birdsAreFlying then
+        stopBirds()
+    else
+        startBirds()
+    end
+end
+
+function startBirds()
+    getCars()
+    moveCarsToSky()
+    while birdsAreFlying do
+        moveCarsNorth()
+        pause(0.25)
+    end
+end
+
+function stopBirds()
+    birdsAreFlying = false
+    cars = {}
+end
+
+menu.add_action("Bird Migration Start/Stop", birdsFlyNorth())
